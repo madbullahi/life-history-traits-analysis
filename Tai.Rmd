@@ -1,14 +1,15 @@
 ---
-title: "Exploratory Data Analysis & hypothesis testing"
-output: html_notebook
+title: "Exploratoy and hypothesis testing analysis"
+output: rmarkdown::github_document
 author: Muhammad
 ---
 
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
 
-"MP data"
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
 ```{r}
-# Step 1: import the data file into R
-
+plot(cars)
 ```
 
 Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
