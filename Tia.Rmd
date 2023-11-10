@@ -1,30 +1,106 @@
 ---
-title: "R Notebook"
-output: html_notebook
+title: "Exploratory and hypothesis testing analysis"
+output: rmarkdown::github_document
+author: Muhammad
 ---
 
-
+#load libraries
 ```{r}
-#Load libraries
-
 library(readxl)
-
 ```
 
 
+# import data
 ```{r}
-#import data for MP
-
-MP_Data < read_excel(file.choose(), sheet = 'MP')
-
+MP_Data <- read_excel(file.choose(), sheet = 'MP')
 
 ```
 
-
 ```{r}
-
 MP_Data
+```
+```{r}
+#subet the variables: Age_maturity, Genotype & Treatment
+
+Age<- MP_Data[,'Age_maturity']
+
+Genotype <-MP_Data[,'Genotypes']
+
+Treatment<-MP_Data[,'Treatment']
+
+```
+
+```{r}
+install.packages("rms")
 
 ```
 
 
+
+```{r}
+#load packages
+
+library(lmerTest) # loads p-values for type I,II,III anova.
+library(rcompanion) # provides summary of analysis of a dataset.
+library(heplots) # loads HE plots for visualizing hypothesis test.
+
+```
+
+
+```{r}
+# Do the anova for Age_maturity:
+
+Age_ano <- lmer(Age_maturity ~ Treatment*Genotypes + (1|Genotypes:Replicates), data = MP_Data)
+
+
+```
+
+```{r}
+anova(Age_ano)
+
+```
+
+```{r}
+#Plot the histogram of the residuals
+
+x=residuals(Age_ano)
+plotNormalHistogram(x)
+
+```
+
+```{r}
+
+#run anova for a log transform Age_maturity data:
+
+Age_log_ano <- lmer(log(Age_maturity) ~ Treatment*Genotypes + (1|Genotypes:Replicates), data = MP_Data)
+
+```
+
+```{r}
+anova(Age_log_ano)
+```
+
+```{r}
+log_age = residuals(Age_log_ano)
+plotNormalHistogram(log_age)
+```
+
+```{r}
+#plot the Q-Q plot:
+
+qqnorm(residuals(Age_ano),
+       ylab = 'Sample Quantiles for residuals')
+
+qqline(residuals(Age_ano),
+       col='red')
+
+```
+```{r}
+qqnorm(residuals(Age_log_ano),
+       ylab = 'Sample Quantiles for residuals')
+
+qqline(residuals(Age_log_ano),
+       col='red')
+
+
+```
