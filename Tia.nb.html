@@ -9,10 +9,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<meta name="author" content="Muhammad" />
 
 
-<title>Exploratory Data Analysis &amp; hypothesis testing</title>
+<title>R Notebook</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -1747,35 +1746,45 @@ display: none;
 
 
 
-<h1 class="title toc-ignore">Exploratory Data Analysis &amp; hypothesis
-testing</h1>
-<h4 class="author">Muhammad</h4>
+<h1 class="title toc-ignore">R Notebook</h1>
 
 </div>
 
 
 <!-- rnb-text-begin -->
-<p>“MP data”</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBTdGVwIDE6IGltcG9ydCB0aGUgZGF0YSBmaWxlIGludG8gUlxuXG5gYGAifQ== -->
-<pre class="r"><code># Step 1: import the data file into R
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShyZWFkeGwpXG5gYGAifQ== -->
+<pre class="r"><code>library(readxl)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuTVBfRGF0YSAgPC0gcmVhZF9leGNlbChmaWxlLmNob29zZSgpLCBzaGVldCA9ICdNUCcpXG5cblxuYGBgIn0= -->
+<pre class="r"><code>MP_Data  &lt;- read_excel(file.choose(), sheet = &#39;MP&#39;)
 </code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-<p>Add a new chunk by clicking the <em>Insert Chunk</em> button on the
-toolbar or by pressing <em>Ctrl+Alt+I</em>.</p>
-<p>When you save the notebook, an HTML file containing the code and
-output will be saved alongside it (click the <em>Preview</em> button or
-press <em>Ctrl+Shift+K</em> to preview the HTML file).</p>
-<p>The preview shows you a rendered HTML copy of the contents of the
-editor. Consequently, unlike <em>Knit</em>, <em>Preview</em> does not
-run any R code chunks. Instead, the output of the chunk when it was last
-run in the editor is displayed.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG5NUF9EYXRhXG5gYGAifQ== -->
+<pre class="r"><code>
+MP_Data</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbInRibF9kZiIsInRibCIsImRhdGEuZnJhbWUiXSwibnJvdyI6MTYsIm5jb2wiOjEwLCJzdW1tYXJ5Ijp7IkEgdGliYmxlIjpbIjE2IMOXIDEwIl19fSwicmRmIjoiSDRzSUFBQUFBQUFBQnNXVnYyL1RRQlRITDBsTmlHbEtFQjJRcUVxRnFpaU5haXRwU29sUXF4clVKdnpvUUpPQU9vQWkxekhGSXJFanh4RWtETERBeWd4YkU4L2RrTHF3c1BBbmRHSHBERU1YR0J2TzlqczNmaUlMUHkxWjMzdWY5NTd2dmJ2VHViUzJsZU8zZUVKSWhJeUZJeVRDMFNIaDdsVUtRcDVRUW8wUUdTTXhSNS9Sb1BOMDRFUlAwRGV4ZWtUY1J5S2dwMEVUbnY1dHYxT0QrM29GUmpkSzk0V01rUDBWTTdaUldoQnlTMExtTjhEL214K3RnMkxvbG1uVS83VVp1YnRlK2JORE9HZlNET3o3Rk9nTTBndElNY2Z4VTBpQnYzRFBXN1NINC8wNlpvRXpUU0w3TWxMTWsyaWVOUEQwQ0g4eXlQMDZyZ0hQZ3pKN0dTbmpLNkE1MEF5YVp4SDFJeUkvcXorTjZyQlhOcis4bXQ2WGJQRkRzMy9BUzNiNXhwc0hxZStTL2Y2anEvMkRQQTI0SlBVUDVlTGU1SFBKZnVoeCs5dzNPcGlUZG52ZFErcnc1K205L3JRMzJUMlUraGU1NmYzTnI5THU1N2YwZVhmaVgzZmNONlhlWE1yNWdGOEhXNzhVV3MvVUNNWCtlZFJ2Rm5nMnlIMy9mRENQNEgxaDY4bnNIRksyUDB2SVRxRTYySDRzanFpRDVjK2lPbTRETDRBeXUvZ3lxSGVBMzBKOEdkV3hDbkZNOGZsZy9Db3JJL0RqNEhTNW9iYUlkMG54QVBtUzJxeHJpbXhSRDl4blJWVTNyRTd6QkZSTVZiWWFxbTRCR0wrK28xWWJzdFUyTmF2RHZyTW1kNnJaYmRNd2FrRE9GRFN6WlZXSFVieXNkWCtldVRBY05sNVc2WTFXQzZUR0NxclMxbXRPV3JDcm1HazhGVmxuY2ZxR25jVWJEQVpIdUgybExyZFkrd3p5TmRtU3hVY216YWZXTVVxSkdrMUxNM1NhRkhaK3VCeEtEcGtJbkczclRpVTFRWG5jMXA4SVY0ajNrdzdCYnNSaG5CZ2E4OTZVNFFGd0RqNTFTdFYzTkYxbHRkZmxiWlhkN3hPMFk3ZGhzV2xxL3Fid2xMWkV5N0JrRnNjclJwMFJ0emR5L0FNUks5aDFad2dBQUE9PSJ9 -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["Replicates"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["Genotypes"],"name":[2],"type":["chr"],"align":["left"]},{"label":["Treatment"],"name":[3],"type":["chr"],"align":["left"]},{"label":["Age_maturity"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Day_1brood"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["First_brood"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["Size_maturity"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["Day_2brood"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["Second_brood"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["Fecundity"],"name":[10],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"LRV-0-1","3":"control","4":"8","5":"10","6":"26","7":"2590.66","8":"13","9":"26","10":"52"},{"1":"2","2":"LRV-0-1","3":"control","4":"7","5":"10","6":"24","7":"2583.37","8":"12","9":"20","10":"44"},{"1":"3","2":"LRV-0-1","3":"control","4":"8","5":"11","6":"26","7":"2601.63","8":"13","9":"26","10":"52"},{"1":"4","2":"LRV-0-1","3":"control","4":"8","5":"10","6":"28","7":"2650.88","8":"12","9":"19","10":"47"},{"1":"1","2":"LR2-36-01","3":"control","4":"6","5":"9","6":"28","7":"2539.61","8":"12","9":"19","10":"47"},{"1":"2","2":"LR2-36-01","3":"control","4":"6","5":"9","6":"26","7":"2544.69","8":"12","9":"28","10":"54"},{"1":"3","2":"LR2-36-01","3":"control","4":"8","5":"10","6":"29","7":"2606.88","8":"13","9":"22","10":"51"},{"1":"4","2":"LR2-36-01","3":"control","4":"6","5":"9","6":"19","7":"2568.98","8":"12","9":"28","10":"47"},{"1":"1","2":"LRV-0-1","3":"PET","4":"8","5":"11","6":"16","7":"2257.24","8":"14","9":"12","10":"28"},{"1":"2","2":"LRV-0-1","3":"PET","4":"8","5":"NA","6":"NA","7":"NA","8":"NA","9":"NA","10":"NA"},{"1":"3","2":"LRV-0-1","3":"PET","4":"7","5":"13","6":"20","7":"2371.39","8":"17","9":"11","10":"31"},{"1":"4","2":"LRV-0-1","3":"PET","4":"7","5":"13","6":"11","7":"2445.51","8":"17","9":"20","10":"31"},{"1":"1","2":"LR2-36-01","3":"PET","4":"8","5":"11","6":"15","7":"2286.30","8":"NA","9":"NA","10":"15"},{"1":"2","2":"LR2-36-01","3":"PET","4":"NA","5":"NA","6":"NA","7":"NA","8":"NA","9":"NA","10":"NA"},{"1":"3","2":"LR2-36-01","3":"PET","4":"8","5":"11","6":"9","7":"2338.84","8":"14","9":"22","10":"31"},{"1":"4","2":"LR2-36-01","3":"PET","4":"8","5":"11","6":"13","7":"2324.58","8":"14","9":"10","10":"23"}],"options":{"columns":{"min":{},"max":[10],"total":[10]},"rows":{"min":[10],"max":[10],"total":[16]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIkV4cGxvcmF0b3J5IERhdGEgQW5hbHlzaXMgJiBoeXBvdGhlc2lzIHRlc3RpbmciDQpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sNCmF1dGhvcjogTXVoYW1tYWQNCi0tLQ0KDQoNCiJNUCBkYXRhIg0KYGBge3J9DQojIFN0ZXAgMTogaW1wb3J0IHRoZSBkYXRhIGZpbGUgaW50byBSDQoNCmBgYA0KDQpBZGQgYSBuZXcgY2h1bmsgYnkgY2xpY2tpbmcgdGhlICpJbnNlcnQgQ2h1bmsqIGJ1dHRvbiBvbiB0aGUgdG9vbGJhciBvciBieSBwcmVzc2luZyAqQ3RybCtBbHQrSSouDQoNCldoZW4geW91IHNhdmUgdGhlIG5vdGVib29rLCBhbiBIVE1MIGZpbGUgY29udGFpbmluZyB0aGUgY29kZSBhbmQgb3V0cHV0IHdpbGwgYmUgc2F2ZWQgYWxvbmdzaWRlIGl0IChjbGljayB0aGUgKlByZXZpZXcqIGJ1dHRvbiBvciBwcmVzcyAqQ3RybCtTaGlmdCtLKiB0byBwcmV2aWV3IHRoZSBIVE1MIGZpbGUpLg0KDQpUaGUgcHJldmlldyBzaG93cyB5b3UgYSByZW5kZXJlZCBIVE1MIGNvcHkgb2YgdGhlIGNvbnRlbnRzIG9mIHRoZSBlZGl0b3IuIENvbnNlcXVlbnRseSwgdW5saWtlICpLbml0KiwgKlByZXZpZXcqIGRvZXMgbm90IHJ1biBhbnkgUiBjb2RlIGNodW5rcy4gSW5zdGVhZCwgdGhlIG91dHB1dCBvZiB0aGUgY2h1bmsgd2hlbiBpdCB3YXMgbGFzdCBydW4gaW4gdGhlIGVkaXRvciBpcyBkaXNwbGF5ZWQuDQo=</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIlIgTm90ZWJvb2siDQpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sNCi0tLQ0KDQoNCmBgYHtyfQ0KI0xvYWQgbGlicmFyaWVzDQoNCmxpYnJhcnkocmVhZHhsKQ0KDQpgYGANCg0KDQpgYGB7cn0NCiNpbXBvcnQgZGF0YSBmb3IgTVANCg0KTVBfRGF0YSA8IHJlYWRfZXhjZWwoZmlsZS5jaG9vc2UoKSwgc2hlZXQgPSAnTVAnKQ0KDQoNCmBgYA0KDQoNCmBgYHtyfQ0KDQpNUF9EYXRhDQoNCmBgYA0KDQoNCg==</div>
 
 
 
@@ -1822,7 +1831,7 @@ $(document).ready(function () {
 <!-- code folding -->
 <script>
 $(document).ready(function () {
-  window.initializeSourceEmbed("Tia.rmd");
+  window.initializeSourceEmbed("Tia.Rmd");
   window.initializeCodeFolding("show" === "show");
 });
 </script>

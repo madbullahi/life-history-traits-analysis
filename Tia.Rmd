@@ -1,25 +1,30 @@
 ---
-title: "Exploratory and hypothesis testing analysis"
-output: rmarkdown::github_document
-author: Muhammad
+title: "R Notebook"
+output: html_notebook
 ---
 
-#load libraries
+
 ```{r}
+#Load libraries
+
 library(readxl)
+
 ```
 
 
-# import data
 ```{r}
-MP_Data  <- read_excel(file.choose(), sheet = 'MP')
+#import data for MP
+
+MP_Data < read_excel(file.choose(), sheet = 'MP')
 
 
 ```
+
 
 ```{r}
 
 MP_Data
+
 ```
 
-The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
+
