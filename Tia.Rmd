@@ -104,3 +104,54 @@ qqline(residuals(Age_log_ano),
 
 
 ```
+```{r}
+#PCA: analysis of quantitative variables only
+
+colSums(is.na(MP_Data))
+
+```
+```{r}
+
+str(MP_Data)
+```
+
+```{r}
+
+MP_Data$Genotypes <- factor(MP_Data$Genotypes, levels = c("LRV-0-1", "LR2-36-01"))
+
+```
+
+
+```{r}
+MP_Data
+
+```
+```{r}
+TY <- MP_Data[-c(1,5:6,8:9)]
+
+```
+
+
+```{r}
+TY
+```
+```{r}
+TY <- TY[complete.cases(TY),]
+
+```
+
+```{r}
+
+TY
+```
+
+```{r}
+TY[3:5]<- log(TY[3:5]+0.5)
+
+```
+
+
+```{r}
+
+
+```
