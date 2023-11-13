@@ -152,6 +152,28 @@ TY[3:5]<- log(TY[3:5]+0.5)
 
 
 ```{r}
+logTY_data <- TY[,c(3:5)]
+
+```
+
+```{r}
+logTY_data
+
+```
+
+
+```{r}
+logTY_data_pca <- prcomp(logTY_data, scale. = TRUE)
+
+```
+
+```{r}
+logTY_data_pca
+```
+
+
+
+```{r}
 
 
 ```
