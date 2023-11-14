@@ -107,7 +107,7 @@ qqline(residuals(Age_log_ano),
 ```{r}
 #PCA: analysis of quantitative variables only
 
-colSums(is.na(MP_Data))
+colSums(is.na())
 
 ```
 ```{r}
