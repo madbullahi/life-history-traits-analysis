@@ -283,5 +283,13 @@ fviz_pca_biplot(logAb_PFOS_PFOA_pca,
 ```
 
 
+```{r}
+#import PFOS data
+
+PFOS <- read_excel(file.choose(), sheet = "PFOS_abu")
+
+
+```
+
 
 
