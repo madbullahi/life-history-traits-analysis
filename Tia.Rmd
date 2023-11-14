@@ -107,7 +107,7 @@ qqline(residuals(Age_log_ano),
 ```{r}
 #PCA: analysis of quantitative variables only
 
-colSums(is.na())
+colSums(is.na(MP_Data))
 
 ```
 ```{r}
@@ -213,5 +213,84 @@ fviz_pca_biplot(logTY_data_pca,
              legend.title = "Genotype",
              repel = TRUE,
              )
+
+```
+
+
+```{r}
+#import MP_PFOA data
+MP_PFOA_T <- read_excel(file.choose(), sheet = "MP_PFOA_Tia")
+
+
+```
+
+
+
+```{r}
+MP_PFOA_T
+
+
+```
+
+```{r}
+colSums(is.na(MP_PFOA_T))
+
+```
+
+
+```{r}
+
+MP_PFOA_T$Genotypes <- factor(MP_PFOA_T$Genotypes, levels = c("LRV-0-1", "LR2-36-01"))
+
+
+```
+
+
+```{r}
+MP_PFOA_T
+
+
+```
+```{r}
+Ta <- MP_PFOA_T[-c(1,5:6,8:9)]
+
+```
+
+
+```{r}
+Ta
+```
+
+
+```{r}
+
+Ta <- Ta[complete.cases(Ta),]
+```
+
+
+
+
+```{r}
+Ta
+```
+
+
+```{r}
+
+
+Ta[3:5]<- log(Ta[3:5]+0.5)
+
+```
+
+
+
+```{r}
+logTa_data <- Ta[,c(3:5)]
+
+```
+
+
+```{r}
+
 
 ```
