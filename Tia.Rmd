@@ -377,8 +377,58 @@ MP_PF_PA
 MP_PF_PA[3:5]<- log(MP_PF_PA[3:5]+0.5)
 ```
 
+```{r}
+
+logMP_PF_PA <- MP_PF_PA[,c(3:5)]
+```
 
 ```{r}
+
+logMP_PF_PA_pca <- prcomp(logMP_PF_PA, scale. = TRUE)
+
+```
+
+
+```{r}
+logMP_PF_PA_pca
+
+```
+
+
+
+```{r}
+summary(logMP_PF_PA_pca)
+
+```
+
+
+```{r}
+
+Genotypes <- as.factor(MP_PFOS_PFOA$Genotypes)
+
+```
+
+
+```{r}
+
+fviz_pca_biplot(logMP_PF_PA_pca,
+             col.ind = Genotypes,
+              palette = c("LRV-0-1"="red","LR2-36-01"="black"),
+             addEllipses = TRUE, 
+             col.var="blue",
+             arrowsize=0.2,
+             labelsize=3,
+             geom.ind = "point",
+             pointsize=1,
+             pointshape=19,
+             mean.point=F,
+             xlim=c(-5,5),
+             ylim=c(-3,3),
+             var.scale=0.5,
+             ellipse.type = "confidence",
+             legend.title = "Genotype",
+             repel = TRUE,
+             )
 
 
 
