@@ -1,16 +1,157 @@
 ---
-title: "R Notebook"
+title:"Exploratory and hypothesis testing analysis"
 output: rmarkdown::github_document
 author: Muhammad
 ---
 
+# import data
+```{r}
+PE_abu <- read_excel(file.choose(), sheet = "PE_abu")
+```
 
 ```{r}
 
+PE_abu
 ```
 
-Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+```{r}
 
-When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
+#subet the variables: Age_maturity, Genotype & Treatment
 
-The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
+Age<- PE_abu[,'Age_maturity']
+
+Genotype <- PE_abu[,'Genotype']
+
+Treatment<- PE_abu[,'Treatment']
+```
+
+```{r}
+ #Do the anova for Age_maturity:
+
+PE_Age_ano <- lmer(Age_maturity ~ Treatment*Genotype + (1|Genotype:Replicates), data = PE_abu)
+
+```
+
+```{r}
+
+anova(PE_Age_ano)
+```
+
+```{r}
+
+#Plot the histogram of the residuals
+
+x=residuals(PE_Age_ano)
+plotNormalHistogram(x)
+```
+
+```{r}
+
+#run anova for a log transform Age_maturity data:
+
+PE_Age_log_ano <- lmer(log(Age_maturity) ~ Treatment*Genotype + (1|Genotype:Replicates), data = PE_abu)
+```
+
+```{r}
+
+anova(PE_Age_log_ano)
+```
+
+```{r}
+log_age_PE = residuals(PE_Age_log_ano)
+plotNormalHistogram(log_age_PE)
+
+```
+
+
+
+```{r}
+#plot the Q-Q plot:
+
+qqnorm(residuals(PE_Age_ano),
+       ylab = 'Sample Quantiles for residuals')
+
+qqline(residuals(PE_Age_ano),
+       col='red')
+```
+
+
+```{r}
+qqnorm(residuals(PE_Age_log_ano),
+       ylab = 'Sample Quantiles for residuals')
+
+qqline(residuals(PE_Age_log_ano),
+       col='red')
+
+```
+
+```{r}
+# PCA:only works with quantitative variables
+
+colSums(is.na(PE_abu))
+
+```
+
+```{r}
+#PCA
+colSums(is.na(PE_abu))
+
+```
+
+```{r}
+PE_abu$Genotype <- factor(PE_abu$Genotype, levels = c("LRV_0_1", "LR2_36_1"))
+
+```
+
+```{r}
+
+PE_abu
+```
+
+```{r}
+
+Ab <- PE_abu[-c(1,5,7,8,9:10)]
+
+```
+
+```{r}
+Ab <- Ab[complete.cases(Ab),]
+
+```
+
+
+```{r}
+Ab
+
+```
+
+
+```{r}
+
+Ab[3:5]<- log(Ab[3:5]+0.5)
+```
+
+```{r}
+logAb_data <- Ab[,c(3:5)]
+
+```
+
+```{r}
+logAb_data_pca <- prcomp(logAb_data, scale. = TRUE)
+
+```
+
+
+```{r}
+
+
+logAb_data_pca
+```
+
+
+
+```{r}
+
+
+
+```
