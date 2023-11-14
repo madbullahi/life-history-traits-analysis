@@ -187,16 +187,101 @@ fviz_pca_biplot(logAb_data_pca,
 
 
 ```{r}
-#import MP_PFOA data
-MP_PFOA_T <- read_excel(file.choose(), sheet = "MP_PFOA_Tia")
+#import PFOS_PFOA data
+PFOS_PFOA_abu <- read_excel(file.choose(), sheet = "PFOS_PFOA_abu")
 
 ```
 
 
 ```{r}
-MP_PFOA_T
+PFOS_PFOA_abu
 
 ```
 ```{r}
 
-colSums(is.na(MP_PFOA_T))
+colSums(is.na(PFOS_PFOA_abu))
+
+```
+
+
+```{r}
+PFOS_PFOA_abu$Genotype <- factor(PFOS_PFOA_abu$Genotype, levels = c("LRV_0_1", "LR2_36_1"))
+
+```
+
+
+```{r}
+Abu_PFOS_PFOA <- PFOS_PFOA_abu[-c(1,5,7,8,9:10)]
+
+```
+
+
+```{r}
+Abu_PFOS_PFOA
+
+```
+
+
+```{r}
+
+Abu_PFOS_PFOA[3:5]<- log(Abu_PFOS_PFOA[3:5]+0.5)
+
+```
+
+
+```{r}
+logAb_PFOS_PFOA <- Abu_PFOS_PFOA[,c(3:5)]
+
+```
+
+```{r}
+
+logAb_PFOS_PFOA_pca <- prcomp(logAb_PFOS_PFOA, scale. = TRUE)
+
+```
+
+
+```{r}
+logAb_PFOS_PFOA_pca
+
+```
+
+
+```{r}
+summary(logAb_PFOS_PFOA_pca)
+
+```
+
+```{r}
+
+Genotype <- as.factor(PFOS_PFOA_abu$Genotype)
+```
+
+
+```{r}
+fviz_pca_biplot(logAb_PFOS_PFOA_pca,
+             col.ind = Genotype,
+              palette = c("LRV_0_1"="red","LR2_36_1"="black"),
+             addEllipses = TRUE, 
+             col.var="blue",
+             arrowsize=0.2,
+             labelsize=3,
+             geom.ind = "point",
+             pointsize=1,
+             pointshape=19,
+             mean.point=F,
+             xlim=c(-5,5),
+             ylim=c(-3,3),
+             var.scale=0.5,
+             ellipse.type = "confidence",
+             legend.title = "Genotype",
+             repel = TRUE,
+             )
+
+
+
+```
+
+
+
+
