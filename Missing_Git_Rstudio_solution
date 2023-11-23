@@ -1,0 +1,12 @@
+Missing Git tab in Rstudio
+
+To avoid these mambo jumbos, an alternative way is that you can simply uninstall git and scoop and reinstall Git with admin privileges.
+
+1. Search for “Add or remove programs” in your Windows search bar. Then, uninstall “Git.”
+2. In “Terminal”, execute scoop uninstall scoop
+3. Then download Git 64 Standalone Installer from https://git-scm.com/download/win (use the version according to your computer). 
+4. When opening the installer, right-click to “Run as Admin,” then you have the option to install it in C:\Program Files\ Remember to pick “Use Git from the Windows Command Prompt” and “Enable Symbolic Links.”
+5. Open “Rstudio” with “Run as Admin”, go to Tools -> Global Options -> Terminal -> New terminal open with -> Select “Git Bash”
+
+
+Voila! You are all set again.
