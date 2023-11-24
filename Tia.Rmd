@@ -16,9 +16,13 @@ MP_Data <- read_excel(file.choose(), sheet = 'MP')
 
 ```
 
-```{r}
+```{r Table Mp_Tia}
+
 MP_Data
 ```
+
+
+
 ```{r}
 #subet the variables: Age_maturity, Genotype & Treatment
 
@@ -126,56 +130,61 @@ MP_Data$Genotypes <- factor(MP_Data$Genotypes, levels = c("LRV-0-1", "LR2-36-01"
 MP_Data
 
 ```
+
+
 ```{r}
-TY <- MP_Data[-c(1,5:6,8:9)]
+MicroplasticOnly <- MP_Data[-c(1,5:6,8:9)]
+
+```
+
+
+```{r Subset of Microplastic Table}
+
+MicroplasticOnly
+```
+
+
+```{r}
+MicroplasticOnly <- MicroplasticOnly[complete.cases(MicroplasticOnly),]
+
+```
+
+```{r}
+
+MicroplasticOnly
+```
+
+```{r}
+MicroplasticOnly[3:5]<- log(MicroplasticOnly[3:5]+0.5)
 
 ```
 
 
 ```{r}
-TY
-```
-```{r}
-TY <- TY[complete.cases(TY),]
+logMicroplasticOnly_data <- MicroplasticOnly[,c(3:5)]
 
 ```
 
 ```{r}
-
-TY
-```
-
-```{r}
-TY[3:5]<- log(TY[3:5]+0.5)
+logMicroplasticOnly_data
 
 ```
 
 
 ```{r}
-logTY_data <- TY[,c(3:5)]
+logMicroplasticOnly_pca <- prcomp(logMicroplasticOnly_data, scale. = TRUE)
 
 ```
 
 ```{r}
-logTY_data
-
-```
-
-
-```{r}
-logTY_data_pca <- prcomp(logTY_data, scale. = TRUE)
-
-```
-
-```{r}
-logTY_data_pca
+logMicroplasticOnly_pca
 ```
 
 
 
 ```{r}
 
-summary(logTY_data_pca)
+summary(logMicroplasticOnly_pca)
 ```
 
 ```{r}
@@ -187,6 +196,8 @@ library(devtools)
 install_github("kassambara/factoextra")
 
 ```
+
+
 ```{r}
 library(factoextra)
 ```
@@ -195,7 +206,7 @@ library(factoextra)
 Genotypes <- as.factor(MP_Data$Genotypes)
 
 
-fviz_pca_biplot(logTY_data_pca,
+fviz_pca_biplot(logMicroplasticOnly_pca,
              col.ind = Genotypes,
               palette = c("LRV-0-1"="red","LR2-36-01"="black"),
              addEllipses = TRUE, 
@@ -216,6 +227,25 @@ fviz_pca_biplot(logTY_data_pca,
 
 ```
 
+```{r}
+fviz_pca_var(logMicroplasticOnly_pca, geom = c("point", "text"))
+
+```
+```{r}
+
+fviz_pca_biplot(logMicroplasticOnly_pca)
+```
+
+```{r}
+
+fviz_pca_biplot(logMicroplasticOnly_pca, label="var", habillage=MP_Data$Genotypes,
+               addEllipses=TRUE, ellipse.level=0.95)
+```
+
+```{r}
+
+fviz_pca_ind(logMicroplasticOnly_pca)
+```
 
 ```{r}
 #import MP_PFOA data
