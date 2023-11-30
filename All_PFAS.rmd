@@ -1,0 +1,22 @@
+---
+title: "PCA All PFAS"
+output:  rmarkdown::github_document
+author: Muhammad
+---
+ 
+
+```{r}
+# load packages.
+
+library(readxl)
+library(FactoMineR)
+library(factoextra)
+library(ggplot2)
+
+
+```
+
+
+```{r}
+PFAS_data_abu <- read_excel(file.choose(), sheet = "Abu")
+```
