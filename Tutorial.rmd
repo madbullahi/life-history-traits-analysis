@@ -1,0 +1,74 @@
+---
+title: "EDA"
+output: rmarkdown::github_document
+author: "Muhammad"
+
+---
+
+#Foundations of Exploratory Data Analysis
+
+
+
+```{r}
+# set working directory
+setwd("C:/Users/mxa1132-admin/OneDrive/Documents/life-history-traits-analysis")
+```
+
+```{r}
+
+# load libraries
+library(readxl) # for reading excel files, bot .xls and .xlsx.
+library(dplyr) # for data manipulation
+library(ggplot2) # for data visualization
+library(lmerTest) # for linear mixed effects models
+library(heplots) # for visualizing linear mixed effects models
+library(rcompanion) # for calculating effect sizes and summarizing statistics.
+
+```
+
+
+```{r}
+# read in data
+Data <- read_excel(file.choose(), sheet = "MP")
+#Data <- read_excel("C:/Users/mxa1132-admin/OneDrive/Documents/life-history-traits-analysis/MP.xlsx", sheet = "MP")
+
+# the code uses read_excel() function from the readxl package to read an Excel file located in the working directory.
+# the file.choose() function allows you to select the file interactively.
+# Additionally, the sheet argument specifies the sheet name to be read. If the sheet argument is not specified, the first sheet in the Excel file will be read by default.
+```
+
+
+```{r}
+# check data
+Data
+```
+
+
+```{r}
+# check data structure
+str(Data) 
+# check data structure e.g array, matrix, data frame, list, factor, character, integer, numeric, logical, etc.
+
+# it provides a summary of the object, including the number of observations, variables, and variable names.
+
+```
+
+```{r}
+# check data summary
+summary(Data)
+
+```
+
+```{r}
+# outliers detection
+boxplot(Data$Fecundity, main = "fecundity", ylab = "fecundity", col = "lightblue", border = "brown", vertical = TRUE)
+```
+What does the whiskers represents?
+
+```{r}
+#hist(data, main = "Fecundity", xlab = "Fecundity", col = "lightblue", border = "brown")
+```
+
+```{r}
+```{r}
+```{r}
