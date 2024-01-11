@@ -230,13 +230,42 @@ comp_D <- D[complete.cases(D),] # remove missing values in rows
 
 # we use this logical vector to subset the data frame and remove the rows with missing values.
 
+# a logical vector is a vector that contains only TRUE and FALSE values or NA values.
+
+# logical vectors are often used to subset data frames.
+
 ```
 
 ```{r}
 comp_D
 ```
 
+
 ```{r}
+
+comp_D_WO <- comp_D
+
+print(comp_D_WO)
+```
+
+
+```{r}
+comp_D_WO[4:7] <- log(comp_D_WO[4:7] + 0.5) # log transform columns 4 to 7
+
+# takes the natural logarithm of the values in columns 4 to 7 and adds 0.5 to each value before taking the log.
+
+# adding 0.5 to each value ensures that the log is taken for all values, even if the value is 0.
+
+# the addition of 0.5 is a common practice when log transforming count data.
+
+```
+
+```{r}
+comp_D_WO
+```
+
+```{r}
+
 ```
 
 ```{r}
