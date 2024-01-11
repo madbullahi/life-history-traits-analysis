@@ -295,6 +295,18 @@ pca <- prcomp(log_comp_D_WO, scale = TRUE) # scale = TRUE scales the variables t
 
 # PCA is sensitive to the scale of the variables.
 
+# the object is stored in the variable pca containing the following components: stdev, rotation,& principal components scores.
+
+```
+
+```{r}
+# explaining PCA
+
+# the principal components are linear combinations of the original variables.
+
+# each priincipal component score provides information about the position of the observation in the principal component space.
+
+# these scores are used to understand the relationship between the observations and patterns in the data.
 ```
 
 ```{r}
@@ -303,8 +315,93 @@ print(pca)
 ```
 
 ```{r}
+# what is the relatioship between the socres and variance of the data?
+
+# the principal components are representing the directions of maximum variance in the data.
+
+# Each PC captures a certain amount of variance in the data.
+
+# the first PC captures the most variance, the second PC captures the second most variance, and so on.
+
+# the larger the variance captured by a PC, the more information it contains about the data.
+
+# the Pcs are ordered by the amount of variance they capture.
+
+# this relationship is important in PCA in understanding the contribution of each PC to the data.
+```
+
+
+```{r}
+# how much variance is captured by each PC?
+
+summary(pca) # the summary() function returns a summary of the PCA.
+```
+
+
+
+```{r}
+Genotype <- as.factor(comp_D_WO$Genotype) # convert Genotype to factor
 
 ```
 
 ```{r}
+
+Treatment <- as.factor(comp_D_WO$Treatment) # convert Treatment to factor
+
 ```
+
+```{r}
+
+# plot the scores for the first two PCs
+
+library(factoextra) # load the factoextra package
+library(FactoMineR) # load the FactoMineR package
+
+
+```
+
+
+```{r}
+
+fviz_pca_biplot(pca,
+             col.ind = Genotype, 
+             palette = c("LRV-0-1"="red","LR2-36-01"="black"),
+             addEllipses = TRUE, 
+             col.var="blue",
+             arrowsize=0.2,
+             labelsize=3,
+             geom.ind = "point",
+             pointsize=1,
+             pointshape=19,
+             mean.point=F,
+             xlim=c(-5,5),
+             ylim=c(-3,3),
+             var.scale=0.5,
+             ellipse.type = "confidence",
+             legend.title = "Genotype",
+             repel = TRUE,
+             )
+```
+
+```{r}
+fviz_pca_biplot(pca,
+             col.ind = Treatment, 
+             palette = c("PET"="red","PC1"="black", "PC2" = "blue", "PC1C2" = "green"),
+             addEllipses = TRUE, 
+             col.var="blue",
+             arrowsize=0.2,
+             labelsize=3,
+             geom.ind = "point",
+             pointsize=1,
+             pointshape=19,
+             mean.point=F,
+             xlim=c(-5,5),
+             ylim=c(-3,3),
+             var.scale=0.5,
+             ellipse.type = "confidence",
+             legend.title = "Treatment",
+             repel = TRUE,
+             )
+```
+
+
