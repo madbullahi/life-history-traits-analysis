@@ -2,7 +2,7 @@
 title: "EDA"
 output: rmarkdown::github_document
 author: "Muhammad"
-
+date: "10/10/2021"
 ---
 
 #Foundations of Exploratory Data Analysis
@@ -14,10 +14,12 @@ author: "Muhammad"
 setwd("C:/Users/mxa1132-admin/OneDrive/Documents/life-history-traits-analysis")
 ```
 
+
+
 ```{r}
 
 # load libraries
-library(readxl) # for reading excel files, bot .xls and .xlsx.
+library(readxl) # for reading excel files, both .xls and .xlsx.
 library(dplyr) # for data manipulation
 library(ggplot2) # for data visualization
 library(lmerTest) # for linear mixed effects models
@@ -363,6 +365,32 @@ library(FactoMineR) # load the FactoMineR package
 
 ```{r}
 
+
+Pca_plot <- fviz_pca_ind(pca, habillage = Genotype, geom = "point") # fviz_pca_biplot() function from factoextra package is used to plot the scores for the first two PCs.
+```
+
+```{r}
+
+
+print(Pca_plot)
+
+```
+
+```{r}
+
+
+
+```
+
+
+
+
+
+
+
+
+```{r}
+
 fviz_pca_biplot(pca,
              col.ind = Genotype, 
              palette = c("LRV-0-1"="red","LR2-36-01"="black"),
@@ -374,14 +402,21 @@ fviz_pca_biplot(pca,
              pointsize=1,
              pointshape=19,
              mean.point=F,
-             xlim=c(-5,5),
-             ylim=c(-3,3),
+            # xlim=c(-5,5),
+             #ylim=c(-3,3),
              var.scale=0.5,
              ellipse.type = "confidence",
              legend.title = "Genotype",
              repel = TRUE,
              )
 ```
+
+
+
+
+
+
+
 
 ```{r}
 fviz_pca_biplot(pca,
@@ -405,3 +440,77 @@ fviz_pca_biplot(pca,
 ```
 
 
+
+
+
+
+
+
+
+
+
+
+```{r}
+
+
+# Assuming Genotype and Treatment are columns in your dataset
+# Ensure that Genotype and Treatment are factors
+#log_comp_D_WO$Genotype <- factor(log_comp_D_WO$Genotype)
+#log_comp_D_WO$Treatment <- factor(log_comp_D_WO$Treatment)
+
+# Create the PCA biplot with color assignment for both Genotype and Treatment
+fviz_pca_biplot(pca,
+             habillage = comp_D_WO$Genotype, # Color by Treatment
+            # col.ind = Genotype, 
+             addEllipses = TRUE, 
+             col.var="blue",
+             arrowsize=0.2,
+             labelsize=3,
+             geom.ind = "point",
+             pointsize=1,
+             pointshape=19,
+             mean.point=F,
+             xlim=c(-5,5),
+             ylim=c(-3,3),
+             var.scale=0.5,
+             ellipse.type = "confidence",
+             legend.title = "Treatment",
+             repel = TRUE
+             )
+```
+```{r}
+
+U <- pca$x
+
+print(U)
+```
+
+```{r}
+qplot(U[, 1], U[, 2]) + coord_equal() # plot the first two PCs
+```
+
+```{r}
+#Measuring Outliers
+apply(U, 2, function(x) which( abs(x - mean(x)) > (3 * sd(x)) )) # find outliers
+
+# applies a function to each column of the matrix U.
+
+# the function finds the observations that are more than 3 standard deviations from the mean.
+
+# '2' indicates that the function is applied to each column of the matrix U.
+
+# which() function is used to identify the indices that satisfy the condition.
+```
+
+```{r}
+apply(U, 2, function(x) which( abs(x - mean(x)) > (3 * sd(x)) ))
+```
+
+```{r}
+
+# Three standard deviations away from the mean is a statistical concept related to the spread of data in a normal distribution. 
+
+# In a normal distribution, 99.7% of the data is within three standard deviations of the mean.
+
+# The observations that are more than three standard deviations away from the mean are considered outliers.
+```
