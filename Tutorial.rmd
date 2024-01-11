@@ -378,106 +378,29 @@ print(Pca_plot)
 
 ```{r}
 
-
-
-```
-
-
-
-
-
-
-
-
-```{r}
-
 fviz_pca_biplot(pca,
-             col.ind = Genotype, 
-             palette = c("LRV-0-1"="red","LR2-36-01"="black"),
-             addEllipses = TRUE, 
-             col.var="blue",
-             arrowsize=0.2,
-             labelsize=3,
-             geom.ind = "point",
-             pointsize=1,
-             pointshape=19,
-             mean.point=F,
-            # xlim=c(-5,5),
-             #ylim=c(-3,3),
-             var.scale=0.5,
-             ellipse.type = "confidence",
-             legend.title = "Genotype",
-             repel = TRUE,
+             col.ind = Genotype, # color by Genotype
+            palette = c("LRV-0-1"="red","LR2-36-01"="black"), # color palette
+              addEllipses = TRUE, # Concentration ellipses
+              col.var="blue", # Variables color
+              arrowsize=0.2, # Arrow size
+             labelsize=3, # Label size
+             geom.ind = "point", # show points only (nbut not "text")
+             pointsize=1, # Point size
+             pointshape=19, # Point shape
+             mean.point=F,# Show mean point
+            # xlim=c(-5,5),# x axis limits
+             #ylim=c(-3,3), # y axis limits
+             var.scale=0.5, # Scaling of the variables
+             ellipse.type = "confidence", # Confidence ellipse
+             legend.title = "Genotype", # Legend title
+             repel = TRUE, # Avoid text overlapping
              )
+
 ```
 
 
 
-
-
-
-
-
-```{r}
-fviz_pca_biplot(pca,
-             col.ind = Treatment, 
-             palette = c("PET"="red","PC1"="black", "PC2" = "blue", "PC1C2" = "green"),
-             addEllipses = TRUE, 
-             col.var="blue",
-             arrowsize=0.2,
-             labelsize=3,
-             geom.ind = "point",
-             pointsize=1,
-             pointshape=19,
-             mean.point=F,
-             xlim=c(-5,5),
-             ylim=c(-3,3),
-             var.scale=0.5,
-             ellipse.type = "confidence",
-             legend.title = "Treatment",
-             repel = TRUE,
-             )
-```
-
-
-
-
-
-
-
-
-
-
-
-
-```{r}
-
-
-# Assuming Genotype and Treatment are columns in your dataset
-# Ensure that Genotype and Treatment are factors
-#log_comp_D_WO$Genotype <- factor(log_comp_D_WO$Genotype)
-#log_comp_D_WO$Treatment <- factor(log_comp_D_WO$Treatment)
-
-# Create the PCA biplot with color assignment for both Genotype and Treatment
-fviz_pca_biplot(pca,
-             habillage = comp_D_WO$Genotype, # Color by Treatment
-            # col.ind = Genotype, 
-             addEllipses = TRUE, 
-             col.var="blue",
-             arrowsize=0.2,
-             labelsize=3,
-             geom.ind = "point",
-             pointsize=1,
-             pointshape=19,
-             mean.point=F,
-             xlim=c(-5,5),
-             ylim=c(-3,3),
-             var.scale=0.5,
-             ellipse.type = "confidence",
-             legend.title = "Treatment",
-             repel = TRUE
-             )
-```
 ```{r}
 
 U <- pca$x
@@ -486,7 +409,7 @@ print(U)
 ```
 
 ```{r}
-qplot(U[, 1], U[, 2]) + coord_equal() # plot the first two PCs
+qplot(U[, 1], U[, 2], colour = factor(Genotype) ) + coord_equal() # plot the first two PCs
 ```
 
 ```{r}
