@@ -92,7 +92,7 @@ A <- ggplot(Data, aes(x = Treatment, y = Age_maturity, fill = Treatment)) +
   
   geom_boxplot(outlier.colour = "red", outlier.shape = 1, outlier.size = 3) +
   
-  scale_color_manual(values = c("control" = "red", "PET" = "blue")) +
+  scale_color_manual(values = c("contro" = "red", "PET" = "blue")) +
   
   scale_fill_manual(values = c("control" = "lightblue", "PET" = "lightgreen")) +
   
@@ -233,6 +233,7 @@ comp_D <- D[complete.cases(D),] # remove missing values in rows
 ```
 
 ```{r}
+comp_D
 ```
 
 ```{r}
