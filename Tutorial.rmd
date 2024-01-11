@@ -265,6 +265,44 @@ comp_D_WO
 ```
 
 ```{r}
+log_comp_D_WO <- comp_D_WO[, c(4:7)] # select columns 4 to 7
+
+# Creats a new data frame with only columns 4 to 7.
+
+# we will use this data frame to run the PCA.
+
+```
+
+```{r}
+
+print(log_comp_D_WO)
+```
+
+```{r}
+# run the PCA with variable scaling on the transformed data
+
+pca <- prcomp(log_comp_D_WO, scale = TRUE) # scale = TRUE scales the variables to have unit variance before running the PCA.
+
+# prcomp() function from stat package returns a list of principal components using the log transformed data. 
+
+# the scale = TRUE argument scales the variables to have unit variance before running the PCA.
+
+# scaling the variables is important because variables with large variances can dominate the PCA.
+
+# scaling the variables ensures that each variable contributes equally to the PCA.
+
+# scaling is important when the variables are measured in different units.
+
+# PCA is sensitive to the scale of the variables.
+
+```
+
+```{r}
+
+print(pca)
+```
+
+```{r}
 
 ```
 
