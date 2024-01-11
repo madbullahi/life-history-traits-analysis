@@ -29,8 +29,8 @@ library(rcompanion) # for calculating effect sizes and summarizing statistics.
 
 ```{r}
 # read in data
-Data <- read_excel(file.choose(), sheet = "MP")
-#Data <- read_excel("C:/Users/mxa1132-admin/OneDrive/Documents/life-history-traits-analysis/MP.xlsx", sheet = "MP")
+Data <- read_excel(file.choose(), sheet = "MP-Tia")
+#Data <- read_excel("C:/Users/mxa1132-admin/OneDrive/Documents/life-history-traits-analysis/MP.xlsx", sheet = "MP-Tia")
 
 # the code uses read_excel() function from the readxl package to read an Excel file located in the working directory.
 # the file.choose() function allows you to select the file interactively.
@@ -61,14 +61,155 @@ summary(Data)
 
 ```{r}
 # outliers detection
-boxplot(Data$Fecundity, main = "fecundity", ylab = "fecundity", col = "lightblue", border = "brown", vertical = TRUE)
+boxplot(Data$fecundity, main = "fecundity", ylab = "fecundity", col = "lightblue", border = "brown", vertical = TRUE)
 ```
 What does the whiskers represents?
 
 ```{r}
-#hist(data, main = "Fecundity", xlab = "Fecundity", col = "lightblue", border = "brown")
+# create a boxplot for both control and treatment groups (fecundity))
+
+p <- ggplot(Data, aes(x = Treatment, y = fecundity, fill = Treatment)) +
+ 
+   geom_boxplot(outlier.colour = "red", outlier.shape = 1, outlier.size = 3) +
+  
+  labs(x = "Treatment", y = "Fecundity") +
+  
+  theme_bw() +
+  
+  theme(legend.position = "none")+
+  
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
 
 ```{r}
+print(p)
+```
+
+# Age_maturity
 ```{r}
+# create a boxplot for both control and treatment groups (Age_maturity))
+A <- ggplot(Data, aes(x = Treatment, y = Age_maturity, fill = Treatment)) +
+  
+  geom_boxplot(outlier.colour = "red", outlier.shape = 1, outlier.size = 3) +
+  
+  scale_color_manual(values = c("control" = "red", "PET" = "blue")) +
+  
+  scale_fill_manual(values = c("control" = "lightblue", "PET" = "lightgreen")) +
+  
+  theme(legend.key.size = unit(0.5, "cm")) +
+  
+  labs(x = "Treatment", y = "Age_maturity") +
+  
+  scale_y_continuous(limits = c(1, 12)) +
+  
+  theme_minimal() 
+  
+  #theme(legend.position = "none")+
+  
+ # theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
 ```{r}
+print(A)
+
+
+```
+
+
+
+```{r}
+
+# create a boxplot for both control and treatment groups (Size_maturity))
+
+s <- ggplot(Data, aes(x = Treatment, y = Size_maturity, fill = Treatment)) +
+  
+  geom_boxplot(outlier.colour = "red", outlier.shape = 1, outlier.size = 3) +
+  
+  scale_color_manual(values = c("control" = "red", "PET" = "blue")) +
+  
+  scale_fill_manual(values = c("control" = "lightblue", "PET" = "lightgreen")) +
+  
+  theme(legend.key.size = unit(0.5, "cm")) +
+  
+  labs(x = "Treatment", y = "Size_maturity") +
+  
+  #scale_y_continuous(limits = c(1, 12)) +
+  
+  theme_minimal() 
+  
+  #theme(legend.position = "none")+
+  
+ # theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+```{r}
+print(s)
+
+```
+
+```{r}
+# create a boxplot for both control and treatment groups (interval_broods))
+
+IB <- ggplot(Data, aes(x = Treatment, y = Interval_brood, fill = Treatment)) +
+  
+  geom_boxplot(outlier.colour = "red", outlier.shape = 1, outlier.size = 3) +
+  
+  scale_color_manual(values = c("control" = "red", "PET" = "blue")) +
+  
+  scale_fill_manual(values = c("control" = "lightblue", "PET" = "lightgreen")) +
+  
+  theme(legend.key.size = unit(0.5, "cm")) +
+  
+  labs(x = "Treatment", y = "interval_broods") +
+  
+  #scale_y_continuous(limits = c(1, 12)) +
+  
+  theme_minimal() 
+  
+  #theme(legend.position = "none")+
+  
+ # theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+```{r}
+print(IB)
+
+```
+
+
+```{r}
+# lets use the PCA to fish out the outliers.
+# PCA is a dimensionality reduction technique that is often used to transform a high-dimensional dataset into a smaller-dimensional subspace prior to running a machine learning algorithm on the data.
+
+# PCA is an unsupervised algorithm that learns the principal components of the data.
+
+```
+
+```{r}
+# PCA: only works with numeric data
+colSums(is.na(Data)) # check for missing values
+
+
+```
+
+
+```{r}
+D <- Data 
+
+print(D)
+```
+```{r}
+
+D$Genotype <- factor(D$Genotype, levels = c("LRV-0-1", "LR2-36-01")) # convert Genotype to factor.
+
+# Doing this will ensure that Genotype is treated as a categorical variable when we run the PCA.
+
+```
+
+```{r}
+```
+
+
+```{r}
+
+```
