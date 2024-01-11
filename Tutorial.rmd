@@ -204,12 +204,39 @@ D$Genotype <- factor(D$Genotype, levels = c("LRV-0-1", "LR2-36-01")) # convert G
 
 # Doing this will ensure that Genotype is treated as a categorical variable when we run the PCA.
 
+# by defining the levels, we can control the order in which the levels are plotted.
+
+# it will also help in performing comparisons between the levels of the factor.
+
+```
+
+```{r}
+D$Treatment <- factor(D$Treatment, levels = c("PC1", "PET", "PC2", "PC1C2")) # convert Treatment to factor.
+```
+
+
+```{r}
+D <- D[, c(1,2,3,4,7,10:11)] # select columns 1 to 4, 7, 10 and 11
+```
+
+```{r}
+D
+```
+
+```{r}
+comp_D <- D[complete.cases(D),] # remove missing values in rows
+
+# complete.cases() function returns a logical vector indicating which cases are complete, i.e. have no missing values.
+
+# we use this logical vector to subset the data frame and remove the rows with missing values.
+
 ```
 
 ```{r}
 ```
 
+```{r}
+```
 
 ```{r}
-
 ```
