@@ -245,14 +245,14 @@ comp_D
 
 ```{r}
 
-comp_D_WO <- comp_D
+comp_D_without_NA <- comp_D
 
-print(comp_D_WO)
+print(comp_D_without_NA)
 ```
 
 
 ```{r}
-comp_D_WO[4:7] <- log(comp_D_WO[4:7] + 0.5) # log transform columns 4 to 7
+comp_D_without_NA[4:7] <- log(comp_D_without_NA[4:7] + 0.5) # log transform columns 4 to 7
 
 # takes the natural logarithm of the values in columns 4 to 7 and adds 0.5 to each value before taking the log.
 
@@ -263,11 +263,11 @@ comp_D_WO[4:7] <- log(comp_D_WO[4:7] + 0.5) # log transform columns 4 to 7
 ```
 
 ```{r}
-comp_D_WO
+print(comp_D_without_NA) 
 ```
 
 ```{r}
-log_comp_D_WO <- comp_D_WO[, c(4:7)] # select columns 4 to 7
+log_comp_D_WO_Na <- comp_D_without_NA[, c(4:7)] # select columns 4 to 7
 
 # Creats a new data frame with only columns 4 to 7.
 
@@ -277,13 +277,14 @@ log_comp_D_WO <- comp_D_WO[, c(4:7)] # select columns 4 to 7
 
 ```{r}
 
-print(log_comp_D_WO)
+print(log_comp_D_WO_Na)
 ```
+
 
 ```{r}
 # run the PCA with variable scaling on the transformed data
 
-pca <- prcomp(log_comp_D_WO, scale = TRUE) # scale = TRUE scales the variables to have unit variance before running the PCA.
+pca <- prcomp(log_comp_D_WO_Na, scale = TRUE) # scale = TRUE scales the variables to have unit variance before running the PCA.
 
 # prcomp() function from stat package returns a list of principal components using the log transformed data. 
 
@@ -342,13 +343,13 @@ summary(pca) # the summary() function returns a summary of the PCA.
 
 
 ```{r}
-Genotype <- as.factor(comp_D_WO$Genotype) # convert Genotype to factor
+Genotype <- as.factor(comp_D_without_NA$Genotype) # convert Genotype to factor
 
 ```
 
 ```{r}
 
-Treatment <- as.factor(comp_D_WO$Treatment) # convert Treatment to factor
+Treatment <- as.factor(comp_D_without_NA$Treatment) # convert Treatment to factor
 
 ```
 
@@ -426,7 +427,7 @@ apply(U, 2, function(x) which( abs(x - mean(x)) > (3 * sd(x)) )) # find outliers
 ```
 
 ```{r}
-apply(U, 2, function(x) which( abs(x - mean(x)) > (3 * sd(x)) ))
+apply(U, 2, function(x) which( abs(x - mean(x)) > (2 * sd(x)) )) # find outliers
 ```
 
 ```{r}
@@ -436,4 +437,19 @@ apply(U, 2, function(x) which( abs(x - mean(x)) > (3 * sd(x)) ))
 # In a normal distribution, 99.7% of the data is within three standard deviations of the mean.
 
 # The observations that are more than three standard deviations away from the mean are considered outliers.
+
+# the observations that are more than three standard deviations away from the mean are considered outliers.
+
+# the observations that are more than two standard deviations away from the mean are considered extreme values.
 ```
+
+```{r}
+# Tukeys method
+
+# Tukey's method is a statistical method for identifying outliers.
+
+# Tukey's method uses the interquartile range (IQR) to identify outliers.
+
+
+```
+
