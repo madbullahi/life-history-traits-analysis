@@ -342,7 +342,7 @@ summary(pca) # the summary() function returns a summary of the PCA.
 
 
 ```{r}
-Genotype <- as.factor(comp_D_without_NA$Genotype) # convert Genotype to factor
+Genotypes <- as.factor(comp_D_without_NA$Genotypes) # convert Genotype to factor
 
 ```
 
@@ -379,7 +379,7 @@ print(Pca_plot)
 ```{r}
 
 fviz_pca_biplot(pca,
-             col.ind = Genotype, # color by Genotype
+             col.ind = Genotypes, # color by Genotype
             palette = c("LRV-0-1"="red","LR2-36-01"="black"), # color palette
               addEllipses = TRUE, # Concentration ellipses
               col.var="blue", # Variables color
@@ -399,6 +399,13 @@ fviz_pca_biplot(pca,
 
 ```
 
+```{r}
+
+
+```
+
+```{r}
+```
 
 
 ```{r}
