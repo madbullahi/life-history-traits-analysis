@@ -114,7 +114,6 @@ A <- ggplot(Data, aes(x = Treatment, y = Age_maturity, fill = Treatment)) +
 ```{r}
 print(A)
 
-
 ```
 
 
@@ -202,7 +201,7 @@ print(D)
 ```
 ```{r}
 
-D$Genotype <- factor(D$Genotype, levels = c("LRV-0-1", "LR2-36-01")) # convert Genotype to factor.
+D$Genotypes <- factor(D$Genotypes, levels = c("LRV-0-1", "LR2-36-01")) # convert Genotype to factor.
 
 # Doing this will ensure that Genotype is treated as a categorical variable when we run the PCA.
 
@@ -213,7 +212,7 @@ D$Genotype <- factor(D$Genotype, levels = c("LRV-0-1", "LR2-36-01")) # convert G
 ```
 
 ```{r}
-D$Treatment <- factor(D$Treatment, levels = c("PC1", "PET", "PC2", "PC1C2")) # convert Treatment to factor.
+D$Treatment <- factor(D$Treatment, levels = c("control", "PET")) # convert Treatment to factor.
 ```
 
 
