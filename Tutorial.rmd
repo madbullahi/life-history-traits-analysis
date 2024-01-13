@@ -31,7 +31,7 @@ library(rcompanion) # for calculating effect sizes and summarizing statistics.
 
 ```{r}
 # read in data
-Data <- read_excel(file.choose(), sheet = "MP-Tia")
+Data <- read_excel(file.choose(), sheet = "MP")
 #Data <- read_excel("C:/Users/mxa1132-admin/OneDrive/Documents/life-history-traits-analysis/MP.xlsx", sheet = "MP-Tia")
 
 # the code uses read_excel() function from the readxl package to read an Excel file located in the working directory.
@@ -63,14 +63,14 @@ summary(Data)
 
 ```{r}
 # outliers detection
-boxplot(Data$fecundity, main = "fecundity", ylab = "fecundity", col = "lightblue", border = "brown", vertical = TRUE)
+boxplot(Data$Fecundity, main = "Fecundity", ylab = "fecundity", col = "lightblue", border = "brown", vertical = TRUE)
 ```
 What does the whiskers represents?
 
 ```{r}
 # create a boxplot for both control and treatment groups (fecundity))
 
-p <- ggplot(Data, aes(x = Treatment, y = fecundity, fill = Treatment)) +
+p <- ggplot(Data, aes(x = Treatment, y = Fecundity, fill = Treatment)) +
  
    geom_boxplot(outlier.colour = "red", outlier.shape = 1, outlier.size = 3) +
   
@@ -367,7 +367,7 @@ library(FactoMineR) # load the FactoMineR package
 ```{r}
 
 
-Pca_plot <- fviz_pca_ind(pca, habillage = Genotype, geom = "point") # fviz_pca_biplot() function from factoextra package is used to plot the scores for the first two PCs.
+Pca_plot <- fviz_pca_ind(pca, habillage = Treatment, geom = "point") # fviz_pca_biplot() function from factoextra package is used to plot the scores for the first two PCs.
 ```
 
 ```{r}
@@ -410,7 +410,7 @@ print(U)
 ```
 
 ```{r}
-qplot(U[, 1], U[, 2], colour = factor(Genotype) ) + coord_equal() # plot the first two PCs
+qplot(U[, 1], U[, 2], colour = factor(Treatment) ) + coord_equal() # plot the first two PCs
 ```
 
 ```{r}
