@@ -399,14 +399,6 @@ fviz_pca_biplot(pca,
 
 ```
 
-```{r}
-
-
-```
-
-```{r}
-```
-
 
 ```{r}
 
@@ -461,9 +453,9 @@ apply(U, 2, function(x) which( abs(x - mean(x)) > (2 * sd(x)) )) # find outliers
 
 ```{r}
 
-U_no_outliers <- U
+#U_no_outliers <- U
 
-outliers <- apply(U, 2, function(x) which( abs(x - mean(x)) > (3 * sd(x)) )) # find outliers
+#outliers <- apply(U, 2, function(x) which( abs(x - mean(x)) > (3 * sd(x)) )) # find outliers
 
 #for (i in 1:ncol(U)) {
  # U_no_outliers[outliers[, i], i] <- NA
@@ -472,9 +464,9 @@ outliers <- apply(U, 2, function(x) which( abs(x - mean(x)) > (3 * sd(x)) )) # f
 
 ```{r}
 
-for (i in 1:ncol(U)) {
-  U_no_outliers[outliers[[i]], i] <- NA
-}
+#for (i in 1:ncol(U)) {
+ # U_no_outliers[outliers[[i]], i] <- NA
+#}
 ```
 
 ```{r}
