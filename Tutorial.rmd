@@ -491,7 +491,7 @@ apply(U, 2, function(x) which( abs(x - mean(x)) > (2 * sd(x)) )) # find outliers
 ```{r}
 .
 
-print(comp_D_without_NA)
+print(comp_D)
 ```
 
 ```{r}
@@ -505,7 +505,7 @@ library(Rmisc) # load the Rmisc package
 ```{r}
 # summary statistics for the vairable Age at maturity
 
-Age_at_maturity <- summarySE(comp_D_without_NA, measurevar = "Age_maturity", groupvars = c("Genotypes", "Treatment"))
+Age_at_maturity <- summarySE(comp_D, measurevar = "Age_maturity", groupvars = c("Genotypes", "Treatment"))
 
 ```
 
@@ -536,7 +536,9 @@ Age <- ggplot(Age_at_maturity,
         axis.line = element_line(colour = "black")) +
   labs(x = "Treatment", # labs() function from ggplot2 package is used to add labels to the plot.
        y = "Age at maturity",
-       colour = "Genotype") 
+       colour = "Genotype") +
+  #xlim(c(0.5, 2.5)) # xlim() function from ggplot2 package is used to set the limits for the x axis.
+ylim(c(2, 10)) # ylim() function from ggplot2 package is used to set the limits for the y axis.
   
 
 ```
