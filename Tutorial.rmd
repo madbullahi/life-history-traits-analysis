@@ -470,10 +470,58 @@ apply(U, 2, function(x) which( abs(x - mean(x)) > (2 * sd(x)) )) # find outliers
 ```
 
 ```{r}
-U_no_outliers 
+#U_no_outliers 
 
 ```
+
 ```{r}
 
-qplot(U_no_outliers[, 1], U_no_outliers[, 2], colour = factor(Genotype) ) + coord_equal()
+#qplot(U_no_outliers[, 1], U_no_outliers[, 2], colour = factor(Genotype) ) + coord_equal()
+```
+
+
+```{r}
+# plot the reaction norms for the variables in the data
+
+# prepapre a summary statistics for the variables in the data
+
+```
+
+
+```{r}
+.
+
+print(comp_D_without_NA)
+```
+
+```{r}
+
+# load the package for the summary statistics
+
+library(Rmisc) # load the Rmisc package
+
+```
+
+```{r}
+# summary statistics for the vairable Age at maturity
+
+Age_at_maturity <- summarySE(comp_D_without_NA, measurevar = "Age_maturity", groupvars = c("Genotypes", "Treatment"))
+
+```
+
+```{r}
+
+print(Age_at_maturity)
+```
+
+```{r}
+```
+
+```{r}
+# plot the reacton norm for Age at maturity
+
+pd = position_dodge(0.1) # position_dodge() function from ggplot2 package is used to position the bars side by side.
+
+Age <- ggplot(Age_at_maturity,)
+
 ```
