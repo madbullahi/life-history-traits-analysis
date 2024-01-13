@@ -514,14 +514,38 @@ Age_at_maturity <- summarySE(comp_D_without_NA, measurevar = "Age_maturity", gro
 print(Age_at_maturity)
 ```
 
-```{r}
-```
 
 ```{r}
 # plot the reacton norm for Age at maturity
 
 pd = position_dodge(0.1) # position_dodge() function from ggplot2 package is used to position the bars side by side.
 
-Age <- ggplot(Age_at_maturity,)
+Age <- ggplot(Age_at_maturity,
+              aes(x = Treatment, # aes() function from ggplot2 package is used to specify the variables to be plotted.
+                  y = Age_maturity, 
+                  colour = Genotypes,
+                  group = interaction(Genotypes))) +
+  geom_errorbar(aes(ymin = Age_maturity - se, # geom_errorbar() function from ggplot2 package is used to plot the error bars.
+                    ymax = Age_maturity + se),
+                width = 0.1, # width of the error bars
+                position = pd) +
+  geom_line(position = pd) + # geom_line() function from ggplot2 package is used to plot the lines.
+  theme(panel.grid.major = element_blank(), # theme() function from ggplot2 package is used to remove the grid lines.
+        panel.grid.minor = element_blank(),
+        panel.background = element_blank(),
+        axis.line = element_line(colour = "black")) +
+  labs(x = "Treatment", # labs() function from ggplot2 package is used to add labels to the plot.
+       y = "Age at maturity",
+       colour = "Genotype") 
+  
+
+```
+
+
+```{r}
+print(Age)
+```
+
+```{r}
 
 ```
