@@ -588,4 +588,79 @@ print(Size)
 ```
 
 ```{r}
+# summary statistics for the variable Fecundity
+
+fecundity <- summarySE(comp_D, measurevar = "Fecundity", groupvars = c("Genotypes", "Treatment"))
+
+```
+
+```{r}
+print(fecundity)
+```
+
+```{r}
+# plot the reaction norm for fecundity
+FecunDity <- ggplot(fecundity,
+                    aes(x = Treatment,
+                        y = Fecundity,
+                        colour = Genotypes,
+                        group = interaction(Genotypes))) +
+  geom_errorbar(aes(ymin = Fecundity - se,
+                    ymax = Fecundity + se),
+                width = 0.1,
+                position = pd) +
+  geom_line(position = pd) +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.background = element_blank(),
+        axis.line = element_line(colour = "black")) +
+  labs(x = "Treatment",
+       y = "Fecundity",
+       colour = "Genotype") #+
+  #xlim(c(0.5, 2.5))
+```
+
+```{r}
+print(FecunDity)
+```
+
+```{r}
+# summary statistics for the variable Intervarl between broods
+
+IN_BRD <- summarySE(comp_D, measurevar = "Interval_brood", groupvars = c("Genotypes", "Treatment"))
+
+```
+
+```{r} 
+print(IN_BRD)
+```
+
+```{r}
+# plot the reaction norm for Interval between broods
+Interval_between_broods <- ggplot(IN_BRD,
+                                  aes(x = Treatment,
+                                      y = Interval_brood,
+                                      colour = Genotypes,
+                                      group = interaction(Genotypes))) +
+  geom_errorbar(aes(ymin = Interval_brood - se,
+                    ymax = Interval_brood + se),
+                width = 0.1,
+                position = pd) +
+  geom_line(position = pd) +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.background = element_blank(),
+        axis.line = element_line(colour = "black")) +
+  labs(x = "Treatment",
+       y = "Interval between broods",
+       colour = "Genotype") +
+  ylim(c(0.5, 5.0))
+```
+
+```{r}
+print(Interval_between_broods)
+```
+
+```{r}
+
 ```
