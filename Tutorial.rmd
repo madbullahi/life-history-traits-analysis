@@ -698,9 +698,91 @@ anova(Age_maturity_ANOVA)
 ```
 
 ```{r}
+
+# Analysis of variance (ANOVA) for the variable Size at maturity
+
+Size_maturity <- comp_D[, 'Size_maturity'] # extract the variable Size at maturity from the data frame comp_D
 ```
 
 ```{r}
 
+# perform the ANOVA
 
+Size_maturity_ANOVA <- lmer(Size_maturity ~ Treatment*Genotypes + (1|Genotypes: Replicates), data = comp_D)
+```
+
+```{r}
+
+anova(Size_maturity_ANOVA)
+```
+
+```{r}
+# Analysis of variance (ANOVA) for the variable Fecundity
+
+Fecundity <- comp_D[, 'Fecundity'] # extract the variable Fecundity from the data frame comp_D
+```
+
+```{r}
+# perform the ANOVA
+
+fecundity_ANOVA <- lmer(Fecundity ~ Treatment*Genotypes + (1|Genotypes: Replicates), data = comp_D)
+```
+
+```{r}
+# print the ANOVA results
+
+anova(fecundity_ANOVA) # print the ANOVA results
+```
+
+```{r}
+
+# Analysis of variance (ANOVA) for the variable Interval between broods
+
+Interval_brood <- comp_D[, 'Interval_brood'] # extract the variable Interval between broods from the data frame comp_D
+```
+
+```{r}
+# perform the ANOVA
+
+Interval_brood_ANOVA <- lmer(Interval_brood ~ Treatment*Genotypes + (1|Genotypes: Replicates), data = comp_D)
+```
+
+```{r}
+# print the ANOVA results
+
+anova(Interval_brood_ANOVA) # print the ANOVA results
+```
+
+```{r}
+# check if the data is normally distributed and meets the assumptions of ANOVA
+
+# check the normality of the data
+
+
+```
+
+```{r}
+# check the normality of the variable Age at maturity
+# plot the histogram of the residuals of the variable 'Age at maturity'
+
+x <- residuals(Age_maturity_ANOVA) # extract the residuals of the variable 'Age at maturity' from the ANOVA results
+
+```
+
+```{r}
+
+plotNormalHistogram(x) # plot the histogram of the residuals of the variable 'Age at maturity'
+```
+
+```{r}
+# plot the qq-plot of the residuals of the variable 'Age at maturity'
+
+qqnorm(residuals(Age_maturity_ANOVA),
+       ylab = "Sample Quantiles for Residuals") # plot the qq-plot of the residuals of the variable 'Age at maturity'
+
+qqline(residuals(Age_maturity_ANOVA),
+       col = "red") # add the reference line to the qq-plot
+```
+
+```{r}
 ```
