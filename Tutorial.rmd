@@ -785,4 +785,24 @@ qqline(residuals(Age_maturity_ANOVA),
 ```
 
 ```{r}
+# how the qq-plot should look like if the data is normally distributed;
+# the points should be on the reference line. Deviations from the reference line indicate that the data is not normally distributed.
+# edge effects are common in the qq-plot. if the edge effects are present, the data is not normally distributed.it suggests that the tails of the residuals are not normally distributed.
+# the qq-plot compares the quantiles of the residuals to the quantiles of the theoretical normal distribution.
+# what are  residuals? they are used to assess the goodness of fit of a model. 
+```
+
+```{r}
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+```{r}
+
 ```
