@@ -793,6 +793,73 @@ qqline(residuals(Age_maturity_ANOVA),
 ```
 
 ```{r}
+# check the normality of the variable Size at maturity
+
+s <- residuals(Size_maturity_ANOVA) # extract the residuals of the variable 'Size at maturity' from the ANOVA results
+
+```
+
+```{r}
+# plot the histogram of the residuals of the variable 'Size at maturity'
+
+plotNormalHistogram(s) # plot the histogram of the residuals of the variable 'Size at maturity'
+```
+
+```{r}
+# plot the qq-plot of the residuals of the variable 'Size at maturity'
+
+qqnorm(residuals(Size_maturity_ANOVA),
+       ylab = "Sample Quantiles for Residuals") # plot the qq-plot of the residuals of the variable 'Size at maturity'
+
+qqline(residuals(Size_maturity_ANOVA),
+       col = "red") # add the reference line to the qq-plot
+```
+
+```{r}
+# check the normality of the variable Fecundity
+
+f <- residuals(fecundity_ANOVA) # extract the residuals of the variable 'Fecundity' from the ANOVA results
+
+```
+
+```{r}
+# plot the histogram of the residuals of the variable 'Fecundity'
+
+plotNormalHistogram(f) # plot the histogram of the residuals of the variable 'Fecundity'
+```
+
+```{r}
+# plot the qq-plot of the residuals of the variable 'Fecundity'
+
+qqnorm(residuals(fecundity_ANOVA),
+       ylab = "Sample Quantiles for Residuals") # plot the qq-plot of the residuals of the variable 'Fecundity'
+qqline(residuals(fecundity_ANOVA),
+       col = "red") # add the reference line to the qq-plot
+```
+
+```{r}
+# check the normality of the variable Interval between broods
+  
+i <- residuals(Interval_brood_ANOVA) # extract the residuals of the variable 'Interval between broods' from the ANOVA results
+
+```
+
+```{r}
+# plot the histogram of the residuals of the variable 'Interval between broods'
+
+plotNormalHistogram(i) # plot the histogram of the residuals of the variable 'Interval between broods'
+```
+
+```{r}
+# plot the qq-plot of the residuals of the variable 'Interval between broods'
+
+qqnorm(residuals(Interval_brood_ANOVA),
+       ylab = "Sample Quantiles for Residuals") # plot the qq-plot of the residuals of the variable 'Interval between broods'
+qqline(residuals(Interval_brood_ANOVA),
+       col = "red") # add the reference line to the qq-plot
+```
+
+```{r}
 ```
 
 ```{r}
