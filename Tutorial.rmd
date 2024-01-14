@@ -662,5 +662,45 @@ print(Interval_between_broods)
 ```
 
 ```{r}
+# Analysis of variance (ANOVA) for the variable Age at maturity
+
+Age_maturity <- comp_D[, 'Age_maturity'] # extract the variable Age at maturity from the data frame comp_D
+
+Genotypes <- comp_D[, 'Genotypes'] # extract the variable Genotypes from the data frame comp_D
+
+Treatment <- comp_D[, 'Treatment'] # extract the variable Treatment from the data frame comp_D
+
+
+```
+
+```{r}
+# load the required packages for ANOVA
+
+library(lmerTest) # lmerTest package is used to perform the ANOVA
+
+```
+
+```{r}
+# perform the ANOVA
+
+Age_maturity_ANOVA <- lmer(Age_maturity ~ Treatment*Genotypes + (1|Genotypes: Replicates), data = comp_D) 
+
+# lmer() function from lmerTest package is used to perform the ANOVA.
+# Age_maturity ~ Treatment*Genotypes + (1|Genotypes: Replicates) is the formula for the ANOVA.
+# Treatment*Genotypes is the fixed effect.
+# (1|Genotypes: Replicates) is the random effect.
+```
+
+```{r}
+# print the ANOVA results
+
+anova(Age_maturity_ANOVA)
+```
+
+```{r}
+```
+
+```{r}
+
 
 ```
