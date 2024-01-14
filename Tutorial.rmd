@@ -860,6 +860,49 @@ qqline(residuals(Interval_brood_ANOVA),
 ```
 
 ```{r}
+# Run an ANOV with the log transformed data
+
+print(comp_D_without_NA) # print the data frame comp_D_without_NA
+
+```
+
+```{r}
+
+# subset the variable Age at maturity
+
+Age_maturity <- comp_D_without_NA[, 'Age_maturity'] # extract the variable Age at maturity from the data frame comp_D_without_NA
+
+#print(Age_at_maturity_log) # print the variable Age at maturity
+
+```
+
+```{r}
+print(Age_maturity) # print the variable Age at maturity
+```
+
+
+```{r}
+# run the ANOV with the log transformed data for Age at maturity
+
+Age_maturity_log_ANOVA <- lmer(Age_maturity ~ Treatment*Genotypes + (1|Genotypes: Replicates), data = comp_D_without_NA)
+```
+
+```{r}
+anova(Age_maturity_log_ANOVA) # print the ANOVA results
+```
+
+```{r}
+# check the normality of the variable Age at maturity
+
+a <- residuals(Age_maturity_log_ANOVA) # extract the residuals of the variable 'Age at maturity' from the ANOVA results
+
+```
+
+```{r}
+plotNormalHistogram(a) # plot the histogram of the residuals of the variable 'Age at maturity'
+```
+
+```{r}
 ```
 
 ```{r}
