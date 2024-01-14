@@ -549,5 +549,43 @@ print(Age)
 ```
 
 ```{r}
+# summary statistics for the variable Size at maturity.
 
+Size_at_maturity <- summarySE(comp_D, measurevar = "Size_maturity", # summarySE() function from Rmisc package is used to calculate the summary statistics.
+                              groupvars = c("Genotypes", "Treatment")) # measurevar argument is used to specify the variable for which the summary statistics are calculated.
+# groupvars argument is used to specify the variables for which the summary statistics are calculated.
+
+```
+
+```{r}
+print(Size_at_maturity)
+```
+
+```{r}
+Size <- ggplot(Size_at_maturity,
+               aes(x = Treatment,
+                   y = Size_maturity,
+                   colour = Genotypes,
+                   group = interaction(Genotypes))) +
+  geom_errorbar(aes(ymin = Size_maturity - se,
+                    ymax = Size_maturity + se),
+                width = 0.1,
+                position = pd) +
+  geom_line(position = pd) +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.background = element_blank(),
+        axis.line = element_line(colour = "black")) +
+  labs(x = "Treatment",
+       y = "Size at maturity",
+       colour = "Genotype") #+
+  #xlim(c(0.5, 2.5))
+```
+
+```{r}
+
+print(Size)
+```
+
+```{r}
 ```
