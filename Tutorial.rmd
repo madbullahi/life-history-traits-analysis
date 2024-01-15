@@ -413,7 +413,7 @@ qplot(U[, 1], U[, 2], colour = factor(Treatment) ) + coord_equal() # plot the fi
 
 ```{r}
 #Measuring Outliers
-apply(U, 2, function(x) which( abs(x - mean(x)) > (3 * sd(x)) )) # find outliers
+apply(U, 2, function(x) which( abs(x - mean(x)) > (2 * sd(x)) )) # find outliers
 
 # applies a function to each column of the matrix U.
 
@@ -752,6 +752,13 @@ Interval_brood_ANOVA <- lmer(Interval_brood ~ Treatment*Genotypes + (1|Genotypes
 
 anova(Interval_brood_ANOVA) # print the ANOVA results
 ```
+```{r}
+
+summary(Age_maturity_ANOVA) # print the summary of the ANOVA results
+```
+
+```{r}
+```
 
 ```{r}
 # check if the data is normally distributed and meets the assumptions of ANOVA
@@ -902,6 +909,15 @@ a <- residuals(Age_maturity_log_ANOVA) # extract the residuals of the variable '
 plotNormalHistogram(a) # plot the histogram of the residuals of the variable 'Age at maturity'
 ```
 
+```{r}
+# plot the qq-plot of the residuals of the variable 'Age at maturity'
+
+qqnorm(residuals(Age_maturity_log_ANOVA),
+       ylab = "Sample Quantiles for Residuals") # plot the qq-plot of the residuals of the variable 'Age at maturity'
+qqline(residuals(Age_maturity_log_ANOVA),
+       col = "red") # add the reference line to the qq-plot
+```
+The assumption of linear models are about the residuals, not the raw data. The residuals are the difference between the observed values and the fitted values. The residuals are the errors of the model. The residuals are the
 ```{r}
 ```
 
