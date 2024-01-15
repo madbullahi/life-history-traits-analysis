@@ -63,7 +63,8 @@ summary(Data)
 
 ```{r}
 # outliers detection
-boxplot(Data$Fecundity, main = "Fecundity", ylab = "fecundity", col = "lightblue", border = "brown", vertical = TRUE)
+boxplot(Data$Fecundity, main = "Fecundity", ylab = "fecundity", col = "lightblue", border = "brown", vertical = TRUE) # boxplot for fecundity
+# boxplot () function is used to create boxplots for a given variable.
 ```
 What does the whiskers represents?
 
