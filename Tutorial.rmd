@@ -426,7 +426,7 @@ apply(U, 2, function(x) which( abs(x - mean(x)) > (2 * sd(x)) )) # find outliers
 ```
 
 ```{r}
-apply(U, 2, function(x) which( abs(x - mean(x)) > (2 * sd(x)) )) # find outliers
+apply(U, 2, function(x) which( abs(x - mean(x)) > (3 * sd(x)) )) # find outliers
 ```
 
 ```{r}
@@ -919,7 +919,13 @@ qqline(residuals(Age_maturity_log_ANOVA),
        col = "red") # add the reference line to the qq-plot
 ```
 The assumption of linear models are about the residuals, not the raw data. The residuals are the difference between the observed values and the fitted values. The residuals are the errors of the model. The residuals are the
+
+
+
+# PFOS data
 ```{r}
+# Import the PFOS data.
+
 ```
 
 ```{r}
