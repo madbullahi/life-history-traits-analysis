@@ -367,7 +367,7 @@ library(FactoMineR) # load the FactoMineR package
 ```{r}
 
 
-Pca_plot <- fviz_pca_ind(pca, habillage = Treatment, geom = "point") # fviz_pca_biplot() function from factoextra package is used to plot the scores for the first two PCs.
+Pca_plot <- fviz_pca_ind(pca, habillage = Genotypes, geom = "point") # fviz_pca_biplot() function from factoextra package is used to plot the scores for the first two PCs.
 ```
 
 ```{r}
