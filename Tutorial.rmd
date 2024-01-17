@@ -1248,7 +1248,7 @@ print(PFOS_Data2) # print the subsetted data for the PFOS data.
 ```
 
 ```{r}
-# perform the Anova for the variable Age at maturity from the PFOS data.
+
 
 # subset the variables  (response and fixed) from the original data set for the PFOS data.
 
@@ -1259,17 +1259,17 @@ Genotypes <- PFOS_Data2[, "Genotypes"]
 Treatment <- PFOS_Data2[, "Treatment"]
 ```
 
+```{r}
+# perform the Anova for the variable Age at maturity from the PFOS data.
 
+Age_maturity_Ano <- lmer(Age_maturity ~ Treatment * Genotypes + (1|Genotypes: Replicates), data = PFOS_Data2)
 
+```
 
+```{r}
+anova(Age_maturity_Ano) # print the Anova for the variable Age at maturity from the PFOS data.
 
-
-
-
-
-
-
-
+```
 
 
 
