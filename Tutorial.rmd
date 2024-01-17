@@ -938,7 +938,7 @@ summary(PFOs_data) # print the summary of the PFOS data
 ```
 
 ```{r}
-str(PFOs_data) # plot the boxplot of the PFOS data
+str(PFOs_data) # plot the Boxplot of the PFOS data
 ```
 
 
@@ -1235,8 +1235,62 @@ IB_PFos <- ggplot(IB_pfos,
 ```{r}
 print(IB_PFos) # print the reaction nomr for interval between brood events.
 ```
+```{r}
+# subset the variables from the original data set for the PFOS data.
+
+PFOS_Data2 <- PFOs_data[, c("Replicates", "Genotypes", "Treatment", "Age_maturity", "Size_maturity", "Fecundity", "Interval_brood")]
+
+```
 
 ```{r}
+print(PFOS_Data2) # print the subsetted data for the PFOS data.
+
+```
+
+```{r}
+# perform the Anova for the variable Age at maturity from the PFOS data.
+
+# subset the variables  (response and fixed) from the original data set for the PFOS data.
+
+Age_maturity <- PFOS_Data2[, "Age_maturity"]
+
+Genotypes <- PFOS_Data2[, "Genotypes"]
+
+Treatment <- PFOS_Data2[, "Treatment"]
 ```
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# PFOA data : Tia
+```{r}
+# import PFOA data
+
+PFOA_Data <- read_excel(file.choose(), sheet = "PFOA-Tia")
+
+```
+
+
+```{r}
+print(PFOA_Data) # print the PFOA data
+
+```
+
+```{r}
+```
