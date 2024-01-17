@@ -1306,6 +1306,70 @@ print(PFOA_without_NA) # print the PFOA data without missing values
 
 ```
 
+
+```{r}
+# subset the required variables from the PFOA data
+
+PFOA_Data_new <- PFOA_without_NA[, c("Replicates", "Genotypes", "Treatment", "Age_maturity", "Size_maturity", "Fecundity", "Invterval_brood")]
+
+```
+
+```{r}
+
+print(PFOA_Data_new) # print the subsetted PFOA data
+
+```
+
+
+```{r}
+# log transform the variables from the PFOA data
+
+PFOA_log_data <- log(PFOA_Data_new[, c("Age_maturity", "Size_maturity", "Fecundity", "Invterval_brood")])
+
+
+```
+
+
+```{r}
+print(PFOA_log_data) # print the log transformed data.
+
+```
+
+```{r}
+# convert the variables Genotypes and Treatment as factors.
+
+Genotypes <- as.factor(PFOA_Data_new[, "Genotypes"]) # convert Genotypes as factors.
+
+Treatment <- as.factor(PFOA_Data_new[, "Treatment"]) # convert Treatment as factors.
+
+```
+
+```{r}
+# perform the pca for the log transformed data.
+
+
+PFOA_pca <- prcomp(PFOA_log_data, center = TRUE, scale. = TRUE)
+
+print(PFOA_pca) # print the pca for the log transformed data.
+
+```
+
+```{r}
+
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+
+
+```
+
+
 ```{r}
 ```
 
