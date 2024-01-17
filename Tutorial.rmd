@@ -925,15 +925,69 @@ The assumption of linear models are about the residuals, not the raw data. The r
 # PFOS data: Tia
 ```{r}
 # Import the PFOS data.
+PFOs_data <- read_excel(file.choose(), sheet = "PFOS-Tia") # import the PFOS data
 
 ```
 
 ```{r}
+print(PFOs_data) # print the PFOS data
+```
 
+```{r}
+summary(PFOs_data) # print the summary of the PFOS data
+```
+
+```{r}
+str(PFOs_data) # plot the boxplot of the PFOS data
+```
+
+
+
+```{r}
+#check for complete cases
+
+colSums(is.na(PFOs_data)) # check for complete cases
 ```
 
 ```{r}
 
+PFOS_DT <- PFOs_data[complete.cases(PFOs_data),] # remove the missing values from the PFOS data
+
+```
+
+```{r}
+print(PFOS_DT) # print the PFOS data
+```
+
+```{r}
+PFOS_without_NA <- PFOS_DT
+```
+
+```{r}
+# Conert the Gentoypes $ Treatment to factors
+
+
+Genotypes <- as.factor(PFOS_without_NA$Genotypes) # convert the Genotypes to factors
+
+Treatment <- as.factor(PFOS_without_NA$Treatment) # convert the Treatment to factors
+
+```
+
+```{r}
+# subset the need variables to create a new dataframe
+
+PFOS_Data_new <- PFOS_without_NA[, c("Replicates","Genotypes", "Treatment", "Size_maturity", "Fecundity", "Interval_brood")] # subset the need variables to create a new dataframe
+
+```
+
+```{r}
+print(PFOS_Data_new) # print the new dataframe
+```
+
+```{r}
+```
+
+```{r}
 ```
 
 ```{r}
