@@ -1338,11 +1338,14 @@ print(PFOA_log_data) # print the log transformed data.
 ```{r}
 # convert the variables Genotypes and Treatment as factors.
 
-Genotypes <- as.factor(PFOA_Data_new[, "Genotypes"]) # convert Genotypes as factors.
+Genotypes <- as.factor(PFOA_Data_new$Genotypes) # convert the genotypes as factors .
 
-Treatment <- as.factor(PFOA_Data_new[, "Treatment"]) # convert Treatment as factors.
+Treatment <- as.factor(PFOA_Data_new$Treatment) # convert Treatment as factors.
 
 ```
+
+
+
 
 ```{r}
 # perform the pca for the log transformed data.
