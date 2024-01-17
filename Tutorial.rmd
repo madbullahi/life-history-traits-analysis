@@ -1292,5 +1292,22 @@ print(PFOA_Data) # print the PFOA data
 
 ```
 
+
+```{r}
+colSums(is.na(PFOA_Data)) # check for missing values
+
+```
+
+```{r}
+PFOA_without_NA <- PFOA_Data[complete.cases(PFOA_Data),] # remove missing values
+
+
+print(PFOA_without_NA) # print the PFOA data without missing values
+
+```
+
+```{r}
+```
+
 ```{r}
 ```
