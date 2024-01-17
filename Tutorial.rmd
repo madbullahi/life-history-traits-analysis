@@ -28,7 +28,7 @@ library(rcompanion) # for calculating effect sizes and summarizing statistics.
 
 ```
 
-
+# Import Microplastic Data: Tia
 ```{r}
 # read in data
 Data <- read_excel(file.choose(), sheet = "MP")
@@ -922,7 +922,7 @@ The assumption of linear models are about the residuals, not the raw data. The r
 
 
 
-# PFOS data
+# PFOS data: Tia
 ```{r}
 # Import the PFOS data.
 
