@@ -976,7 +976,7 @@ Treatment <- as.factor(PFOS_without_NA$Treatment) # convert the Treatment to fac
 ```{r}
 # subset the need variables to create a new dataframe
 
-PFOS_Data_new <- PFOS_without_NA[, c("Replicates","Genotypes", "Treatment", "Size_maturity", "Fecundity", "Interval_brood")] # subset the need variables to create a new dataframe
+PFOS_Data_new <- PFOS_without_NA[, c("Replicates","Genotypes", "Treatment", "Size_maturity", "Fecundity", "Interval_brood", "Age_maturity")] # subset the need variables to create a new dataframe
 
 ```
 
@@ -985,11 +985,258 @@ print(PFOS_Data_new) # print the new dataframe
 ```
 
 ```{r}
+# log transform the variables Size at maturity, Fecundity, Ages_maturity and Interval between broods.
+
+PFOS_Data_new_log <- log(PFOS_Data_new[, c("Size_maturity", "Fecundity", "Interval_brood", "Age_maturity")] + 0.5) # log transform the variables Size at maturity, Fecundity, Ages_maturity and Interval between broods.
+
+```
+
+```{r}
+print(PFOS_Data_new_log) # print the log transformed data
+```
+
+```{r}
+# perform a PCA on the log transformed data.
+
+PFOS_PCA <- prcomp(PFOS_Data_new_log, center = TRUE, scale. = TRUE) # perform a PCA on the log transformed data.
+
+```
+
+```{r}
+
+summary(PFOS_PCA) # print the summary of the PCA
+```
+
+```{r}
+print(PFOS_PCA) # print the PCA
+```
+
+```{r}
+
+Genotypes <- as.factor(PFOS_Data_new$Genotypes) # convert the Genotypes to factors
+Treatment <- as.factor(PFOS_Data_new$Treatment) # convert the Treatment to factors
+```
+
+
+
+
+```{r}
+PFOS_pca_plot <- fviz_pca_ind(PFOS_PCA, habillage = Genotypes, geom = "point") # plot the PCA
+```
+
+
+```{r}
+print(PFOS_pca_plot) # print the PCA
+```
+
+```{r}
+fviz_pca_biplot(PFOS_PCA, # plot the PCA
+             col.ind = Genotypes, # color by Genotype
+            palette = c("LRV-0-1"="red","LR2-36-01"="black"), # color palette
+              addEllipses = TRUE, # Concentration ellipses
+              col.var="blue", # Variables color
+              arrowsize=0.2, # Arrow size
+             labelsize=3, # Label size
+             geom.ind = "point", # show points only (nbut not "text")
+             pointsize=1, # Point size
+             pointshape=19, # Point shape
+             mean.point=F,# Show mean point
+            # xlim=c(-5,5),# x axis limits
+             #ylim=c(-3,3), # y axis limits
+             var.scale=0.5, # Scaling of the variables
+             ellipse.type = "confidence", # Confidence ellipse
+             legend.title = "Genotype", # Legend title
+             repel = TRUE, # Avoid text overlapping
+             )
+```
+
+
+```{r}
+U2 <- PFOS_PCA$x # extract the second column of the rotation matrix
+```
+
+```{r}
+U2
+```
+
+```{r}
+qplot(U2[, 1], U2[, 2], colour = factor(Treatment) ) + coord_equal() # plot the first two PC
+```
+
+```{r}
+# look for potential ouliers in the PFOS data
+
+apply(U2, 2, function(x) which( abs(x - mean(x)) > (2 * sd(x)) )) # look for potential ouliers in the PFOS data
+
+apply(U2, 2, function(x) which( abs(x - mean(x)) > (3 * sd(x)) )) # look for potential ouliers in the PFOS data
+```
+
+```{r}
+# summary stats for Age at maturity from the PFOS data.
+
+Age_AT_Maturity <- summarySE(PFOS_Data_new, measurevar = "Age_maturity", groupvars = c("Genotypes", "Treatment")) # summary stats for Age at maturity from the PFOS data.
+
+```
+
+```{r}
+print(Age_AT_Maturity) # print the summary stats for Age at maturity from the PFOS data.
+```
+
+
+
+```{r}
+# Plot the reaction norm for Age at Maturity
+
+Age_PFOs <- ggplot(Age_AT_Maturity,
+                                  aes(x = Treatment,
+                                      y = Age_maturity,
+                                      colour = Genotypes,
+                                      group = interaction(Genotypes))) +
+  geom_errorbar(aes(ymin = Age_maturity - se,
+                    ymax = Age_maturity + se),
+                width = 0.1,
+                position = pd) +
+  geom_line(position = pd) +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.background = element_blank(),
+        axis.line = element_line(colour = "black")) +
+  labs(x = "Treatment",
+       y = "Age at Maturity",
+       colour = "Genotype")
+  
+```
+
+```{r}
+
+print(Age_PFOs) # print the reaction nomr for Age at Maturity
+
+```
+
+```{r}
+# summary stats for Size at maturity from the PFOS data.
+
+Size_pfos <- summarySE(PFOS_Data_new, measurevar = "Size_maturity", groupvars = c("Genotypes", "Treatment")) # summary stats for Size at maturity from the PFOS data.
+
+```
+
+```{r}
+print(Size_pfos) # print the summary stats for Size at maturity from the PFOS data.
+
+
+```
+
+
+```{r}
+# plot the reaction norm for Size at maturity.
+
+Size_PFOs <- ggplot(Size_pfos,
+                                  aes(x = Treatment,
+                                      y = Size_maturity,
+                                      colour = Genotypes,
+                                      group = interaction(Genotypes))) +
+  geom_errorbar(aes(ymin = Size_maturity - se,
+                    ymax = Size_maturity + se),
+                width = 0.1,
+                position = pd) +
+  geom_line(position = pd) +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.background = element_blank(),
+        axis.line = element_line(colour = "black")) +
+  labs(x = "Treatment",
+       y = "Size at Maturity",
+       colour = "Genotype")
+  
+```
+
+```{r}
+
+print(Size_PFOs) # print the reaction nomr for Size at maturity.
+
+
+```
+
+```{r}
+# plot the reaction norm for Fecundity.
+
+fecundity_pfos <- summarySE(PFOS_Data_new, measurevar = "Fecundity", groupvars = c("Genotypes", "Treatment")) # summary stats for Fecundity from the PFOS data.
+
+```
+
+```{r}
+print(fecundity_pfos) # print the summary stats for Fecundity from the PFOS data.
+
+
+```
+
+```{r}
+# plot the reaction norm for Fecundity.
+
+fecundity_pfos <- ggplot(fecundity_pfos,
+                                  aes(x = Treatment,
+                                      y = Fecundity,
+                                      colour = Genotypes,
+                                      group = interaction(Genotypes))) +
+  geom_errorbar(aes(ymin = Fecundity - se,
+                    ymax = Fecundity + se),
+                width = 0.1,
+                position = pd) +
+  geom_line(position = pd) +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.background = element_blank(),
+        axis.line = element_line(colour = "black")) +
+  labs(x = "Treatment",
+       y = "Fecundity",
+       colour = "Genotype")
+  
+```
+
+```{r}
+print(fecundity_pfos) # print the reaction nomr for Fecundity.
+```
+```{r}
+# perform the summary stats for interval between brood events from the PFOS data.
+
+IB_pfos <- summarySE(PFOS_Data_new, measurevar = "Interval_brood", groupvars = c("Genotypes", "Treatment")) # summary stats for interval between brood events from the PFOS data.
+
+```
+
+```{r}
+print(IB_pfos) # print the summary stats for interval between brood events from the PFOS data.
+
+```
+
+```{r}
+
+# plot the reaction norm for interval between brood events.
+
+IB_PFos <- ggplot(IB_pfos,
+                                  aes(x = Treatment,
+                                      y = Interval_brood,
+                                      colour = Genotypes,
+                                      group = interaction(Genotypes))) +
+  geom_errorbar(aes(ymin = Interval_brood - se,
+                    ymax = Interval_brood + se),
+                width = 0.1,
+                position = pd) +
+  geom_line(position = pd) +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.background = element_blank(),
+        axis.line = element_line(colour = "black")) +
+  labs(x = "Treatment",
+       y = "Interval between brood events",
+       colour = "Genotype")
+  
+```
+
+```{r}
+print(IB_PFos) # print the reaction nomr for interval between brood events.
 ```
 
 ```{r}
 ```
 
-```{r}
 
-```
