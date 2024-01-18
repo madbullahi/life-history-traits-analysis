@@ -1564,14 +1564,85 @@ qqline(residuals(Age_pfoa_ano),
 ```
 
 ```{r}
+# perform the ANOVA for Size at maturity from the PFOA data.
+
+Size_pfoa_ano <- lmer(Size_maturity ~ Treatment * Genotypes + (1|Genotypes: Replicates), data = PFOA_Data_new)
+
+print(anova(Size_pfoa_ano)) # print the ANOVA for Size at maturity from the PFOA data.
+
+```
+
+```{r}
+# check the normality of the residuals for Size at maturity from the PFOA data.
+
+Size_pfoa_ano_res <- residuals(Size_pfoa_ano)
+
+plotNormalHistogram(Size_pfoa_ano_res) # print the histogram for the residuals for Size at maturity from the PFOA data.
+
+```
+
+```{r}
+# plot the qqplot for the residuals for Size at maturity from the PFOA data.
+
+qqnorm(residuals(Size_pfoa_ano),
+       ylab = "Sample Quantiles for Residuals") # plot the qq-plot of the residuals of the variable 'Size at maturity'
+
+qqline(residuals(Size_pfoa_ano),
+       col = "red")
+```   
+
+```{r}
+# perform the ANOVA for Fecundity from the PFOA data.
+
+Fecundity_pfoa_ano <- lmer(Fecundity ~ Treatment * Genotypes + (1|Genotypes: Replicates), data = PFOA_Data_new)
+
+print(anova(Fecundity_pfoa_ano)) # print the ANOVA for Fecundity from the PFOA data.
+
+```
+
+```{r}
+isSingular(Fecundity_pfoa_ano, tol = 1e-4) # check if the model is singular
+
+
+```
+ this means some of the dimensions have been estimated as zero. This is because the model is too complex for the data.
+```{r}
+# check the normality of the residuals for Fecundity from the PFOA data.
+
+Fecundity_pfoa_ano_res <- residuals(Fecundity_pfoa_ano)
+
+plotNormalHistogram(Fecundity_pfoa_ano_res) # print the histogram for the residuals for Fecundity from the PFOA data.
+
 ```
 
 ```{r}
 
+# plot the qqplot for the residuals for Fecundity from the PFOA data.
+
+qqnorm(residuals(Fecundity_pfoa_ano),
+       ylab = "Sample Quantiles for Residuals") # plot the qq-plot of the residuals of the variable 'Fecundity'
+
+qqline(residuals(Fecundity_pfoa_ano),
+       col = "red")
 ```
 
 ```{r}
+# perform the ANOVA for Interval between broods from the PFOA data.
 
+Interval_pfoa_ano <- lmer(Invterval_brood ~ Treatment * Genotypes + (1|Genotypes: Replicates), data = PFOA_Data_new)
+
+print(anova(Interval_pfoa_ano)) # print the ANOVA for Interval between broods from the PFOA data.
+
+```
+
+```{r}
+# check the normality of the residuals for Interval between broods from the PFOA data.
+
+qqnorm(residuals(Interval_pfoa_ano),
+       ylab = "Sample Quantiles for Residuals") # plot the qq-plot of the residuals of the variable 'Interval between broods'
+
+qqline(residuals(Interval_pfoa_ano),
+       col = "red")
 ```
 
 
