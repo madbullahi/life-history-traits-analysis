@@ -1534,6 +1534,40 @@ print(interval_pfoa_plot) # print the plot for the reaction norm for interval be
 ```
 
 ```{r}
+
+# perform the ANOVA for Age at maturity from the PFOA data.
+
+Age_pfoa_ano <- lmer(Age_maturity ~ Treatment * Genotypes + (1|Genotypes: Replicates), data = PFOA_Data_new)
+
+anova(Age_pfoa_ano) # print the ANOVA for Age at maturity from the PFOA data.
+
+```
+
+```{r}
+# check the normality of the residuals for Age at maturity from the PFOA data.
+
+Age_pfoa_ano_res <- residuals(Age_pfoa_ano)
+
+plotNormalHistogram(Age_pfoa_ano_res) # print the histogram for the residuals for Age at maturity from the PFOA data.
+
+```
+
+```{r}
+# plot the qqplot for the residuals for Age at maturity from the PFOA data.
+
+qqnorm(residuals(Age_pfoa_ano),
+       ylab = "Sample Quantiles for Residuals") # plot the qq-plot of the residuals of the variable 'Age at maturity'
+
+qqline(residuals(Age_pfoa_ano),
+       col = "red")
+
+```
+
+```{r}
+```
+
+```{r}
+
 ```
 
 ```{r}
