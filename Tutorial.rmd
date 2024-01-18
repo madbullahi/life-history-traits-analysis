@@ -1689,6 +1689,10 @@ print(Microplastic_withou_NA) # print the data for the micropalstic data from th
 
 ```
 
+
+
+
+
 ```{r}
 # log transform the data for the micropalstic data from the Abu data.
 
@@ -1699,7 +1703,59 @@ print(Microplastic_log) # print the log transformed data for the micropalstic da
 ```
 
 ```{r}
+# convert the genotype and treatment variables as factors
+
+Genotype <- as.factor(Microplastic_withou_NA$Genotype)
+
+Treatment <- as.factor(Microplastic_withou_NA$Treatment)
 ```
 
 ```{r}
+# perform a pca on the log transformed data for the micropalstic data from the Abu data.
+
+Microplastic_pca <- prcomp(Microplastic_log)
+
+print(Microplastic_pca) # print the pca on the log transformed data for the micropalstic data from the Abu data.
+
 ```
+
+```{r}
+
+summary(Microplastic_pca) # print the summary of the pca on the log transformed data for the micropalstic data from the Abu data.
+
+```
+
+```{r}
+# plot the pca on the log transformed data for the micropalstic data from the Abu data.
+
+Microplastic_pca_plot <- fviz_pca_ind(Microplastic_pca, habillage = Genotype, geom = "point")
+
+print(Microplastic_pca_plot) # print the pca plot on the log transformed data for the micropalstic data from the Abu data.
+
+```
+
+```{r}
+# biplot for the pca on the log transformed data for the micropalstic data from the Abu data.
+
+fviz_pca_biplot(Microplastic_pca, # plot the PCA
+             col.ind = Genotype, # color by Genotype
+            palette = c("LRV_0_1"="red","LR2_36_1"="black"), # color palette
+              addEllipses = TRUE, # Concentration ellipses
+              col.var="blue", # Variables color
+              arrowsize=0.2, # Arrow size
+             labelsize=3, # Label size
+             geom.ind = "point", # show points only (nbut not "text")
+             pointsize=1, # Point size
+             pointshape=19, # Point shape
+             mean.point=F,# Show mean point
+            # xlim=c(-5,5),# x axis limits
+             #ylim=c(-3,3), # y axis limits
+             var.scale=0.5, # Scaling of the variables
+             ellipse.type = "confidence", # Confidence ellipse
+             legend.title = "Genotype", # Legend title
+             repel = TRUE, # Avoid text overlapping
+             )
+```
+
+
+```{r}
