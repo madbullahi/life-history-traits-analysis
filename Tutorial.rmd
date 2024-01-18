@@ -1375,11 +1375,168 @@ print(PFOA_pca_plot) # print the pca for the log transformed data.
 ```
 
 ```{r}
+# pca biplot
+
+fviz_pca_biplot(PFOA_pca, # plot the PCA
+             col.ind = Genotypes, # color by Genotype
+            palette = c("LRV-0-1"="red","LR2-36-01"="black"), # color palette
+              addEllipses = TRUE, # Concentration ellipses
+              col.var="blue", # Variables color
+              arrowsize=0.2, # Arrow size
+             labelsize=3, # Label size
+             geom.ind = "point", # show points only (nbut not "text")
+             pointsize=1, # Point size
+             pointshape=19, # Point shape
+             mean.point=F,# Show mean point
+            # xlim=c(-5,5),# x axis limits
+             #ylim=c(-3,3), # y axis limits
+             var.scale=0.5, # Scaling of the variables
+             ellipse.type = "confidence", # Confidence ellipse
+             legend.title = "Genotype", # Legend title
+             repel = TRUE, # Avoid text overlapping
+             )
 ```
 
 ```{r}
 
+# summary stats for Age at maturity from the PFOA data.
 
+Age_pfoa <- summarySE(PFOA_Data_new, measurevar = "Age_maturity", groupvars = c("Treatment", "Genotypes"))
+
+print(Age_pfoa) # print the summary stats for Age at maturity from the PFOA data.
+
+```
+
+```{r}
+
+# plot the reaction norm for Age at maturity from the PFOA data.
+
+Age_pfoa_plot <- ggplot(Age_pfoa,
+                                  aes(x = Treatment,
+                                      y = Age_maturity,
+                                      colour = Genotypes,
+                                      group = interaction(Genotypes))) +
+  geom_errorbar(aes(ymin = Age_maturity - se,
+                    ymax = Age_maturity + se),
+                width = 0.1,
+                position = pd) +
+  geom_line(position = pd) +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.background = element_blank(),
+        axis.line = element_line(colour = "black")) +
+  labs(x = "Treatment",
+       y = "Age at maturity",
+       colour = "Genotype")
+  
+
+print(Age_pfoa_plot) # print the plot for the reaction norm for Age at maturity from the PFOA data.
+
+```
+
+```{r}
+# summary stats for Size at maturity from the PFOA data.
+
+Size_pfoa <- summarySE(PFOA_Data_new, measurevar = "Size_maturity", groupvars = c("Treatment", "Genotypes"))
+
+print(Size_pfoa) # print the summary stats for Size at maturity from the PFOA data.
+
+```
+
+```{r}
+# plot the reaction norm for Size at maturity from the PFOA data.
+
+size_pfoa_plot <- ggplot(Size_pfoa,
+                                  aes(x = Treatment,
+                                      y = Size_maturity,
+                                      colour = Genotypes,
+                                      group = interaction(Genotypes))) +
+  geom_errorbar(aes(ymin = Size_maturity - se,
+                    ymax = Size_maturity + se),
+                width = 0.1,
+                position = pd) +
+  geom_line(position = pd) +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.background = element_blank(),
+        axis.line = element_line(colour = "black")) +
+  labs(x = "Treatment",
+       y = "Size at maturity",
+       colour = "Genotype")
+
+print(size_pfoa_plot) # print the plot for the reaction norm for Size at maturity from the PFOA data.
+```
+
+```{r}
+# summary stats for Fecundity from the PFOA data.
+
+fecundity_pfoa <- summarySE(PFOA_Data_new, measurevar = "Fecundity", groupvars = c("Treatment", "Genotypes"))
+
+print(fecundity_pfoa) # print the summary stats for Fecundity from the PFOA data.
+
+```
+
+```{r}
+# plot the reaction norm for Fecundity from the PFOA data.
+
+fecundity_pfoa_plot <- ggplot(fecundity_pfoa,
+                                  aes(x = Treatment,
+                                      y = Fecundity,
+                                      colour = Genotypes,
+                                      group = interaction(Genotypes))) +
+  geom_errorbar(aes(ymin = Fecundity - se,
+                    ymax = Fecundity + se),
+                width = 0.1,
+                position = pd) +
+  geom_line(position = pd) +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.background = element_blank(),
+        axis.line = element_line(colour = "black")) +
+  labs(x = "Treatment",
+       y = "Fecundity",
+       colour = "Genotype")
+
+print(fecundity_pfoa_plot) # print the plot for the reaction norm for Fecundity from the PFOA data.
+```
+
+```{r}
+# summary stats for interval between broods from the PFOA data.
+
+interval_pfoa <- summarySE(PFOA_Data_new, measurevar = "Invterval_brood", groupvars = c("Treatment", "Genotypes"))
+
+print(interval_pfoa) # print the summary stats for interval between broods from the PFOA data.
+
+```
+
+```{r}
+# plot the reaction norm for interval between broods from the PFOA data.
+
+interval_pfoa_plot <- ggplot(interval_pfoa,
+                                  aes(x = Treatment,
+                                      y = Invterval_brood,
+                                      colour = Genotypes,
+                                      group = interaction(Genotypes))) +
+  geom_errorbar(aes(ymin = Invterval_brood - se,
+                    ymax = Invterval_brood + se),
+                width = 0.1,
+                position = pd) +
+  geom_line(position = pd) +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.background = element_blank(),
+        axis.line = element_line(colour = "black")) +
+  labs(x = "Treatment",
+       y = "Interval between broods",
+       colour = "Genotype")
+
+print(interval_pfoa_plot) # print the plot for the reaction norm for interval between broods from the PFOA data.
+```
+
+```{r}
+```
+
+```{r}
 
 ```
 
