@@ -1359,11 +1359,22 @@ print(PFOA_pca) # print the pca for the log transformed data.
 
 ```{r}
 
+summary(PFOA_pca) # summary of the pca for the log transformed data.
 
 ```
 
 ```{r}
+# plot the pca for the log transformed data.
 
+PFOA_pca_plot <- fviz_pca_biplot(PFOA_pca, geom = "point", habillage = Treatment)
+```
+
+```{r}
+print(PFOA_pca_plot) # print the pca for the log transformed data.
+
+```
+
+```{r}
 ```
 
 ```{r}
