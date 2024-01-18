@@ -1645,6 +1645,58 @@ qqline(residuals(Interval_pfoa_ano),
        col = "red")
 ```
 
+Micrpolastic data: Abu
+
+```{r}
+# import the data for the micropalstic data from the Abu data.
+
+Micrplastic_Data <- read_excel(file.choose(), sheet = "Abu-PE")
+
+print(Micrplastic_Data) # print the data for the micropalstic data from the Abu data.
+
+```
+
+```{r}
+str(Micrplastic_Data) # check the structure of the data for the micropalstic data from the Abu data.
+
+```
+
+```{r}
+# check for missing values in the data for the micropalstic data from the Abu data.
+
+ colSums(is.na(Micrplastic_Data))
+
+
+```
+
+
+
+```{r}
+# subset the required variables from the data for the micropalstic data from the Abu data.
+
+Micrplastic_Data_new <- Micrplastic_Data[, c("Replicates","Treatment", "Genotype", "Age_maturity", "Size_maturity", "Fecundity", "Interval_btwnbrds")]
+
+print(Micrplastic_Data_new) # print the subsetted data for the micropalstic data from the Abu data.
+
+```
+
+```{r}
+# remove missing values from the data for the micropalstic data from the Abu data.
+
+Microplastic_withou_NA <- Micrplastic_Data_new[complete.cases(Micrplastic_Data_new),]
+
+print(Microplastic_withou_NA) # print the data for the micropalstic data from the Abu data without missing values.
+
+```
+
+```{r}
+# log transform the data for the micropalstic data from the Abu data.
+
+Microplastic_log <- log(Microplastic_withou_NA[, c("Age_maturity", "Size_maturity", "Fecundity", "Interval_btwnbrds")])
+
+print(Microplastic_log) # print the log transformed data for the micropalstic data from the Abu data.
+
+```
 
 ```{r}
 ```
