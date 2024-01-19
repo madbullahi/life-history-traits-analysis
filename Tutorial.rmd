@@ -1895,6 +1895,125 @@ fecundity_plot_micro <- ggplot(fucndity_stat,
 
 print(fecundity_plot_micro) # print the reaction norm for fecundity for the data for the micropalstic data from the Abu data.
 ```
+```{r}
+# summary statistics for the variable interval between brood for the data for the micropalstic data from the Abu data.
+
+interv_brood_stat <- summarySE(Microplastic_withou_NA, measurevar = "Interval_btwnbrds", groupvars = c("Treatment", 
+              "Genotype"))  # print the summary statistics for the data for the micropalstic data from the Abu data.
+
+print(interv_brood_stat) # print the summary statistics for the data for the micropalstic data from the Abu data.
+
+```
+
+```{r}
+# plot the reaction norm for interval between brood for the data for the micropalstic data from the Abu data.
+
+int_brood_plot_micro <- ggplot(interv_brood_stat,
+                                  aes(x = Treatment,
+                                      y = Interval_btwnbrds,
+                                      colour = Genotype,
+                                      group = interaction(Genotype))) +
+  geom_errorbar(aes(ymin = Interval_btwnbrds - se,
+                    ymax = Interval_btwnbrds + se),
+                width = 0.1,
+                position = pd) +
+  geom_line(position = pd) +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.background = element_blank(),
+        axis.line = element_line(colour = "black")) +
+  labs(x = "Treatment",
+       y = "Interval between brood events",
+       colour = "Genotype")
 
 
+print(int_brood_plot_micro) # print the reaction norm for interval between brood for the data for the micropalstic data from the Abu data.
+```
+
+```{r}
+
+# Anova for Age at maturity for the data for the micropalstic data from the Abu data.
+
+Age_anova <- lmer(Age_maturity ~ Treatment * Genotype + (1|Genotype:Replicates), data = Microplastic_withou_NA) # print the Anova for Age at maturity for the data for the micropalstic data from the Abu data.
+
+anova(Age_anova) # print the Anova for Age at maturity for the data for the micropalstic data from the Abu data.
+
+```
+
+```{r}
+# check the normality of the residuals.
+
+micro <- residuals(Age_anova) # print the residuals for the Anova for Age at maturity for the data for the micropalstic data from the Abu data.
+
+plotNormalHistogram(micro) # print the residuals for the Anova for Age at maturity for the data for the micropalstic data from the Abu data.
+
+```
+
+```{r}
+# qpplot
+
+qqnorm(residuals(Age_anova),)
+       ylab = "Sample Quantiles for Residuals" # plot the qq-plot of the residuals of the variable 'Fecundity'
+
+qqline(residuals(Age_anova),
+       col = "red")
+```
+```{r}
+# Anova for Size at maturity for the data for the micropalstic data from the Abu data.
+
+size_anova <- lmer(Size_maturity ~ Treatment * Genotype + (1|Genotype:Replicates), data = Microplastic_withou_NA) # print the Anova for Size at maturity for the data for the micropalstic data from the Abu data.
+
+print(anova(size_anova)) # print the Anova for Size at maturity for the data for the micropalstic data from the Abu data.
+
+```
+
+```{r}
+# check the normality of the residuals.
+
+size_micro <- residuals(size_anova) # print the residuals for the Anova for Size at maturity for the data for the micropalstic data from the Abu data.
+
+plotNormalHistogram(size_micro) # print the residuals for the Anova for Size at maturity for the data for the micropalstic data from the Abu data.
+
+```
+
+```{r}
+# qpplot
+
+qqnorm(residuals(size_anova),)
+       ylab = "Sample Quantiles for Residuals" # plot the qq-plot of the residuals of the variable 'Fecundity'
+       
+   qqline(residuals(size_anova),
+       col = "red")
+```
+
+```{r}
+# Anova for Interval_brood for the data for the micropalstic data from the Abu data.
+
+interv_brood_anova <- lmer(Interval_btwnbrds ~ Treatment * Genotype + (1|Genotype:Replicates), data = Microplastic_withou_NA) # print the Anova for Interval_brood for the data for the micropalstic data from the Abu data.
+
+print(anova(interv_brood_anova)) # print the Anova for Interval_brood for the data for the micropalstic data from the Abu data.
+
+```
+
+```{r}
+# check the normality of the residuals.
+
+interv_brood_micro <- residuals(interv_brood_anova) # print the residuals for the Anova for Interval_brood for the data for the micropalstic data from the Abu data.
+
+plotNormalHistogram(interv_brood_micro) # print the residuals for the Anova for Interval_brood for the data for the micropalstic data from the Abu data.
+
+```
+
+```{r}
+# qpplot
+
+qqnorm(residuals(interv_brood_anova),)
+       ylab = "Sample Quantiles for Residuals" # plot the qq-plot of the residuals of the variable 'Fecundity'
+       
+   qqline(residuals(interv_brood_anova),
+       col = "red")
+```
+
+```{r}
+```
 
