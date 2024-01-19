@@ -2013,6 +2013,19 @@ qqnorm(residuals(interv_brood_anova),)
    qqline(residuals(interv_brood_anova),
        col = "red")
 ```
+PFOS Data: Abu
+```{r}
+
+# import the PFOs data
+
+Pfos_data_abu <- read_excel(file.choose(), sheet = "PFOS_abu") # import the PFOs data
+
+print(Pfos_data_abu) # print the PFOs data
+
+```
+
+```{r}
+```
 
 ```{r}
 ```
