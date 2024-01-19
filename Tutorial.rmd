@@ -1775,4 +1775,54 @@ qplot(U3[, 1], U3[, 2], colour = factor(Treatment) ) + coord_equal()
 
 ```
 
+```{r}  
+#Measuring Outliers
+apply(U3, 2, function(x) which( abs(x - mean(x)) > (3 * sd(x)) )) # print the outliers in the data for the micropalstic data from the Abu data.
+
+# the concensus is to consider data points that are beyond 3 standard deviation away from the mean.
+
+```
+
+
+```{r}
+# perform the summary statistics for the data for the micropalstic data from the Abu data.
+
+# Age at maturity
+
+Age_maturity_stat <- summarySE(Microplastic_withou_NA, measurevar = "Age_maturity", groupvars = c("Treatment", "Genotype"))  # print the summary statistics for the data for the micropalstic data from the Abu data.
+
+
+print(Age_maturity_stat) # print the summary statistics for the data for the micropalstic data from the Abu data.
+
+```
+
+```{r}
+```
+
+```{r}
+
+# plot the reacion norm for the variable Age at maturity for the data for the micropalstic data from the Abu data.
+
+Age_maturity_plot_micro <- ggplot(Age_maturity_stat,
+                                  aes(x = Treatment,
+                                      y = Age_maturity,
+                                      colour = Genotype,
+                                      group = interaction(Genotype))) +
+  geom_errorbar(aes(ymin = Age_maturity - se,
+                    ymax = Age_maturity + se),
+                width = 0.1,
+                position = pd) +
+  geom_line(position = pd) +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.background = element_blank(),
+        axis.line = element_line(colour = "black")) +
+  labs(x = "Treatment",
+       y = "Age at maturity events",
+       colour = "Genotype")
+
+
+print(Age_maturity_plot_micro) # print the reacion norm for the variable Age at maturity for the data for the micropalstic data from the Abu data.
+```
+
 
