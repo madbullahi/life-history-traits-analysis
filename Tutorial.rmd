@@ -1825,4 +1825,76 @@ Age_maturity_plot_micro <- ggplot(Age_maturity_stat,
 print(Age_maturity_plot_micro) # print the reacion norm for the variable Age at maturity for the data for the micropalstic data from the Abu data.
 ```
 
+```{r}
+# summary sttaistics for the variable Size at maturity for the data for the micropalstic data from the Abu data.
+
+size_maturity_stat <- summarySE(Microplastic_withou_NA, measurevar = "Size_maturity", groupvars = c("Treatment", "Genotype"))  # print the summary statistics for the data for the micropalstic data from the Abu data.
+
+
+print(size_maturity_stat) # print the summary statistics for the data for the micropalstic data from the Abu data.
+
+```
+
+```{r}
+
+# plot the reaction norm for size at maturity for the data for the micropalstic data from the Abu data.
+
+size_maturity_plot_micro <- ggplot(size_maturity_stat,
+                                  aes(x = Treatment,
+                                      y = Size_maturity,
+                                      colour = Genotype,
+                                      group = interaction(Genotype))) +
+  geom_errorbar(aes(ymin = Size_maturity - se,
+                    ymax = Size_maturity + se),
+                width = 0.1,
+                position = pd) +
+  geom_line(position = pd) +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.background = element_blank(),
+        axis.line = element_line(colour = "black")) +
+  labs(x = "Treatment",
+       y = "Size at maturity events",
+       colour = "Genotype")
+
+print(size_maturity_plot_micro) # print the reaction norm for size at maturity for the data for the micropalstic data from the Abu data.
+```
+
+```{r}
+
+# summary statistics for the variable fecundity for the data for the micropalstic data from the Abu data.
+
+fucndity_stat <- summarySE(Microplastic_withou_NA, measurevar = "Fecundity", groupvars = c("Treatment", 
+              "Genotype"))  # print the summary statistics for the data for the micropalstic data from the Abu data.
+
+print(fucndity_stat) # print the summary statistics for the data for the micropalstic data from the Abu data.
+
+```
+
+```{r}
+
+# plot the reaction norm for fecundity for the data for the micropalstic data from the Abu data.
+
+fecundity_plot_micro <- ggplot(fucndity_stat,
+                                  aes(x = Treatment,
+                                      y = Fecundity,
+                                      colour = Genotype,
+                                      group = interaction(Genotype))) +
+  geom_errorbar(aes(ymin = Fecundity - se,
+                    ymax = Fecundity + se),
+                width = 0.1,
+                position = pd) +
+  geom_line(position = pd) +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.background = element_blank(),
+        axis.line = element_line(colour = "black")) +
+  labs(x = "Treatment",
+       y = "Fecundity events",
+       colour = "Genotype")
+
+print(fecundity_plot_micro) # print the reaction norm for fecundity for the data for the micropalstic data from the Abu data.
+```
+
+
 
