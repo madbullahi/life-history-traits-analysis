@@ -2025,6 +2025,26 @@ print(Pfos_data_abu) # print the PFOs data
 ```
 
 ```{r}
+str(Pfos_data_abu) # print the structure of the PFOs data
+
+```
+
+```{r}
+colSums(is.na(Pfos_data_abu)) # print the number of NA's in the PFOs data
+
+```
+
+```{r}
+# remove the NA's from the PFOs data
+
+Pfos_without_na_abu <- Pfos_data_abu[complete.cases(Pfos_data_abu),] # remove the NA's from the PFOs data
+
+
+print(Pfos_without_na_abu) # print the PFOs data without NA's
+
+```
+
+```{r}
 ```
 
 ```{r}
