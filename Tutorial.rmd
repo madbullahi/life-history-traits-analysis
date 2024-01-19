@@ -1759,3 +1759,20 @@ fviz_pca_biplot(Microplastic_pca, # plot the PCA
 
 
 ```{r}
+# check for potential outliers in the data for the micropalstic data from the Abu data.
+
+U3 <- Microplastic_pca$x
+
+print(U3) # print the potential outliers in the data for the micropalstic data from the Abu data.
+
+```
+
+```{r}
+# make a qqplot of U.
+
+qplot(U3[, 1], U3[, 2], colour = factor(Treatment) ) + coord_equal()
+
+
+```
+
+
