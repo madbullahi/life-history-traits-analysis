@@ -511,15 +511,17 @@
   
   Age_at_maturity <- summarySE(comp_D, measurevar = "Age_maturity", groupvars = c("Genotypes", "Treatment"))
   
-  ```
+```
   
-  ```{r}
+
+
+```{r}
   
   print(Age_at_maturity)
-  ```
+```
   
   
-  ```{r}
+```{r}
   # plot the reacton norm for Age at maturity
   
   pd = position_dodge(0.1) # position_dodge() function from ggplot2 package is used to position the bars side by side.
@@ -545,12 +547,12 @@
   ylim(c(2, 10)) # ylim() function from ggplot2 package is used to set the limits for the y axis.
     
   
-  ```
+```
   
   
-  ```{r}
+```{r}
   print(Age)
-  ```
+```
   
   ```{r}
   # summary statistics for the variable Size at maturity.
@@ -1127,10 +1129,10 @@
   print(Size_pfos) # print the summary stats for Size at maturity from the PFOS data.
   
   
-  ```
+```
   
   
-  ```{r}
+```{r}
   # plot the reaction norm for Size at maturity.
   
   Size_PFOs <- ggplot(Size_pfos,
@@ -1151,29 +1153,29 @@
          y = "Size at Maturity",
          colour = "Genotype")
     
-  ```
+```
   
-  ```{r}
+```{r}
   
   print(Size_PFOs) # print the reaction nomr for Size at maturity.
   
   
-  ```
+```
   
-  ```{r}
+```{r}
   # plot the reaction norm for Fecundity.
   
   fecundity_pfos <- summarySE(PFOS_Data_new, measurevar = "Fecundity", groupvars = c("Genotypes", "Treatment")) # summary stats for Fecundity from the PFOS data.
   
-  ```
+```
   
-  ```{r}
+```{r}
   print(fecundity_pfos) # print the summary stats for Fecundity from the PFOS data.
   
   
-  ```
+```
   
-  ```{r}
+```{r}
   # plot the reaction norm for Fecundity.
   
   fecundity_pfos <- ggplot(fecundity_pfos,
@@ -1194,24 +1196,25 @@
          y = "Fecundity",
          colour = "Genotype")
     
-  ```
+```
   
-  ```{r}
+```{r}
   print(fecundity_pfos) # print the reaction nomr for Fecundity.
-  ```
-  ```{r}
+```
+  
+```{r}
   # perform the summary stats for interval between brood events from the PFOS data.
   
   IB_pfos <- summarySE(PFOS_Data_new, measurevar = "Interval_brood", groupvars = c("Genotypes", "Treatment")) # summary stats for interval between brood events from the PFOS data.
   
-  ```
+```
   
-  ```{r}
+```{r}
   print(IB_pfos) # print the summary stats for interval between brood events from the PFOS data.
   
-  ```
+```
   
-  ```{r}
+```{r}
   
   # plot the reaction norm for interval between brood events.
   
@@ -1233,12 +1236,14 @@
          y = "Interval between brood events",
          colour = "Genotype")
     
-  ```
+```
   
-  ```{r}
+```{r}
   print(IB_PFos) # print the reaction nomr for interval between brood events.
-  ```
-  ```{r}
+```
+
+
+```{r}
   # subset the variables from the original data set for the PFOS data.
   
   PFOS_Data2 <- PFOs_data[, c("Replicates", "Genotypes", "Treatment", "Age_maturity", "Size_maturity", "Fecundity", "Interval_brood")]
@@ -1727,17 +1732,19 @@
   summary(Microplastic_pca) # print the summary of the pca on the log transformed data for the micropalstic data from the Abu data.
   
   ```
-  
-  ```{r}
+
+
+```{r}
   # plot the pca on the log transformed data for the micropalstic data from the Abu data.
   
   Microplastic_pca_plot <- fviz_pca_ind(Microplastic_pca, habillage = Genotype, geom = "point")
   
   print(Microplastic_pca_plot) # print the pca plot on the log transformed data for the micropalstic data from the Abu data.
+
+```
   
-  ```
-  
-  ```{r}
+
+```{r}
   # biplot for the pca on the log transformed data for the micropalstic data from the Abu data.
   
   fviz_pca_biplot(Microplastic_pca, # plot the PCA
@@ -1758,10 +1765,10 @@
                legend.title = "Genotype", # Legend title
                repel = TRUE, # Avoid text overlapping
                )
-  ```
+```
   
   
-  ```{r}
+```{r}
   # check for potential outliers in the data for the micropalstic data from the Abu data.
   
   U3 <- Microplastic_pca$x
@@ -1776,18 +1783,19 @@
   qplot(U3[, 1], U3[, 2], colour = factor(Treatment) ) + coord_equal()
   
   
-  ```
+```
   
-  ```{r}  
+
+```{r}  
   #Measuring Outliers
   apply(U3, 2, function(x) which( abs(x - mean(x)) > (3 * sd(x)) )) # print the outliers in the data for the micropalstic data from the Abu data.
   
   # the concensus is to consider data points that are beyond 3 standard deviation away from the mean.
   
-  ```
+```
   
   
-  ```{r}
+```{r}
   # perform the summary statistics for the data for the micropalstic data from the Abu data.
   
   # Age at maturity
@@ -1797,12 +1805,9 @@
   
   print(Age_maturity_stat) # print the summary statistics for the data for the micropalstic data from the Abu data.
   
-  ```
+```
   
-  ```{r}
-  ```
-  
-  ```{r}
+```{r}
   
   # plot the reacion norm for the variable Age at maturity for the data for the micropalstic data from the Abu data.
   
@@ -1826,9 +1831,9 @@
   
   
   print(Age_maturity_plot_micro) # print the reacion norm for the variable Age at maturity for the data for the micropalstic data from the Abu data.
-  ```
+```
   
-  ```{r}
+```{r}
   # summary sttaistics for the variable Size at maturity for the data for the micropalstic data from the Abu data.
   
   size_maturity_stat <- summarySE(Microplastic_withou_NA, measurevar = "Size_maturity", groupvars = c("Treatment", "Genotype"))  # print the summary statistics for the data for the micropalstic data from the Abu data.
@@ -1836,9 +1841,10 @@
   
   print(size_maturity_stat) # print the summary statistics for the data for the micropalstic data from the Abu data.
   
-  ```
+```
   
-  ```{r}
+
+```{r}
   
   # plot the reaction norm for size at maturity for the data for the micropalstic data from the Abu data.
   
@@ -1861,9 +1867,10 @@
          colour = "Genotype")
   
   print(size_maturity_plot_micro) # print the reaction norm for size at maturity for the data for the micropalstic data from the Abu data.
-  ```
+```
   
-  ```{r}
+
+```{r}
   
   # summary statistics for the variable fecundity for the data for the micropalstic data from the Abu data.
   
@@ -1872,9 +1879,11 @@
   
   print(fucndity_stat) # print the summary statistics for the data for the micropalstic data from the Abu data.
   
-  ```
+```
   
-  ```{r}
+
+
+```{r}
   
   # plot the reaction norm for fecundity for the data for the micropalstic data from the Abu data.
   
@@ -1897,18 +1906,20 @@
          colour = "Genotype")
   
   print(fecundity_plot_micro) # print the reaction norm for fecundity for the data for the micropalstic data from the Abu data.
-  ```
-  ```{r}
-  # summary statistics for the variable interval between brood for the data for the micropalstic data from the Abu data.
+```
+
+
+```{r}
+  # summary statistics for the variable interval between brood for the data for the microplastic data from the Abu data.
   
   interv_brood_stat <- summarySE(Microplastic_withou_NA, measurevar = "Interval_btwnbrds", groupvars = c("Treatment", 
                 "Genotype"))  # print the summary statistics for the data for the micropalstic data from the Abu data.
   
   print(interv_brood_stat) # print the summary statistics for the data for the micropalstic data from the Abu data.
   
-  ```
+```
   
-  ```{r}
+```{r}
   # plot the reaction norm for interval between brood for the data for the micropalstic data from the Abu data.
   
   int_brood_plot_micro <- ggplot(interv_brood_stat,
@@ -1931,9 +1942,9 @@
   
   
   print(int_brood_plot_micro) # print the reaction norm for interval between brood for the data for the micropalstic data from the Abu data.
-  ```
+```
   
-  ```{r}
+```{r}
   
   # Anova for Age at maturity for the data for the micropalstic data from the Abu data.
   
@@ -1941,18 +1952,18 @@
   
   anova(Age_anova) # print the Anova for Age at maturity for the data for the micropalstic data from the Abu data.
   
-  ```
+```
   
-  ```{r}
+```{r}
   # check the normality of the residuals.
   
   micro <- residuals(Age_anova) # print the residuals for the Anova for Age at maturity for the data for the micropalstic data from the Abu data.
   
   plotNormalHistogram(micro) # print the residuals for the Anova for Age at maturity for the data for the micropalstic data from the Abu data.
   
-  ```
+```
   
-  ```{r}
+```{r}
   # qpplot
   
   qqnorm(residuals(Age_anova),)
@@ -1960,17 +1971,18 @@
   
   qqline(residuals(Age_anova),
          col = "red")
-  ```
-  ```{r}
+```
+
+```{r}
   # Anova for Size at maturity for the data for the micropalstic data from the Abu data.
   
   size_anova <- lmer(Size_maturity ~ Treatment * Genotype + (1|Genotype:Replicates), data = Microplastic_withou_NA) # print the Anova for Size at maturity for the data for the micropalstic data from the Abu data.
   
   print(anova(size_anova)) # print the Anova for Size at maturity for the data for the micropalstic data from the Abu data.
   
-  ```
+```
   
-  ```{r}
+```{r}
   # check the normality of the residuals.
   
   size_micro <- residuals(size_anova) # print the residuals for the Anova for Size at maturity for the data for the micropalstic data from the Abu data.
@@ -2101,11 +2113,165 @@ print(pca_pfos_plot) # print the pca
 ```
   
 ```{r}
+# plot the biplot
+
+
+
+```
+
+    
+    
+```{r}
+
+# check for outliers
+
+U4 <- pca_Pfos$x # check for outliers.
+
+U4
+
 ```
 
 
+```{r}
 
+apply(U4, 2, function(x) which( abs(x - mean(x)) > (3 * sd(x)) )) # check for outliers.
+```
   
-  ```{r}
-  ```
+```{r}
+# summary stat of Age at maturity.
+
+Age_pfos_stat <- summarySE(Pfos_new_df, measurevar = "Age_maturity", groupvars = c("Genotype", "Treatment")) # summary stat of Age at maturity.
+
+print(Age_pfos_stat) # print the summary stat of Age at maturity.
+
+```
   
+```{r}
+# plot the Age at maturity.
+Age_pfos_plot <- ggplot(Age_pfos_stat,
+                                    aes(x = Treatment,
+                                        y = Age_maturity,
+                                        colour = Genotype,
+                                        group = interaction(Genotype))) +
+    geom_errorbar(aes(ymin = Age_maturity - se,
+                      ymax = Age_maturity + se),
+                  width = 0.1,
+                  position = pd) +
+    geom_line(position = pd) +
+    theme(panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.background = element_blank(),
+          axis.line = element_line(colour = "black")) +
+    labs(x = "Treatment",
+         y = "Age_maturity events",
+         colour = "Genotype")
+
+print(Age_pfos_plot) # print the plot of Age at maturity.
+```
+
+```{r}
+# summary stat of Size at maturity.
+
+size_pfos_stat <- summarySE(Pfos_new_df, measurevar = "Size_maturity", groupvars = c("Genotype", "Treatment")) # summary stat of Size at maturity.
+
+print(size_pfos_stat) # print the summary stat of Size at maturity.
+
+```
+  
+```{r}
+
+# plot the reaction norm 
+
+Size_pfos_plot <- ggplot(size_pfos_stat,
+                                    aes(x = Treatment,
+                                        y = Size_maturity,
+                                        colour = Genotype,
+                                        group = interaction(Genotype))) +
+    geom_errorbar(aes(ymin = Size_maturity - se,
+                      ymax = Size_maturity + se),
+                  width = 0.1,
+                  position = pd) +
+    geom_line(position = pd) +
+    theme(panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.background = element_blank(),
+          axis.line = element_line(colour = "black")) +
+    labs(x = "Treatment",
+         y = "Size at maturity",
+         colour = "Genotype")
+
+
+print(Size_pfos_plot) # print the plot of Size at maturity.
+```
+
+```{r}
+
+# summary stat of Fecundity.
+
+Fecundity_pfos_stat <- summarySE(Pfos_new_df, measurevar = "Fecundity", groupvars = c("Genotype", "Treatment")) # summary stat of Fecundity.
+
+print(Fecundity_pfos_stat) # print the summary stat of Fecundity.
+
+```
+  
+```{r}
+# plot the reaction norm
+
+Fecundity_pfos_plot <- ggplot(Fecundity_pfos_stat,
+                                    aes(x = Treatment,
+                                        y = Fecundity,
+                                        colour = Genotype,
+                                        group = interaction(Genotype))) +
+    geom_errorbar(aes(ymin = Fecundity - se,
+                      ymax = Fecundity + se),
+                  width = 0.1,
+                  position = pd) +
+    geom_line(position = pd) +
+    theme(panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.background = element_blank(),
+          axis.line = element_line(colour = "black")) +
+    labs(x = "Treatment",
+         y = "Fecundity",
+  
+       colour = "Genotype")
+
+print(Fecundity_pfos_plot) # print the plot of Fecundity.
+```
+
+```{r}
+# summary stat of Interval between broods.
+
+interval_pfos_stat <- summarySE(Pfos_new_df, measurevar = "Interval_btwnbrds", groupvars = c("Genotype", "Treatment")) # summary stat of Interval between broods.
+
+
+print(interval_pfos_stat) # print the summary stat of Interval between broods.
+
+```
+  
+```{r}
+# plot the reaction norm
+
+interval_pfos_plot <- ggplot(interval_pfos_stat,
+                                    aes(x = Treatment,
+                                        y = Interval_btwnbrds,
+                                        colour = Genotype,
+                                        group = interaction(Genotype))) +
+    geom_errorbar(aes(ymin = Interval_btwnbrds - se,
+                      ymax = Interval_btwnbrds + se),
+                  width = 0.1,
+                  position = pd) +
+    geom_line(position = pd) +
+    theme(panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.background = element_blank(),
+          axis.line = element_line(colour = "black")) +
+    labs(x = "Treatment",
+         y = "Interval between broods",
+         colour = "Genotype")
+
+
+print(interval_pfos_plot) # print the plot of Interval between broods.
+```
+
+
