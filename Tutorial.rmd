@@ -217,18 +217,19 @@
   
 ```{r}
   D$Treatment <- factor(D$Treatment, levels = c("control", "PET")) # convert Treatment to factor.
-  ```
+```
   
   
-  ```{r}
+
+```{r}
   D <- D[, c(1,2,3,4,7,10:11)] # select columns 1 to 4, 7, 10 and 11
-  ```
+```
   
-  ```{r}
+```{r}
   D
-  ```
+```
   
-  ```{r}
+```{r}
   comp_D <- D[complete.cases(D),] # remove missing values in rows
   
   # complete.cases() function returns a logical vector indicating which cases are complete, i.e. have no missing values.
@@ -239,22 +240,22 @@
   
   # logical vectors are often used to subset data frames.
   
-  ```
+```
   
-  ```{r}
+```{r}
   comp_D
-  ```
+```
   
   
-  ```{r}
+```{r}
   
   comp_D_without_NA <- comp_D
   
   print(comp_D_without_NA)
-  ```
+```
   
   
-  ```{r}
+```{r}
   comp_D_without_NA[4:7] <- log(comp_D_without_NA[4:7] + 0.5) # log transform columns 4 to 7
   
   # takes the natural logarithm of the values in columns 4 to 7 and adds 0.5 to each value before taking the log.
@@ -263,28 +264,28 @@
   
   # the addition of 0.5 is a common practice when log transforming count data.
   
-  ```
+```
   
-  ```{r}
+```{r}
   print(comp_D_without_NA) 
-  ```
+```
   
-  ```{r}
+```{r}
   log_comp_D_WO_Na <- comp_D_without_NA[, c(4:7)] # select columns 4 to 7
   
   # Creats a new data frame with only columns 4 to 7.
   
   # we will use this data frame to run the PCA.
   
-  ```
+```
   
-  ```{r}
+```{r}
   
   print(log_comp_D_WO_Na)
-  ```
+```
   
   
-  ```{r}
+```{r}
   # run the PCA with variable scaling on the transformed data
   
   pca <- prcomp(log_comp_D_WO_Na, scale = TRUE) # scale = TRUE scales the variables to have unit variance before running the PCA.
@@ -303,9 +304,9 @@
   
   # the object is stored in the variable pca containing the following components: stdev, rotation,& principal components scores.
   
-  ```
+```
   
-  ```{r}
+```{r}
   # explaining PCA
   
   # the principal components are linear combinations of the original variables.
@@ -313,14 +314,14 @@
   # each priincipal component score provides information about the position of the observation in the principal component space.
   
   # these scores are used to understand the relationship between the observations and patterns in the data.
-  ```
+```
   
-  ```{r}
+```{r}
   
   print(pca)
-  ```
+```
   
-  ```{r}
+```{r}
   # what is the relatioship between the socres and variance of the data?
   
   # the principal components are representing the directions of maximum variance in the data.
@@ -334,23 +335,23 @@
   # the Pcs are ordered by the amount of variance they capture.
   
   # this relationship is important in PCA in understanding the contribution of each PC to the data.
-  ```
+```
   
   
-  ```{r}
+```{r}
   # how much variance is captured by each PC?
   
   summary(pca) # the summary() function returns a summary of the PCA.
-  ```
+```
   
   
   
-  ```{r}
+```{r}
   Genotypes <- as.factor(comp_D_without_NA$Genotypes) # convert Genotype to factor
   
-  ```
+```
   
-  ```{r}
+```{r}
   
   Treatment <- as.factor(comp_D_without_NA$Treatment) # convert Treatment to factor
   
@@ -554,18 +555,18 @@
   print(Age)
 ```
   
-  ```{r}
+```{r}
   # summary statistics for the variable Size at maturity.
   
   Size_at_maturity <- summarySE(comp_D, measurevar = "Size_maturity", # summarySE() function from Rmisc package is used to calculate the summary statistics.
                                 groupvars = c("Genotypes", "Treatment")) # measurevar argument is used to specify the variable for which the summary statistics are calculated.
   # groupvars argument is used to specify the variables for which the summary statistics are calculated.
   
-  ```
+```
   
-  ```{r}
+```{r}
   print(Size_at_maturity)
-  ```
+```
   
   ```{r}
   Size <- ggplot(Size_at_maturity,
@@ -1312,24 +1313,24 @@
   
   print(PFOA_without_NA) # print the PFOA data without missing values
   
-  ```
+```
   
   
-  ```{r}
+```{r}
   # subset the required variables from the PFOA data
   
   PFOA_Data_new <- PFOA_without_NA[, c("Replicates", "Genotypes", "Treatment", "Age_maturity", "Size_maturity", "Fecundity", "Invterval_brood")]
   
-  ```
+```
   
-  ```{r}
+```{r}
   
   print(PFOA_Data_new) # print the subsetted PFOA data
   
-  ```
+```
   
   
-  ```{r}
+```{r}
   # log transform the variables from the PFOA data
   
   PFOA_log_data <- log(PFOA_Data_new[, c("Age_maturity", "Size_maturity", "Fecundity", "Invterval_brood")])
@@ -1621,9 +1622,11 @@
   
   plotNormalHistogram(Fecundity_pfoa_ano_res) # print the histogram for the residuals for Fecundity from the PFOA data.
   
-  ```
+```
   
-  ```{r}
+
+
+```{r}
   
   # plot the qqplot for the residuals for Fecundity from the PFOA data.
   
@@ -1632,18 +1635,20 @@
   
   qqline(residuals(Fecundity_pfoa_ano),
          col = "red")
-  ```
+```
+
   
-  ```{r}
+```{r}
   # perform the ANOVA for Interval between broods from the PFOA data.
   
   Interval_pfoa_ano <- lmer(Invterval_brood ~ Treatment * Genotypes + (1|Genotypes: Replicates), data = PFOA_Data_new)
   
   print(anova(Interval_pfoa_ano)) # print the ANOVA for Interval between broods from the PFOA data.
   
-  ```
+```
   
-  ```{r}
+
+```{r}
   # check the normality of the residuals for Interval between broods from the PFOA data.
   
   qqnorm(residuals(Interval_pfoa_ano),
@@ -1662,24 +1667,24 @@
   
   print(Micrplastic_Data) # print the data for the micropalstic data from the Abu data.
   
-  ```
+```
   
-  ```{r}
+
+```{r}
   str(Micrplastic_Data) # check the structure of the data for the micropalstic data from the Abu data.
   
-  ```
+```
   
-  ```{r}
+```{r}
   # check for missing values in the data for the micropalstic data from the Abu data.
   
    colSums(is.na(Micrplastic_Data))
   
   
-  ```
+```
   
   
-  
-  ```{r}
+```{r}
   # subset the required variables from the data for the micropalstic data from the Abu data.
   
   Micrplastic_Data_new <- Micrplastic_Data[, c("Replicates","Treatment", "Genotype", "Age_maturity", "Size_maturity", "Fecundity", "Interval_btwnbrds")]
@@ -1695,13 +1700,13 @@
   
   print(Microplastic_withou_NA) # print the data for the micropalstic data from the Abu data without missing values.
   
-  ```
+```
   
   
   
   
   
-  ```{r}
+```{r}
   # log transform the data for the micropalstic data from the Abu data.
   
   Microplastic_log <- log(Microplastic_withou_NA[, c("Age_maturity", "Size_maturity", "Fecundity", "Interval_btwnbrds")])
@@ -1840,6 +1845,8 @@
   
   
   print(size_maturity_stat) # print the summary statistics for the data for the micropalstic data from the Abu data.
+  
+  
   
 ```
   
