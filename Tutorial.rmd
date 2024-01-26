@@ -2577,4 +2577,128 @@ anova(Interval_brood_pfas_anova) # print the ANOVA table
 ```
 
 ```{r}
+# import the data
+
+
+MP_PFOA <- read_excel(file.choose(), sheet = "MP_PFOA_Tia") # import the data)
+
+
+print(MP_PFOA) # print the data
+
+```
+
+```{r}
+
+str(MP_PFOA) # structure of the data
+
+```
+
+```{r}
+colSums(is.na(MP_PFOA)) # check for missing values
+
+```
+
+```{r}
+MP_PFOA_data <- MP_PFOA %>% # create a new data frame with only the columns we need
+    select(Replicates,Treatment, Genotypes, Age_maturity, Size_maturity, Fecundity, Interval_brood)
+
+print(MP_PFOA_data) # print the new data frame
+```
+
+```{r}
+
+MP_PFOA_data$Genotypes <- as.factor(MP_PFOA_data$Genotypes) # convert Genotypes to a factor
+
+MP_PFOA_data$Treatment <- as.factor(MP_PFOA_data$Treatment) # convert Treatment to a factor
+
+```
+
+
+```{r}
+MP_PFOA_data[4:7] <- log(MP_PFOA_data[4:7] + 0.5) # log transform the data
+
+```
+
+```{r}
+print(MP_PFOA_data) # print the new data frame
+```
+
+```{r}
+log_MP_PFOA_data <- MP_PFOA_data %>% # create a new data frame with only the columns we need
+    select(Age_maturity, Size_maturity, Fecundity, Interval_brood)
+
+print(log_MP_PFOA_data) # print the new data frame
+```
+
+```{r}
+PCa_MP_Pfoa <- prcomp(log_MP_PFOA_data, center = TRUE, scale. = TRUE) # perform PCA
+
+print(PCa_MP_Pfoa) # print the PCA
+
+```
+
+```{r}
+summary(PCa_MP_Pfoa) # summary of the PCA
+
+```
+
+```{r}
+Genotypes <- as.factor(MP_PFOA_data$Genotypes) # convert Genotypes to a factor
+
+Treatment <- as.factor(MP_PFOA_data$Treatment) # convert Treatment to a factor
+
+```
+
+```{r}
+
+MP_PFOA_plot <- fviz_pca_ind(PCa_MP_Pfoa,
+                             habillage = Genotypes,
+                             geom = "point")
+
+print(MP_PFOA_plot) # print the PCA plot
+
+```
+
+```{r}
+fviz_pca_biplot(PCa_MP_Pfoa,
+                col.ind = Genotypes,
+                geom = "point",
+                 palette = c("LRV-0-1" = "red", "LR2-36-01" = "black"),
+                 addEllipses = TRUE,
+                 col.var = "blue",
+                 arrowsize = 0.1,
+                 labelsize = 3,
+                 pointsize = 1,
+                 pointshape = 19,
+                 mean.point = F,
+                 var.scale = 0.5,
+                 ellipse.type = "confidence",
+                 legend.title = "Genotypes",
+                 repel = TRUE
+                )
+
+```
+
+```{r}
+
+U7 <- PCa_MP_Pfoa$x
+
+print(U7) # print the PCA scores
+
+```
+
+```{r}
+qplot(U7[,1], U7[,2],  colour = Treatment, shape = Genotypes) + coord_equal() # QQ plot of PCA scores
+
+```
+
+```{r}
+apply(U7, 2, function
+      (x) which (abs(x - mean(x)) > 3 * sd(x))) # check for outliers))))
+```
+
+
+```{r}
+
+
 ```
