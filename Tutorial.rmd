@@ -2272,3 +2272,266 @@ print(interval_pfos_plot) # print the plot of Interval between broods.
 ```
 
 
+# Mixed chemical exposure
+# -----------------------
+
+# PFOA+PFOS: Tia
+
+```{r}
+
+# read the data
+
+PFOA_PFOS_Tia <- read_excel(file.choose(), sheet = "PFOS_PFOA_Tia") # read the data
+
+print(PFOA_PFOS_Tia) # print the data
+
+```
+
+```{r}
+str(PFOA_PFOS_Tia) # check the structure of the data
+
+```
+
+```{r}
+PFAs_Tia <- PFOA_PFOS_Tia[, c("Replicates", "Genotypes", "Treatment", "Age_maturation", "Size_maturity","Fecundity", "Interval_brood")] # select the columns of interest
+```
+
+```{r}
+print(PFAs_Tia) # print the data
+```
+
+```{r}
+
+PFAs_Tia$Genotypes <- as.factor(PFAs_Tia$Genotypes) # convert the Genotypes column to factor
+
+PFAs_Tia$Treatment <- as.factor(PFAs_Tia$Treatment) # convert the Treatment column to factor
+
+```
+
+```{r}
+
+colSums(is.na(PFAs_Tia)) # check for missing values
+
+```
+
+```{r}
+
+PFAs_Tia [4:7] <- log(PFAs_Tia [4:7]) # log transformation of the data
+
+print(PFAs_Tia) # print the data
+
+```
+
+```{r}
+
+log_PFAS_Tia <- PFAs_Tia[, c("Age_maturation", "Size_maturity","Fecundity", "Interval_brood")] # select the columns of interest
+
+print(log_PFAS_Tia) # print the data
+
+```
+
+
+```{r}
+PCA_PFAS <- prcomp(log_PFAS_Tia, scale = TRUE) # PCA analysis
+
+print(PCA_PFAS) # print the PCA analysis
+
+```
+
+```{r}
+summary(PCA_PFAS) # summary of the PCA analysis
+
+```
+```{r}
+
+Treatment <- as.factor(PFAs_Tia$Treatment) # convert the Treatment column to factor
+
+Genotypes <- as.factor(PFAs_Tia$Genotypes) # convert the Genotypes column to factor
+
+```
+
+
+```{r}
+PFAS_plot <- fviz_pca_ind(PCA_PFAS, habillage = Genotypes, geom = "point") # PCA 
+```
+
+```{r}
+
+print(PFAS_plot) # print the PCA plot
+
+```
+
+```{r}
+fviz_pca_biplot (PCA_PFAS, 
+                 col.ind = Genotypes, 
+                 geom.ind = "point",
+                 palette = c("LRV-0-1" = "red", "LR2-36-01" = "black"),
+                 addEllipses = TRUE,
+                 col.var = "blue",
+                 arrowsize = 0.1,
+                 labelsize = 3,
+                 pointsize = 1,
+                 pointshape = 19,
+                 mean.point = F,
+                 var.scale = 0.5,
+                 ellipse.type = "confidence",
+                 legend.title = "Genotypes",
+                 repel = TRUE
+                 ) # PCA biplot
+```
+
+```{r}
+U6 <- PCA_PFAS$x
+
+print(U6) # print the PCA scores
+
+```
+
+```{r}
+qplot(U6[,1], U6[,2], colour = Treatment, shape = Genotypes) + coord_equal() # PCA scores plot
+```
+
+```{r}
+apply(U6, 2, function(x) which(abs(x -  mean(x)) > (2 * sd(x)))) # mean of the PCA scores
+
+```
+
+```{r}
+# summary stat of Age at maturation.
+
+Age_maturation_pfas_stat <- summarySE(PFOA_PFOS_Tia, measurevar = "Age_maturation", groupvars = c("Genotypes", "Treatment")) # summary stat of Age at maturation.
+
+
+print(Age_maturation_pfas_stat) # print the summary stat of Age at maturation.
+
+```
+
+```{r}
+# plot the reaction norm
+
+Age_maturation_pfas_plot <- ggplot(Age_maturation_pfas_stat,
+                                    aes(x = Treatment,
+                                        y = Age_maturation,
+                                        colour = Genotypes,
+                                        group = interaction(Genotypes))) +
+    geom_errorbar(aes(ymin = Age_maturation - se,
+                      ymax = Age_maturation + se),
+                  width = 0.1,
+                  position = pd) +
+    geom_line(position = pd) +
+    theme(panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.background = element_blank(),
+          axis.line = element_line(colour = "black")) +
+    labs(x = "Treatment",
+         y = "Age at maturation",
+         colour = "Genotypes")
+
+print(Age_maturation_pfas_plot) # print the plot of Age at maturation.
+```
+
+```{r}
+# summary stat of Size at maturity.
+
+Size_maturity_pfas_stat <- summarySE(PFOA_PFOS_Tia, measurevar = "Size_maturity", groupvars = c("Genotypes", "Treatment")) # summary stat of Size at maturity.
+
+print(Size_maturity_pfas_stat) # print the summary stat of Size at maturity.
+
+```
+
+```{r}
+# plot the reaction norm
+
+Size_maturity_pfas_plot <- ggplot(Size_maturity_pfas_stat,
+                                    aes(x = Treatment,
+                                        y = Size_maturity,
+                                        colour = Genotypes,
+                                        group = interaction(Genotypes))) +
+    geom_errorbar(aes(ymin = Size_maturity - se,
+                      ymax = Size_maturity + se),
+                  width = 0.1,
+                  position = pd) +
+    geom_line(position = pd) +
+    theme(panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.background = element_blank(),
+          axis.line = element_line(colour = "black")) +
+    labs(x = "Treatment",
+         y = "Size at maturity",
+         colour = "Genotypes")
+
+print(Size_maturity_pfas_plot) # print the plot of Size at maturity.
+```
+
+```{r}
+# summary stat of Fecundity.
+
+Fecundity_pfas_stat <- summarySE(PFOA_PFOS_Tia, measurevar = "Fecundity", groupvars = c("Genotypes", "Treatment")) # summary stat of Fecundity.
+
+print(Fecundity_pfas_stat) # print the summary stat of Fecundity.
+
+```
+
+```{r}
+# plot the reaction norm
+
+Fecundity_pfas_plot <- ggplot(Fecundity_pfas_stat,
+                                    aes(x = Treatment,
+                                        y = Fecundity,
+                                        colour = Genotypes,
+                                        group = interaction(Genotypes))) +
+    geom_errorbar(aes(ymin = Fecundity - se,
+                      ymax = Fecundity + se),
+                  width = 0.1,
+                  position = pd) +
+    geom_line(position = pd) +
+    theme(panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.background = element_blank(),
+          axis.line = element_line(colour = "black")) +
+    labs(x = "Treatment",
+         y = "Fecundity",
+         colour = "Genotypes")
+
+print(Fecundity_pfas_plot) # print the plot of Fecundity.
+```
+
+```{r}
+# summary stat of Interval between brood.
+
+Interval_brood_pfas_stat <- summarySE(PFOA_PFOS_Tia, measurevar = "Interval_brood", groupvars = c("Genotypes", "Treatment")) # summary stat of Interval between brood.
+
+print(Interval_brood_pfas_stat) # print the summary stat of Interval between brood.
+
+```
+
+```{r}
+# plot the reaction norm
+
+Interval_brood_pfas_plot <- ggplot(Interval_brood_pfas_stat,
+                                    aes(x = Treatment,
+                                        y = Interval_brood,
+                                        colour = Genotypes,
+                                        group = interaction(Genotypes))) +
+    geom_errorbar(aes(ymin = Interval_brood - se,
+                      ymax = Interval_brood + se),
+                  width = 0.1,
+                  position = pd) +
+    geom_line(position = pd) +
+    theme(panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.background = element_blank(),
+          axis.line = element_line(colour = "black")) +
+    labs(x = "Treatment",
+         y = "Interval between brood",
+         colour = "Genotypes")
+
+print(Interval_brood_pfas_plot) # print the plot of Interval between brood.
+
+```
+
+```{r}
+
+
+
+```
