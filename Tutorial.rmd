@@ -2531,7 +2531,50 @@ print(Interval_brood_pfas_plot) # print the plot of Interval between brood.
 ```
 
 ```{r}
+# perform the ANOVA
+
+Age_maturation_pfas_anova <- lmer(Age_maturation ~ Genotypes * Treatment + (1|Genotypes : Replicates), data = PFOA_PFOS_Tia) # perform the ANOVA
 
 
+anova(Age_maturation_pfas_anova) # print the ANOVA table
 
+```
+
+```{r}
+#tidy_Age_PFAS <- tidy(Age_maturation_pfas_anova) # tidy the ANOVA table
+
+#write.csv(tidy_Age_PFAS, "tidy_Age_PFAS.csv") # write the ANOVA table to a csv file
+
+```
+
+```{r}
+
+# perform the ANOVA
+
+Size_maturity_pfas_anova <- lmer(Size_maturity ~ Genotypes * Treatment + (1|Genotypes : Replicates), data = PFOA_PFOS_Tia) # perform the ANOVA
+
+anova(Size_maturity_pfas_anova) # print the ANOVA table
+
+```
+
+```{r}
+
+# perform the ANOVA
+
+Fecundity_pfas_anova <- lmer(Fecundity ~ Genotypes * Treatment + (1|Genotypes : Replicates), data = PFOA_PFOS_Tia) # perform the ANOVA
+
+anova(Fecundity_pfas_anova) # print the ANOVA table
+
+```
+
+```{r}
+# perofrm the ANOVA
+
+Interval_brood_pfas_anova <- lmer(Interval_brood ~ Genotypes * Treatment + (1|Genotypes : Replicates), data = PFOA_PFOS_Tia) # perform the ANOVA
+
+anova(Interval_brood_pfas_anova) # print the ANOVA table
+
+```
+
+```{r}
 ```
