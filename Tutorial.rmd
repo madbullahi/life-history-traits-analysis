@@ -2730,4 +2730,141 @@ Age_maturation_MP_PFOA_plot <- ggplot(Age_maturation_MP_PFOA,
 print(Age_maturation_MP_PFOA_plot) # print the reaction norm
 ```
 
+```{r}
+# summary statistics size at maturation
 
+Size_maturation_MP_PFOA <- summarySE(MP_PFOA_data, measurevar = "Size_maturity", groupvars = c("Treatment", "Genotypes"))
+
+print(Size_maturation_MP_PFOA) # print the summary statistics
+```
+
+```{r}
+
+# plot the reaction norm
+
+Size_maturation_MP_PFOA_plot <- ggplot(Size_maturation_MP_PFOA,
+                                    aes(x = Treatment,
+                                        y = Size_maturity,
+                                        colour = Genotypes,
+                                        group = interaction(Genotypes))) +
+    geom_errorbar(aes(ymin = Size_maturity - se,
+                      ymax = Size_maturity + se),
+                  width = 0.1,
+                  position = pd) +
+    geom_line(position = pd) +
+    theme(panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.background = element_blank(),
+          axis.line = element_line(colour = "black")) +
+    labs(x = "Treatment",
+         y = "Size at maturation",
+         colour = "Genotypes")
+
+print(Size_maturation_MP_PFOA_plot) # print the reaction norm
+```
+
+```{r}
+
+# summary statistics fecundity
+
+Fecundity_MP_PFOA <- summarySE(MP_PFOA_data, measurevar = "Fecundity", groupvars = c("Treatment", "Genotypes"))
+
+print(Fecundity_MP_PFOA) # print the summary statistics
+```
+
+```{r}
+#plot the reaction norm
+
+Fecundity_MP_PFOA_plot <- ggplot(Fecundity_MP_PFOA,
+                                    aes(x = Treatment,
+                                        y = Fecundity,
+                                        colour = Genotypes,
+                                        group = interaction(Genotypes))) +
+    geom_errorbar(aes(ymin = Fecundity - se,
+                      ymax = Fecundity + se),
+                  width = 0.1,
+                  position = pd) +
+    geom_line(position = pd) +
+    theme(panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.background = element_blank(),
+          axis.line = element_line(colour = "black")) +
+    labs(x = "Treatment",
+         y = "Fecundity",
+         colour = "Genotypes")
+
+print(Fecundity_MP_PFOA_plot) # print the reaction norm
+```
+
+```{r}
+# summary statistics interval between broods
+
+Interval_brood_MP_PFOA <- summarySE(MP_PFOA_data, measurevar = "Interval_brood", groupvars = c("Treatment", "Genotypes"))
+
+print(Interval_brood_MP_PFOA) # print the summary statistics
+```
+
+```{r}
+
+# plot the reaction norm
+
+Interval_brood_MP_PFOA_plot <- ggplot(Interval_brood_MP_PFOA,
+                                    aes(x = Treatment,
+                                        y = Interval_brood,
+                                        colour = Genotypes,
+                                        group = interaction(Genotypes))) +
+    geom_errorbar(aes(ymin = Interval_brood - se,
+                      ymax = Interval_brood + se),
+                  width = 0.1,
+                  position = pd) +
+    geom_line(position = pd) +
+    theme(panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.background = element_blank(),
+          axis.line = element_line(colour = "black")) +
+    labs(x = "Treatment",
+         y = "Interval between broods",
+         colour = "Genotypes")
+
+print(Interval_brood_MP_PFOA_plot) # print the reaction norm
+```
+
+```{r}
+
+# perform anova
+
+anova_MP_PFOA_age <- lmer(Age_maturity ~ Treatment * Genotypes +  (1|Genotypes : Replicates), data = MP_PFOA_data)
+
+anova(anova_MP_PFOA_age)
+
+```
+
+```{r}
+# perform anova
+
+anova_MP_PFOA_size <- lmer(Size_maturity ~ Treatment * Genotypes +  (1|Genotypes : Replicates), data = MP_PFOA_data)
+
+anova(anova_MP_PFOA_size)
+
+```
+
+```{r}
+# perform anova
+
+anova_MP_PFOA_fecundity <- lmer(Fecundity ~ Treatment * Genotypes +  (1|Genotypes : Replicates), data = MP_PFOA_data)
+
+anova(anova_MP_PFOA_fecundity)
+
+```
+
+```{r}
+# perform anova
+
+anova_MP_PFOA_interval <- lmer(Interval_brood ~ Treatment * Genotypes +  (1|Genotypes : Replicates), data = MP_PFOA_data)
+
+anova(anova_MP_PFOA_interval)
+
+```
+
+```{r}
+```
