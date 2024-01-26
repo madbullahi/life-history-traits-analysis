@@ -554,6 +554,7 @@ print(Pca_plot)
   print(Age)
 ```
   
+  
 ```{r}
   # summary statistics for the variable Size at maturity.
   
@@ -685,6 +686,12 @@ print(Pca_plot)
   library(lmerTest) # lmerTest package is used to perform the ANOVA
   
 ```
+  
+  #Analysis of Deviance vs Analysis of Variance:
+  
+  #Analysis of Deviance is used to compare the models with different fixed effects.
+  
+  #Analysis of Variance is used to compare the models with different random effects.
   
 ```{r}
   # perform the ANOVA
