@@ -2700,5 +2700,34 @@ apply(U7, 2, function
 
 ```{r}
 
+# summary statistics
 
+Age_maturation_MP_PFOA <- summarySE(MP_PFOA_data, measurevar = "Age_maturity", groupvars = c("Treatment", "Genotypes"))
+print(Age_maturation_MP_PFOA) # print the summary statistics
 ```
+
+```{r}
+# plot the reaction norm
+
+Age_maturation_MP_PFOA_plot <- ggplot(Age_maturation_MP_PFOA,
+                                    aes(x = Treatment,
+                                        y = Age_maturity,
+                                        colour = Genotypes,
+                                        group = interaction(Genotypes))) +
+    geom_errorbar(aes(ymin = Age_maturity - se,
+                      ymax = Age_maturity + se),
+                  width = 0.1,
+                  position = pd) +
+    geom_line(position = pd) +
+    theme(panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.background = element_blank(),
+          axis.line = element_line(colour = "black")) +
+    labs(x = "Treatment",
+         y = "Age at maturation",
+         colour = "Genotypes")
+
+print(Age_maturation_MP_PFOA_plot) # print the reaction norm
+```
+
+
