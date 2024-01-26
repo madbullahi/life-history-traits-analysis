@@ -196,7 +196,6 @@
 ```
   
   
-  
 ```{r}
   D <- Data 
   
@@ -355,9 +354,10 @@
   
   Treatment <- as.factor(comp_D_without_NA$Treatment) # convert Treatment to factor
   
-  ```
+```
   
-  ```{r}
+
+```{r}
   
   # plot the scores for the first two PCs
   
@@ -365,23 +365,23 @@
   library(FactoMineR) # load the FactoMineR package
   
   
-  ```
+```
   
   
-  ```{r}
+```{r}
   
   
   Pca_plot <- fviz_pca_ind(pca, habillage = Genotypes, geom = "point") # fviz_pca_biplot() function from factoextra package is used to plot the scores for the first two PCs.
-  ```
+```
+
+```{r}
   
-  ```{r}
   
+print(Pca_plot)
   
-  print(Pca_plot)
+```
   
-  ```
-  
-  ```{r}
+```{r}
   
   fviz_pca_biplot(pca,
                col.ind = Genotypes, # color by Genotype
@@ -402,21 +402,21 @@
                repel = TRUE, # Avoid text overlapping
                )
   
-  ```
+```
   
   
-  ```{r}
+```{r}
   
   U <- pca$x
   
   print(U)
-  ```
+```
   
-  ```{r}
+```{r}
   qplot(U[, 1], U[, 2], colour = factor(Treatment) ) + coord_equal() # plot the first two PCs
-  ```
+```
   
-  ```{r}
+```{r}
   #Measuring Outliers
   apply(U, 2, function(x) which( abs(x - mean(x)) > (2 * sd(x)) )) # find outliers
   
@@ -427,13 +427,13 @@
   # '2' indicates that the function is applied to each column of the matrix U.
   
   # which() function is used to identify the indices that satisfy the condition.
-  ```
+```
   
-  ```{r}
+```{r}
   apply(U, 2, function(x) which( abs(x - mean(x)) > (3 * sd(x)) )) # find outliers
-  ```
+```
   
-  ```{r}
+```{r}
   
   # Three standard deviations away from the mean is a statistical concept related to the spread of data in a normal distribution. 
   
@@ -444,9 +444,9 @@
   # the observations that are more than three standard deviations away from the mean are considered outliers.
   
   # the observations that are more than two standard deviations away from the mean are considered extreme values.
-  ```
+```
   
-  ```{r}
+```{r}
   # Tukeys method
   
   # Tukey's method is a statistical method for identifying outliers.
@@ -454,9 +454,9 @@
   # Tukey's method uses the interquartile range (IQR) to identify outliers.
   
   
-  ```
+```
   
-  ```{r}
+```{r}
   
   #U_no_outliers <- U
   
@@ -465,49 +465,48 @@
   #for (i in 1:ncol(U)) {
    # U_no_outliers[outliers[, i], i] <- NA
   #}
-  ```
+```
   
-  ```{r}
+```{r}
   
   #for (i in 1:ncol(U)) {
    # U_no_outliers[outliers[[i]], i] <- NA
   #}
-  ```
+```
   
-  ```{r}
+```{r}
   #U_no_outliers 
   
-  ```
+```
   
-  ```{r}
+```{r}
   
   #qplot(U_no_outliers[, 1], U_no_outliers[, 2], colour = factor(Genotype) ) + coord_equal()
-  ```
+```
   
   
-  ```{r}
+```{r}
   # plot the reaction norms for the variables in the data
   
   # prepapre a summary statistics for the variables in the data
   
-  ```
+```
   
   
-  ```{r}
+```{r}
   .
   
   print(comp_D)
-  ```
+```
   
-  ```{r}
+```{r}
   
   # load the package for the summary statistics
   
   library(Rmisc) # load the Rmisc package
+```
   
-  ```
-  
-  ```{r}
+```{r}
   # summary statistics for the vairable Age at maturity
   
   Age_at_maturity <- summarySE(comp_D, measurevar = "Age_maturity", groupvars = c("Genotypes", "Treatment"))
@@ -568,7 +567,7 @@
   print(Size_at_maturity)
 ```
   
-  ```{r}
+```{r}
   Size <- ggplot(Size_at_maturity,
                  aes(x = Treatment,
                      y = Size_maturity,
@@ -587,25 +586,25 @@
          y = "Size at maturity",
          colour = "Genotype") #+
     #xlim(c(0.5, 2.5))
-  ```
+```
   
-  ```{r}
+```{r}
   
   print(Size)
-  ```
+```
   
-  ```{r}
+```{r}
   # summary statistics for the variable Fecundity
   
   fecundity <- summarySE(comp_D, measurevar = "Fecundity", groupvars = c("Genotypes", "Treatment"))
   
-  ```
+```
   
-  ```{r}
+```{r}
   print(fecundity)
-  ```
+```
   
-  ```{r}
+```{r}
   # plot the reaction norm for fecundity
   FecunDity <- ggplot(fecundity,
                       aes(x = Treatment,
@@ -625,24 +624,24 @@
          y = "Fecundity",
          colour = "Genotype") #+
     #xlim(c(0.5, 2.5))
-  ```
+```
   
-  ```{r}
+```{r}
   print(FecunDity)
-  ```
+```
   
-  ```{r}
+```{r}
   # summary statistics for the variable Intervarl between broods
   
   IN_BRD <- summarySE(comp_D, measurevar = "Interval_brood", groupvars = c("Genotypes", "Treatment"))
   
-  ```
+```
   
-  ```{r} 
+```{r} 
   print(IN_BRD)
-  ```
+```
   
-  ```{r}
+```{r}
   # plot the reaction norm for Interval between broods
   Interval_between_broods <- ggplot(IN_BRD,
                                     aes(x = Treatment,
@@ -662,13 +661,13 @@
          y = "Interval between broods",
          colour = "Genotype") +
     ylim(c(0.5, 5.0))
-  ```
+```
   
-  ```{r}
+```{r}
   print(Interval_between_broods)
-  ```
+```
   
-  ```{r}
+```{r}
   # Analysis of variance (ANOVA) for the variable Age at maturity
   
   Age_maturity <- comp_D[, 'Age_maturity'] # extract the variable Age at maturity from the data frame comp_D
@@ -678,16 +677,16 @@
   Treatment <- comp_D[, 'Treatment'] # extract the variable Treatment from the data frame comp_D
   
   
-  ```
+```
   
-  ```{r}
+```{r}
   # load the required packages for ANOVA
   
   library(lmerTest) # lmerTest package is used to perform the ANOVA
   
-  ```
+```
   
-  ```{r}
+```{r}
   # perform the ANOVA
   
   Age_maturity_ANOVA <- lmer(Age_maturity ~ Treatment*Genotypes + (1|Genotypes: Replicates), data = comp_D) 
@@ -696,99 +695,97 @@
   # Age_maturity ~ Treatment*Genotypes + (1|Genotypes: Replicates) is the formula for the ANOVA.
   # Treatment*Genotypes is the fixed effect.
   # (1|Genotypes: Replicates) is the random effect.
-  ```
+```
   
-  ```{r}
+```{r}
   # print the ANOVA results
   
   anova(Age_maturity_ANOVA)
-  ```
+```
   
-  ```{r}
+```{r}
   
   # Analysis of variance (ANOVA) for the variable Size at maturity
   
   Size_maturity <- comp_D[, 'Size_maturity'] # extract the variable Size at maturity from the data frame comp_D
-  ```
+```
   
-  ```{r}
+```{r}
   
   # perform the ANOVA
   
   Size_maturity_ANOVA <- lmer(Size_maturity ~ Treatment*Genotypes + (1|Genotypes: Replicates), data = comp_D)
-  ```
+```
   
-  ```{r}
+```{r}
   
   anova(Size_maturity_ANOVA)
-  ```
+```
   
-  ```{r}
+```{r}
   # Analysis of variance (ANOVA) for the variable Fecundity
   
   Fecundity <- comp_D[, 'Fecundity'] # extract the variable Fecundity from the data frame comp_D
-  ```
+```
   
-  ```{r}
+```{r}
   # perform the ANOVA
   
   fecundity_ANOVA <- lmer(Fecundity ~ Treatment*Genotypes + (1|Genotypes: Replicates), data = comp_D)
-  ```
+```
   
-  ```{r}
+```{r}
   # print the ANOVA results
   
   anova(fecundity_ANOVA) # print the ANOVA results
-  ```
+```
   
-  ```{r}
+```{r}
   
   # Analysis of variance (ANOVA) for the variable Interval between broods
   
   Interval_brood <- comp_D[, 'Interval_brood'] # extract the variable Interval between broods from the data frame comp_D
-  ```
+```
   
-  ```{r}
+```{r}
   # perform the ANOVA
   
   Interval_brood_ANOVA <- lmer(Interval_brood ~ Treatment*Genotypes + (1|Genotypes: Replicates), data = comp_D)
-  ```
+```
   
-  ```{r}
+```{r}
   # print the ANOVA results
   
   anova(Interval_brood_ANOVA) # print the ANOVA results
-  ```
-  ```{r}
+```
+
+```{r}
   
   summary(Age_maturity_ANOVA) # print the summary of the ANOVA results
-  ```
-  
-  ```{r}
-  ```
-  
-  ```{r}
+```
+
+```{r}
   # check if the data is normally distributed and meets the assumptions of ANOVA
   
   # check the normality of the data
   
   
-  ```
+```
   
-  ```{r}
+```{r}
   # check the normality of the variable Age at maturity
   # plot the histogram of the residuals of the variable 'Age at maturity'
   
   x <- residuals(Age_maturity_ANOVA) # extract the residuals of the variable 'Age at maturity' from the ANOVA results
   
-  ```
+```
   
-  ```{r}
+```{r}
   
   plotNormalHistogram(x) # plot the histogram of the residuals of the variable 'Age at maturity'
-  ```
+```
   
-  ```{r}
+```{r}
   # plot the qq-plot of the residuals of the variable 'Age at maturity'
   
   qqnorm(residuals(Age_maturity_ANOVA),
@@ -796,30 +793,30 @@
   
   qqline(residuals(Age_maturity_ANOVA),
          col = "red") # add the reference line to the qq-plot
-  ```
+```
   
-  ```{r}
+```{r}
   # how the qq-plot should look like if the data is normally distributed;
   # the points should be on the reference line. Deviations from the reference line indicate that the data is not normally distributed.
   # edge effects are common in the qq-plot. if the edge effects are present, the data is not normally distributed.it suggests that the tails of the residuals are not normally distributed.
   # the qq-plot compares the quantiles of the residuals to the quantiles of the theoretical normal distribution.
   # what are  residuals? they are used to assess the goodness of fit of a model. 
-  ```
+```
   
-  ```{r}
+```{r}
   # check the normality of the variable Size at maturity
   
   s <- residuals(Size_maturity_ANOVA) # extract the residuals of the variable 'Size at maturity' from the ANOVA results
   
-  ```
+```
   
-  ```{r}
+```{r}
   # plot the histogram of the residuals of the variable 'Size at maturity'
   
   plotNormalHistogram(s) # plot the histogram of the residuals of the variable 'Size at maturity'
-  ```
+```
   
-  ```{r}
+```{r}
   # plot the qq-plot of the residuals of the variable 'Size at maturity'
   
   qqnorm(residuals(Size_maturity_ANOVA),
@@ -827,60 +824,60 @@
   
   qqline(residuals(Size_maturity_ANOVA),
          col = "red") # add the reference line to the qq-plot
-  ```
+```
   
-  ```{r}
+```{r}
   # check the normality of the variable Fecundity
   
   f <- residuals(fecundity_ANOVA) # extract the residuals of the variable 'Fecundity' from the ANOVA results
   
-  ```
+```
   
-  ```{r}
+```{r}
   # plot the histogram of the residuals of the variable 'Fecundity'
   
   plotNormalHistogram(f) # plot the histogram of the residuals of the variable 'Fecundity'
-  ```
+```
   
-  ```{r}
+```{r}
   # plot the qq-plot of the residuals of the variable 'Fecundity'
   
   qqnorm(residuals(fecundity_ANOVA),
          ylab = "Sample Quantiles for Residuals") # plot the qq-plot of the residuals of the variable 'Fecundity'
   qqline(residuals(fecundity_ANOVA),
          col = "red") # add the reference line to the qq-plot
-  ```
+```
   
-  ```{r}
+```{r}
   # check the normality of the variable Interval between broods
     
   i <- residuals(Interval_brood_ANOVA) # extract the residuals of the variable 'Interval between broods' from the ANOVA results
   
-  ```
+```
   
-  ```{r}
+```{r}
   # plot the histogram of the residuals of the variable 'Interval between broods'
   
   plotNormalHistogram(i) # plot the histogram of the residuals of the variable 'Interval between broods'
-  ```
+```
   
-  ```{r}
+```{r}
   # plot the qq-plot of the residuals of the variable 'Interval between broods'
   
   qqnorm(residuals(Interval_brood_ANOVA),
          ylab = "Sample Quantiles for Residuals") # plot the qq-plot of the residuals of the variable 'Interval between broods'
   qqline(residuals(Interval_brood_ANOVA),
          col = "red") # add the reference line to the qq-plot
-  ```
+```
   
-  ```{r}
+```{r}
   # Run an ANOV with the log transformed data
   
   print(comp_D_without_NA) # print the data frame comp_D_without_NA
   
-  ```
+```
   
-  ```{r}
+```{r}
   
   # subset the variable Age at maturity
   
@@ -888,88 +885,87 @@
   
   #print(Age_at_maturity_log) # print the variable Age at maturity
   
-  ```
+```
   
-  ```{r}
+```{r}
   print(Age_maturity) # print the variable Age at maturity
-  ```
+```
   
   
-  ```{r}
+```{r}
   # run the ANOV with the log transformed data for Age at maturity
   
   Age_maturity_log_ANOVA <- lmer(Age_maturity ~ Treatment*Genotypes + (1|Genotypes: Replicates), data = comp_D_without_NA)
-  ```
+```
   
-  ```{r}
+```{r}
   anova(Age_maturity_log_ANOVA) # print the ANOVA results
-  ```
+```
   
-  ```{r}
+```{r}
   # check the normality of the variable Age at maturity
   
   a <- residuals(Age_maturity_log_ANOVA) # extract the residuals of the variable 'Age at maturity' from the ANOVA results
   
-  ```
+```
   
-  ```{r}
+```{r}
   plotNormalHistogram(a) # plot the histogram of the residuals of the variable 'Age at maturity'
-  ```
+```
   
-  ```{r}
+```{r}
   # plot the qq-plot of the residuals of the variable 'Age at maturity'
   
   qqnorm(residuals(Age_maturity_log_ANOVA),
          ylab = "Sample Quantiles for Residuals") # plot the qq-plot of the residuals of the variable 'Age at maturity'
   qqline(residuals(Age_maturity_log_ANOVA),
          col = "red") # add the reference line to the qq-plot
-  ```
+```
   The assumption of linear models are about the residuals, not the raw data. The residuals are the difference between the observed values and the fitted values. The residuals are the errors of the model. The residuals are the
   
   
   
   # PFOS data: Tia
-  ```{r}
+```{r}
   # Import the PFOS data.
   PFOs_data <- read_excel(file.choose(), sheet = "PFOS-Tia") # import the PFOS data
   
-  ```
+```
   
-  ```{r}
+```{r}
   print(PFOs_data) # print the PFOS data
-  ```
+```
   
-  ```{r}
+```{r}
   summary(PFOs_data) # print the summary of the PFOS data
-  ```
+```
   
-  ```{r}
+```{r}
   str(PFOs_data) # plot the Boxplot of the PFOS data
-  ```
+```
   
   
-  
-  ```{r}
+```{r}
   #check for complete cases
   
   colSums(is.na(PFOs_data)) # check for complete cases
-  ```
+```
   
-  ```{r}
+```{r}
   
   PFOS_DT <- PFOs_data[complete.cases(PFOs_data),] # remove the missing values from the PFOS data
   
-  ```
+```
   
-  ```{r}
+```{r}
   print(PFOS_DT) # print the PFOS data
-  ```
+```
   
-  ```{r}
+```{r}
   PFOS_without_NA <- PFOS_DT
-  ```
+```
   
-  ```{r}
+```{r}
   # Conert the Gentoypes $ Treatment to factors
   
   
@@ -977,65 +973,65 @@
   
   Treatment <- as.factor(PFOS_without_NA$Treatment) # convert the Treatment to factors
   
-  ```
+```
   
-  ```{r}
+```{r}
   # subset the need variables to create a new dataframe
   
   PFOS_Data_new <- PFOS_without_NA[, c("Replicates","Genotypes", "Treatment", "Size_maturity", "Fecundity", "Interval_brood", "Age_maturity")] # subset the need variables to create a new dataframe
   
-  ```
+```
   
-  ```{r}
+```{r}
   print(PFOS_Data_new) # print the new dataframe
-  ```
+```
   
-  ```{r}
+```{r}
   # log transform the variables Size at maturity, Fecundity, Ages_maturity and Interval between broods.
   
   PFOS_Data_new_log <- log(PFOS_Data_new[, c("Size_maturity", "Fecundity", "Interval_brood", "Age_maturity")] + 0.5) # log transform the variables Size at maturity, Fecundity, Ages_maturity and Interval between broods.
   
-  ```
+```
   
-  ```{r}
+```{r}
   print(PFOS_Data_new_log) # print the log transformed data
-  ```
+```
   
-  ```{r}
+```{r}
   # perform a PCA on the log transformed data.
   
   PFOS_PCA <- prcomp(PFOS_Data_new_log, center = TRUE, scale. = TRUE) # perform a PCA on the log transformed data.
   
-  ```
+```
   
-  ```{r}
+```{r}
   
   summary(PFOS_PCA) # print the summary of the PCA
-  ```
+```
   
-  ```{r}
+```{r}
   print(PFOS_PCA) # print the PCA
-  ```
+```
   
-  ```{r}
+```{r}
   
   Genotypes <- as.factor(PFOS_Data_new$Genotypes) # convert the Genotypes to factors
   Treatment <- as.factor(PFOS_Data_new$Treatment) # convert the Treatment to factors
-  ```
+```
   
   
   
   
-  ```{r}
+```{r}
   PFOS_pca_plot <- fviz_pca_ind(PFOS_PCA, habillage = Genotypes, geom = "point") # plot the PCA
-  ```
+```
   
   
-  ```{r}
+```{r}
   print(PFOS_pca_plot) # print the PCA
-  ```
-  
-  ```{r}
+```
+
+```{r}
   fviz_pca_biplot(PFOS_PCA, # plot the PCA
                col.ind = Genotypes, # color by Genotype
               palette = c("LRV-0-1"="red","LR2-36-01"="black"), # color palette
@@ -1054,43 +1050,43 @@
                legend.title = "Genotype", # Legend title
                repel = TRUE, # Avoid text overlapping
                )
-  ```
+```
   
   
-  ```{r}
+```{r}
   U2 <- PFOS_PCA$x # extract the second column of the rotation matrix
-  ```
+```
   
-  ```{r}
+```{r}
   U2
-  ```
+```
   
-  ```{r}
+```{r}
   qplot(U2[, 1], U2[, 2], colour = factor(Treatment) ) + coord_equal() # plot the first two PC
-  ```
+```
   
-  ```{r}
+```{r}
   # look for potential ouliers in the PFOS data
   
   apply(U2, 2, function(x) which( abs(x - mean(x)) > (2 * sd(x)) )) # look for potential ouliers in the PFOS data
   
   apply(U2, 2, function(x) which( abs(x - mean(x)) > (3 * sd(x)) )) # look for potential ouliers in the PFOS data
-  ```
+```
   
-  ```{r}
+```{r}
   # summary stats for Age at maturity from the PFOS data.
   
   Age_AT_Maturity <- summarySE(PFOS_Data_new, measurevar = "Age_maturity", groupvars = c("Genotypes", "Treatment")) # summary stats for Age at maturity from the PFOS data.
   
-  ```
+```
   
-  ```{r}
+```{r}
   print(Age_AT_Maturity) # print the summary stats for Age at maturity from the PFOS data.
-  ```
+```
   
   
   
-  ```{r}
+```{r}
   # Plot the reaction norm for Age at Maturity
   
   Age_PFOs <- ggplot(Age_AT_Maturity,
@@ -1111,22 +1107,22 @@
          y = "Age at Maturity",
          colour = "Genotype")
     
-  ```
+```
   
-  ```{r}
+```{r}
   
   print(Age_PFOs) # print the reaction nomr for Age at Maturity
   
-  ```
+```
   
-  ```{r}
+```{r}
   # summary stats for Size at maturity from the PFOS data.
   
   Size_pfos <- summarySE(PFOS_Data_new, measurevar = "Size_maturity", groupvars = c("Genotypes", "Treatment")) # summary stats for Size at maturity from the PFOS data.
   
-  ```
+```
   
-  ```{r}
+```{r}
   print(Size_pfos) # print the summary stats for Size at maturity from the PFOS data.
   
   
@@ -1249,14 +1245,14 @@
   
   PFOS_Data2 <- PFOs_data[, c("Replicates", "Genotypes", "Treatment", "Age_maturity", "Size_maturity", "Fecundity", "Interval_brood")]
   
-  ```
+```
   
-  ```{r}
+```{r}
   print(PFOS_Data2) # print the subsetted data for the PFOS data.
   
-  ```
+```
   
-  ```{r}
+```{r}
   
   
   # subset the variables  (response and fixed) from the original data set for the PFOS data.
@@ -1266,19 +1262,19 @@
   Genotypes <- PFOS_Data2[, "Genotypes"]
   
   Treatment <- PFOS_Data2[, "Treatment"]
-  ```
+```
   
-  ```{r}
+```{r}
   # perform the Anova for the variable Age at maturity from the PFOS data.
   
   Age_maturity_Ano <- lmer(Age_maturity ~ Treatment * Genotypes + (1|Genotypes: Replicates), data = PFOS_Data2)
   
-  ```
+```
   
-  ```{r}
+```{r}
   anova(Age_maturity_Ano) # print the Anova for the variable Age at maturity from the PFOS data.
   
-  ```
+```
   
   
   
@@ -1288,26 +1284,26 @@
   
   
   # PFOA data : Tia
-  ```{r}
+```{r}
   # import PFOA data
   
   PFOA_Data <- read_excel(file.choose(), sheet = "PFOA-Tia")
   
-  ```
+```
   
   
-  ```{r}
+```{r}
   print(PFOA_Data) # print the PFOA data
   
-  ```
+```
   
   
-  ```{r}
+```{r}
   colSums(is.na(PFOA_Data)) # check for missing values
   
-  ```
+```
   
-  ```{r}
+```{r}
   PFOA_without_NA <- PFOA_Data[complete.cases(PFOA_Data),] # remove missing values
   
   
@@ -1336,27 +1332,27 @@
   PFOA_log_data <- log(PFOA_Data_new[, c("Age_maturity", "Size_maturity", "Fecundity", "Invterval_brood")])
   
   
-  ```
+```
   
   
-  ```{r}
+```{r}
   print(PFOA_log_data) # print the log transformed data.
   
-  ```
+```
   
-  ```{r}
+```{r}
   # convert the variables Genotypes and Treatment as factors.
   
   Genotypes <- as.factor(PFOA_Data_new$Genotypes) # convert the genotypes as factors .
   
   Treatment <- as.factor(PFOA_Data_new$Treatment) # convert Treatment as factors.
   
-  ```
+```
   
   
   
   
-  ```{r}
+```{r}
   # perform the pca for the log transformed data.
   
   
@@ -1364,26 +1360,26 @@
   
   print(PFOA_pca) # print the pca for the log transformed data.
   
-  ```
+```
   
-  ```{r}
+```{r}
   
   summary(PFOA_pca) # summary of the pca for the log transformed data.
   
-  ```
+```
   
-  ```{r}
+```{r}
   # plot the pca for the log transformed data.
   
   PFOA_pca_plot <- fviz_pca_biplot(PFOA_pca, geom = "point", habillage = Treatment)
-  ```
+```
   
-  ```{r}
+```{r}
   print(PFOA_pca_plot) # print the pca for the log transformed data.
   
-  ```
+```
   
-  ```{r}
+```{r}
   # pca biplot
   
   fviz_pca_biplot(PFOA_pca, # plot the PCA
@@ -1404,9 +1400,9 @@
                legend.title = "Genotype", # Legend title
                repel = TRUE, # Avoid text overlapping
                )
-  ```
+```
   
-  ```{r}
+```{r}
   
   # summary stats for Age at maturity from the PFOA data.
   
@@ -1414,9 +1410,9 @@
   
   print(Age_pfoa) # print the summary stats for Age at maturity from the PFOA data.
   
-  ```
+```
   
-  ```{r}
+```{r}
   
   # plot the reaction norm for Age at maturity from the PFOA data.
   
@@ -1441,18 +1437,18 @@
   
   print(Age_pfoa_plot) # print the plot for the reaction norm for Age at maturity from the PFOA data.
   
-  ```
+```
   
-  ```{r}
+```{r}
   # summary stats for Size at maturity from the PFOA data.
   
   Size_pfoa <- summarySE(PFOA_Data_new, measurevar = "Size_maturity", groupvars = c("Treatment", "Genotypes"))
   
   print(Size_pfoa) # print the summary stats for Size at maturity from the PFOA data.
   
-  ```
+```
   
-  ```{r}
+```{r}
   # plot the reaction norm for Size at maturity from the PFOA data.
   
   size_pfoa_plot <- ggplot(Size_pfoa,
@@ -1474,18 +1470,18 @@
          colour = "Genotype")
   
   print(size_pfoa_plot) # print the plot for the reaction norm for Size at maturity from the PFOA data.
-  ```
+```
   
-  ```{r}
+```{r}
   # summary stats for Fecundity from the PFOA data.
   
   fecundity_pfoa <- summarySE(PFOA_Data_new, measurevar = "Fecundity", groupvars = c("Treatment", "Genotypes"))
   
   print(fecundity_pfoa) # print the summary stats for Fecundity from the PFOA data.
   
-  ```
+```
   
-  ```{r}
+```{r}
   # plot the reaction norm for Fecundity from the PFOA data.
   
   fecundity_pfoa_plot <- ggplot(fecundity_pfoa,
@@ -1507,18 +1503,18 @@
          colour = "Genotype")
   
   print(fecundity_pfoa_plot) # print the plot for the reaction norm for Fecundity from the PFOA data.
-  ```
+```
   
-  ```{r}
+```{r}
   # summary stats for interval between broods from the PFOA data.
   
   interval_pfoa <- summarySE(PFOA_Data_new, measurevar = "Invterval_brood", groupvars = c("Treatment", "Genotypes"))
   
   print(interval_pfoa) # print the summary stats for interval between broods from the PFOA data.
   
-  ```
+```
   
-  ```{r}
+```{r}
   # plot the reaction norm for interval between broods from the PFOA data.
   
   interval_pfoa_plot <- ggplot(interval_pfoa,
@@ -1540,9 +1536,9 @@
          colour = "Genotype")
   
   print(interval_pfoa_plot) # print the plot for the reaction norm for interval between broods from the PFOA data.
-  ```
+```
   
-  ```{r}
+```{r}
   
   # perform the ANOVA for Age at maturity from the PFOA data.
   
@@ -1550,18 +1546,18 @@
   
   anova(Age_pfoa_ano) # print the ANOVA for Age at maturity from the PFOA data.
   
-  ```
+```
   
-  ```{r}
+```{r}
   # check the normality of the residuals for Age at maturity from the PFOA data.
   
   Age_pfoa_ano_res <- residuals(Age_pfoa_ano)
   
   plotNormalHistogram(Age_pfoa_ano_res) # print the histogram for the residuals for Age at maturity from the PFOA data.
   
-  ```
+```
   
-  ```{r}
+```{r}
   # plot the qqplot for the residuals for Age at maturity from the PFOA data.
   
   qqnorm(residuals(Age_pfoa_ano),
@@ -1570,27 +1566,26 @@
   qqline(residuals(Age_pfoa_ano),
          col = "red")
   
-  ```
+```
   
-  ```{r}
+```{r}
   # perform the ANOVA for Size at maturity from the PFOA data.
   
   Size_pfoa_ano <- lmer(Size_maturity ~ Treatment * Genotypes + (1|Genotypes: Replicates), data = PFOA_Data_new)
   
   print(anova(Size_pfoa_ano)) # print the ANOVA for Size at maturity from the PFOA data.
+```
   
-  ```
-  
-  ```{r}
+```{r}
   # check the normality of the residuals for Size at maturity from the PFOA data.
   
   Size_pfoa_ano_res <- residuals(Size_pfoa_ano)
   
   plotNormalHistogram(Size_pfoa_ano_res) # print the histogram for the residuals for Size at maturity from the PFOA data.
   
-  ```
+```
   
-  ```{r}
+```{r}
   # plot the qqplot for the residuals for Size at maturity from the PFOA data.
   
   qqnorm(residuals(Size_pfoa_ano),
@@ -1598,24 +1593,24 @@
   
   qqline(residuals(Size_pfoa_ano),
          col = "red")
-  ```   
+```   
   
-  ```{r}
+```{r}
   # perform the ANOVA for Fecundity from the PFOA data.
   
   Fecundity_pfoa_ano <- lmer(Fecundity ~ Treatment * Genotypes + (1|Genotypes: Replicates), data = PFOA_Data_new)
   
   print(anova(Fecundity_pfoa_ano)) # print the ANOVA for Fecundity from the PFOA data.
   
-  ```
+```
   
-  ```{r}
+```{r}
   isSingular(Fecundity_pfoa_ano, tol = 1e-4) # check if the model is singular
   
   
-  ```
+```
    this means some of the dimensions have been estimated as zero. This is because the model is too complex for the data.
-  ```{r}
+```{r}
   # check the normality of the residuals for Fecundity from the PFOA data.
   
   Fecundity_pfoa_ano_res <- residuals(Fecundity_pfoa_ano)
@@ -1656,11 +1651,11 @@
   
   qqline(residuals(Interval_pfoa_ano),
          col = "red")
-  ```
+```
   
   Micrpolastic data: Abu
   
-  ```{r}
+```{r}
   # import the data for the micropalstic data from the Abu data.
   
   Micrplastic_Data <- read_excel(file.choose(), sheet = "Abu-PE")
@@ -1691,9 +1686,9 @@
   
   print(Micrplastic_Data_new) # print the subsetted data for the micropalstic data from the Abu data.
   
-  ```
+```
   
-  ```{r}
+```{r}
   # remove missing values from the data for the micropalstic data from the Abu data.
   
   Microplastic_withou_NA <- Micrplastic_Data_new[complete.cases(Micrplastic_Data_new),]
@@ -1703,9 +1698,6 @@
 ```
   
   
-  
-  
-  
 ```{r}
   # log transform the data for the micropalstic data from the Abu data.
   
@@ -1713,30 +1705,30 @@
   
   print(Microplastic_log) # print the log transformed data for the micropalstic data from the Abu data.
   
-  ```
+```
   
-  ```{r}
+```{r}
   # convert the genotype and treatment variables as factors
   
   Genotype <- as.factor(Microplastic_withou_NA$Genotype)
   
   Treatment <- as.factor(Microplastic_withou_NA$Treatment)
-  ```
+```
   
-  ```{r}
+```{r}
   # perform a pca on the log transformed data for the micropalstic data from the Abu data.
   
   Microplastic_pca <- prcomp(Microplastic_log)
   
   print(Microplastic_pca) # print the pca on the log transformed data for the micropalstic data from the Abu data.
   
-  ```
+```
   
-  ```{r}
+```{r}
   
   summary(Microplastic_pca) # print the summary of the pca on the log transformed data for the micropalstic data from the Abu data.
   
-  ```
+```
 
 
 ```{r}
@@ -1780,9 +1772,9 @@
   
   print(U3) # print the potential outliers in the data for the micropalstic data from the Abu data.
   
-  ```
+```
   
-  ```{r}
+```{r}
   # make a qqplot of U.
   
   qplot(U3[, 1], U3[, 2], colour = factor(Treatment) ) + coord_equal()
@@ -1888,7 +1880,6 @@
   
 ```
   
-
 
 ```{r}
   
@@ -1996,9 +1987,9 @@
   
   plotNormalHistogram(size_micro) # print the residuals for the Anova for Size at maturity for the data for the micropalstic data from the Abu data.
   
-  ```
+```
   
-  ```{r}
+```{r}
   # qpplot
   
   qqnorm(residuals(size_anova),)
@@ -2006,27 +1997,27 @@
          
      qqline(residuals(size_anova),
          col = "red")
-  ```
+```
   
-  ```{r}
+```{r}
   # Anova for Interval_brood for the data for the micropalstic data from the Abu data.
   
   interv_brood_anova <- lmer(Interval_btwnbrds ~ Treatment * Genotype + (1|Genotype:Replicates), data = Microplastic_withou_NA) # print the Anova for Interval_brood for the data for the micropalstic data from the Abu data.
   
   print(anova(interv_brood_anova)) # print the Anova for Interval_brood for the data for the micropalstic data from the Abu data.
   
-  ```
+```
   
-  ```{r}
+```{r}
   # check the normality of the residuals.
   
   interv_brood_micro <- residuals(interv_brood_anova) # print the residuals for the Anova for Interval_brood for the data for the micropalstic data from the Abu data.
   
   plotNormalHistogram(interv_brood_micro) # print the residuals for the Anova for Interval_brood for the data for the micropalstic data from the Abu data.
   
-  ```
+```
   
-  ```{r}
+```{r}
   # qpplot
   
   qqnorm(residuals(interv_brood_anova),)
@@ -2034,8 +2025,10 @@
          
      qqline(residuals(interv_brood_anova),
          col = "red")
-  ```
+```
+
   PFOS Data: Abu
+
 ```{r}
   
   # import the PFOs data
@@ -2076,7 +2069,6 @@ print(Pfos_new_df)
 ```
   
   
-  
 ```{r} 
 # Convert the Genotype and treatment variables as factors.
 
@@ -2085,6 +2077,7 @@ Genotyope <- as.factor(Pfos_new_df$Genotype) # Convert the Genotype variable as 
 Treatment <- as.factor(Pfos_new_df$Treatment) # Convert the treatment variable as factors.
 
 ```
+  
   
 ```{r}
 # log transform the variables
@@ -2122,11 +2115,8 @@ print(pca_pfos_plot) # print the pca
 ```{r}
 # plot the biplot
 
-
-
 ```
 
-    
     
 ```{r}
 
