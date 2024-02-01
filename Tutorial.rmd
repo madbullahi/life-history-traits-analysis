@@ -2888,6 +2888,14 @@ anova(anova_MP_PFOA_interval)
 
 # Mortality Analysis
 
+
+```{r}
+# load packages
+
+library(rms) # this package is used to create the data distribution. its installation depends on the installation of the kableExtra package.
+
+```
+
 ```{r}
 # load the data
 
@@ -2897,7 +2905,42 @@ print(PET_mortality) # print the data
 ```
 
 ```{r}
+Data_distr <- datadist(PET_mortality) # create the data distribution
 
+options(datadist = "Data_distr") # set the data distribution
 
 ```
 
+```{r}
+# convert the variable Genotype to a factor
+
+PET_mortality$Genotype <- as.factor(PET_mortality$Genotype)
+
+```
+
+```{r}
+# create the survival plot
+
+surv_PET_plot <- psm(Surv(Day_mortality, Mortality) ~ Genotype, data = PET_mortality) # create the survival plot
+```
+
+```{r}
+
+# print the survival plot
+
+print(surv_PET_plot)
+
+```
+
+```{r}
+# create the survival plot
+
+survplot(surv_PET_plot, Genotype = NA, conf.int = FALSE,xlim = c(0,21), ylim=c(0,1), conf = 'bands', col=c("red","black"),fun= function(y) {(1 - y)}, label.curves=list(keys='lines'));title('Survival_PET')
+```
+
+```{r}
+# anova for mortality data
+
+
+
+```
