@@ -2916,6 +2916,9 @@ options(datadist = "Data_distr") # set the data distribution
 
 PET_mortality$Genotype <- as.factor(PET_mortality$Genotype)
 
+PET_mortality$Treatment <- as.factor(PET_mortality$Treatment)
+
+
 ```
 
 ```{r}
@@ -2937,10 +2940,39 @@ print(surv_PET_plot)
 
 survplot(surv_PET_plot, Genotype = NA, conf.int = FALSE,xlim = c(0,21), ylim=c(0,1), conf = 'bands', col=c("red","black"),fun= function(y) {(1 - y)}, label.curves=list(keys='lines'));title('Survival_PET')
 ```
+```{r}
+
+library(blme) # load the package
+
+```
+
+
 
 ```{r}
 # anova for mortality data
 
+#model_PET <- bglmer(Mortality ~ Treatment * Genotype + (1|Genotype:Replicates), data = PET_mortality, family #= binomial) # create the model
+ # print the anova table
+```
+```{r}
+model_P <- glm(Mortality ~ Treatment * Genotype , data = PET_mortality, family = binomial) # create the model
+
+car::Anova(model_P) # print the anova table
+```
+
+```{r}
+
+```
+
+```{r}
 
 
+```
+
+
+
+```{r}
+aa_pET <- allFit(model_PET)
+
+```
 ```
