@@ -2874,4 +2874,30 @@ anova(anova_MP_PFOA_interval)
 ```
 
 ```{r}
+# the alpha represents the statistical significance of the test.
+
+# the p-value defiens the percentage of finding an effect in our samples that we did.
+
+#  the p-value is only a measure of statistical significance, not of effect size.
+
+# the p-value is the probability of finding an effect in our samples that we did, if there is no effect in the population.
+
+# the standard error is a measure of the accuracy of our estimates.
 ```
+
+
+# Mortality Analysis
+
+```{r}
+# load the data
+
+PET_mortality <- read_excel(file.choose(), sheet = "PET_Mortality")
+
+print(PET_mortality) # print the data
+```
+
+```{r}
+
+
+```
+
