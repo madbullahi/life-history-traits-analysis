@@ -3340,7 +3340,7 @@ for(i in 1:n){
   points(traj.specs.obs[1,1,i],traj.specs.obs[1,2,i],pch=21,col="blue", cex=1.5, bg="white")
 }
 for(i in 1:n){
-  points(traj.specs.obs[p,1,i],traj.specs.obs[p,2,i],pch=21,col="green", cex=1.5, bg="black")
+  points(traj.specs.obs[p,1,i],traj.specs.obs[p,2,i],pch=21,col="black", cex=1.5, bg="black")
 }
 ```
 
