@@ -1279,6 +1279,7 @@ print(Pca_plot)
 ```
   
 ```{r}
+
   anova(Age_maturity_Ano) # print the Anova for the variable Age at maturity from the PFOS data.
   
 ```
@@ -2025,6 +2026,7 @@ print(Pca_plot)
   plotNormalHistogram(interv_brood_micro) # print the residuals for the Anova for Interval_brood for the data for the micropalstic data from the Abu data.
   
 ```
+ 
   
 ```{r}
   # qpplot
@@ -3376,6 +3378,25 @@ Y
 model <- manova(log(Y)~ Treatment * Genotypes, data = mano_Data)
 
 summary(model, test = "Pillai")
+
+```
+
+```{r}
+resid_model <- residuals(model)
+
+plotNormalHistogram(resid_model)
+
+```
+
+```{r}
+qqnorm(residuals(model))
+
+qqline(residuals(model),
+       col = "red")
+
+```
+
+```{r}
 
 ```
 
