@@ -2953,9 +2953,15 @@ library(blme) # load the package
 ```{r}
 # anova for mortality data
 
-#model_PET <- bglmer(Mortality ~ Treatment * Genotype + (1|Genotype:Replicates), data = PET_mortality, family #= binomial) # create the model
- # print the anova table
+#model_PET <- bglmer(Mortality ~ Treatment * Genotype + (1|Genotype:Replicates), data = PET_mortality, family = binomial) # create the mode the anova table
+
+#anova(model_PET) # print the anova table
 ```
+
+```{r}
+```
+
+
 ```{r}
 model_P <- glm(Mortality ~ Treatment * Genotype , data = PET_mortality, family = binomial) # create the model
 
@@ -3098,7 +3104,7 @@ res.red
 lsmeans.obs <- NULL
 for (i in 1:k) {
   mean.temp <- tapply(yhat.full[,i], taxaBylevel, mean)
-  lsmeans.obs <- cbind(lsmeans.obs, mean.temp)
+  lsmeans.obs <- cbind(lsmeans.obs, mean.temp)  
 }
 
 lsmeans.obs
@@ -3344,15 +3350,41 @@ for(i in 1:n){
 }
 ```
 
-```{r})
+# Manova DA
+```{r}
 
+print(Complete_Data)
+```
+
+```{r}
+
+mano_Data <- Complete_Data[-c(5:6, 8:9)]
+
+print(mano_Data)
+```
+
+```{r}
+
+Y <- cbind(mano_Data$Age_maturity, mano_Data$Fecundity, mano_Data$Size_maturity, mano_Data$Interval_brood)
+
+Y
 
 ```
 
 ```{r}
 
+model <- manova(log(Y)~ Treatment * Genotypes, data = mano_Data)
+
+summary(model, test = "Pillai")
 
 ```
 
+```{r}
+
+```
+
+```{r}
+
+```
 
 
