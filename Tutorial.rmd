@@ -272,7 +272,7 @@
 ```{r}
   log_comp_D_WO_Na <- comp_D_without_NA[, c(4:7)] # select columns 4 to 7
   
-  # Creats a new data frame with only columns 4 to 7.
+  # Creates a new data frame with only columns 4 to 7.
   
   # we will use this data frame to run the PCA.
   
@@ -310,7 +310,7 @@
   
   # the principal components are linear combinations of the original variables.
   
-  # each priincipal component score provides information about the position of the observation in the principal component space.
+  # each principal component score provides information about the position of the observation in the principal component space.
   
   # these scores are used to understand the relationship between the observations and patterns in the data.
 ```
@@ -3055,21 +3055,22 @@ print(Y) # print the Y matrix
 ```
 
 ```{r}
+#Basic data parameters (n=#spec, p=#ldmk, k=#dim)
 n <- length(levels(taxa)) # create the n variable
-n
+n  #was n.taxa
 ```
 
 ```{r}
 
-p <- length(levels(taxa)) # create the p variable
+p <- length(levels(level)) # create the p variable
 
-p
+p  #was n.level
 ```
 
 ```{r}
 
 k <- ncol(Y) # create the k variable
-k
+k #dimensions of phenotypic data
 
 ```
 
@@ -3086,6 +3087,11 @@ yhat.full <- predict(lm.full) # predict the model
 
 summary(manova(lm.full)) # print the summary of the model
 
+#summary(lm.full) # print the summary of the model
+```
+```{r}
+
+#yhat.full
 ```
 
 
@@ -3170,7 +3176,7 @@ trajorient<-function(M){
 trans <-function(A){scale(A, scale=F)} ##TRANSLATION
 
 
-csize<-function(A)
+csize<-function(A)  ##CSIZE
 {p<-dim(A)[1]
 size<-sqrt(sum(apply(A,2,var))*(p-1))
 list("centrois_size"=size, "scaled"= A/size)
@@ -3179,7 +3185,7 @@ list("centrois_size"=size, "scaled"= A/size)
   
 mshape<-function(A){apply(A,c(1,2), mean)}  #meanshape
 
-pPsup<- function(M1,M2){
+pPsup<- function(M1,M2){                    ## OPA rotation 1-->2
   k<-ncol(M1)
   Z1<-trans(csize(M1)[[2]])
   Z2<-trans(csize(M2)[[2]])
@@ -3313,13 +3319,13 @@ PSumShape<-PSumShape/(permute+1)
 trajsize.obs # trajectore magnitude, length of line
 PSize
 trajdir.obs # trajectory direction, distance between two dots
-POrient
+POrient 
 #trajshape.obs # trajectory shape, distance between two lines
 #PShape
 ```
 
 ```{r}
-###NOTE: summary statistics pnl;y valid for 2+ trajectories!!
+###NOTE: summary statistics only valid for 2+ trajectories!!
 sumstatsize.obs
 PSumSize
 sumstatdir.obs
