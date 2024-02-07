@@ -7,7 +7,32 @@
   
   #Foundations of Exploratory Data Analysis
   
+ "Correlation is a necessary but not a sufficient condition for causation"
   
+  # Introduction
+  Exploratory Data Analysis (EDA) is an approach to analyzing data sets to summarize their main characteristics, often with visual methods. A statistical model can be used or not, but primarily EDA is for seeing what the data can tell us beyond the formal modeling or hypothesis testing task. Exploratory data analysis was promoted by John Tukey to encourage statisticians to explore the data, and possibly formulate hypotheses that could lead to new data collection and experiments. EDA is different from initial data analysis (IDA), which focuses more narrowly on checking assumptions required for model fitting and hypothesis testing, and handling missing values and making transformations of variables as needed. EDA encompasses IDA.
+  
+  # Objectives
+  The objectives of this tutorial are to:
+  
+  1. Understand the concept of Exploratory Data Analysis (EDA)
+  2. Learn how to import data into R
+  3. Learn how to check data structure and summary
+  4. Learn how to detect outliers
+  5. Learn how to visualize data using boxplots and histograms
+  6. Learn how to calculate and summarize statistics
+  
+  # Data
+  The data used in this tutorial is from a study that investigated the effects of microplastics on the life history traits of the freshwater amphipod, Hyalella azteca. The data set contains the following variables:
+  
+  1. Treatment: Control and PET (polyethylene terephthalate)
+  2. Fecundity: Number of offspring produced
+  3. Age_maturity: Age at maturity
+  4. Size_maturity: Size at maturity
+  5. Interval_brood: Interval between broods
+  
+  # Import Data
+  The first step in any data analysis is to import the data into R. The data used in this tutorial is in an Excel file. The readxl package is used to read the Excel file into R. The read_excel() function is used to read the Excel file. The file.choose() function allows you to select the file interactively. Additionally, the sheet argument specifies the sheet name to be read. If the sheet argument is not specified, the first sheet in the Excel file will be read by default. 
 
 ```{r}
   # set working directory
@@ -3403,6 +3428,12 @@ qqline(residuals(model),
 ```
 
 ```{r}
+# In evolutionary biology, the 'multivariate phenotype' of an individual can be defined as a vector of either known or assumed related traits values
+
+# the relationship between phenotype and genotype is influence by both genteic and environmental factors.
+
+# here, we quantify the magnitude of phenotypic change and its direction in phenotype space.
+
 
 ```
 
