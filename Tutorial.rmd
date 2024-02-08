@@ -3290,7 +3290,7 @@ sumstatshape.obs<-sumstat(trajshape.obs)
 permute<-1000
 line<-nrow(Y)
 PSize<-POrient<-PShape<-array(1,dim=c(n,n))
-PSumsize<-PSumOrient<-PSumShape<-1
+PSumSize<-PSumOrient<-PSumShape<-1
 for(i in 1:permute){
   line.rand<-sample(line,replace=FALSE)
   res.temp<-cbind(line.rand,res.red)
@@ -3323,7 +3323,7 @@ for(i in 1:permute){
         (PShape[j,jj]+1) else PShape[j,jj]
     }
   }
-  PSumsize<-if(sumstatsize.rand>=sumstatsize.obs) (PSumSize+1) else PSumSize
+  PSumSize<-if(sumstatsize.rand>=sumstatsize.obs) (PSumSize+1) else PSumSize
   PSumOrient<-if(sumstatdir.rand>=sumstatdir.obs) (PSumOrient+1) else PSumOrient
   PSumShape<-if(sumstatshape.rand>=sumstatshape.obs) (PSumShape+1) else PSumShape
 } #end of permutation loop
