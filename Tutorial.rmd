@@ -3437,6 +3437,121 @@ qqline(residuals(model),
 
 ```
 
+
+
+
+
+
+##########UPSTREAM ANALYSIS
+```{r}
+
+TEMP_PH <- read_excel(file.choose(), sheet = "Sheet1")
+
+TEMP_PH
+
+```
+
+
+```{r}
+
+str(TEMP_PH)
+
+```
+```{r}
+
+completeCases_TEMP_PH <- TEMP_PH[complete.cases(TEMP_PH),]
+
+completeCases_TEMP_PH
+
+
+
+```
+
+
+```{r}
+log_PH_TEMP <- log(completeCases_TEMP_PH[1:2] + 0.5)
+
+log_PH_TEMP
+
+```
+
+```{r}
+
+pca_PH_TEMP <- prcomp(log_PH_TEMP, scale = TRUE)
+
+pca_PH_TEMP
+
+```
+
+```{r}
+summary(pca_PH_TEMP)
+
+```
+
+```{r}
+U_TP <- pca_PH_TEMP$x
+  
+print(U_TP)
+```
+  
+```{r}
+  qplot(U_TP[, 1], U_TP[, 2] ) + coord_equal()
+```
+
+```{r}
+
+ #Measuring Outliers
+ apply(U_TP, 2, function(x) which( abs(x - mean(x)) > (3 * sd(x)) ))  
+```
+ 
+
+
+  
+```{r}
+ U_no_outliers <- U_TP
+
+outliers <- apply(U_TP, 2, function(x) which( abs(x - mean(x)) > (3 * sd(x)) )) # find outliers
+
+#for (i in 1:ncol(U_TP)) {
+ # U_no_outliers[outliers[, i], i] <- NA
+#}
+
+
+```
+
+  
+```{r}
+  
+  for (i in 1:ncol(U_TP)) {
+   U_no_outliers[outliers[[i]], i] <- NA
+  }
+```
+  
+```{r}
+  U_no_outliers 
+  
+```
+  
+```{r}
+  
+  qplot(U_no_outliers[, 1], U_no_outliers[, 2] ) + coord_equal()
+   
+```
+  
+```{r}
+
+
+
+
+
+
+```
+
+```{r}
+
+```
+
+
 ```{r}
 
 ```
