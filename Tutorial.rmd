@@ -3270,7 +3270,7 @@ sumstat<-function(M){
 
 #########Main Loop########
 
-traj.specs.obs<-arrayspecs(lsmeans.obs)
+traj.specs.obs<-arrayspecs(lsmeans.obs) #lsmeans.obs is the output of the main loop
 trajsize.obs<-trajsize(traj.specs.obs)
 trajdir.obs<-trajorient(traj.specs.obs)
 diag(trajdir.obs)<-0 #b/c some NA/N values on diagonal)
