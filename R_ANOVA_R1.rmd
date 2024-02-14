@@ -1,0 +1,235 @@
+## Libraries
+library(lme4)
+library(ggplot2)
+library(rms)
+library(DescTools)
+
+#---------------------------------------
+#Table 1. ANOVA (following Jelena script)
+#---------------------------------------
+
+#Life history traits (remplace sumNeoNpop, sizeNpop, adultNpop): 
+dat <- read.csv("All.csv")
+dat$pop <- factor(dat$pop, levels = c("CWP","PP","EP"))
+
+##Two-way ANOVA
+## Effects of carbaryl
+datF <- dat[(dat$cond == "HC") | (dat$cond == "LC"), ]
+mod_rand <- lmer(sumNeoNpop ~ pop * cond + (1|Ind), data=datF)
+Anova(mod_rand)
+#without random effect
+mod <- lm(sumNeoNpop ~ pop * cond,data=datF)
+summary(aov(mod))
+
+## Effects of algae
+datF <- dat[(dat$cond == "HA") | (dat$cond == "LA"), ]
+mod_rand <- lmer(sumNeoNpop ~ pop * cond + (1|Ind), data=datF)
+Anova(mod_rand)
+#without random effect
+mod <- lm(sumNeoNpop ~ pop * cond,data=datF)
+summary(aov(mod))
+
+##Three-way ANOVA
+d <- dim(sub <- dat[dat$cond == "HAHC" | dat$cond == "HALC" | dat$cond == "LAHC" | dat$cond == "LALC",])
+sub <- array(NA,dim=d)
+colnames(sub) <- colnames(dat)
+sub <- as.data.frame(sub)
+sub$cond <- as.character(dat$cond[dat$cond == "HAHC" | dat$cond == "HALC" | dat$cond == "LAHC" | dat$cond == "LALC"])
+sub$Ind <- as.character(dat$Ind[dat$cond == "HAHC" | dat$cond == "HALC" | dat$cond == "LAHC" | dat$cond == "LALC"])
+sub[,c(2,4:d[2])] <- dat[dat$cond == "HAHC" | dat$cond == "HALC" | dat$cond == "LAHC" | dat$cond == "LALC",c(2,4:d[2])]
+sub$alg <- NA
+sub$alg[sub$cond == "HAHC" | sub$cond == "HALC"] <- "hi"
+sub$alg[sub$cond == "LAHC" | sub$cond == "LALC"] <- "lo"
+sub$car <- NA
+sub$car[sub$cond == "HAHC" | sub$cond == "LAHC"] <- "hi"
+sub$car[sub$cond == "HALC" | sub$cond == "LALC"] <- "lo"
+sub$alg <- as.factor(sub$alg)
+sub$car <- as.factor(sub$car)
+sub$cond <- as.factor(sub$cond)
+sub$Ind <- as.factor(sub$Ind)
+sub$pop <- as.factor(sub$pop)
+contrasts(sub$alg) <- "contr.sum"
+contrasts(sub$car) <- "contr.sum"
+contrasts(sub$pop) <- "contr.sum"
+#remplace the life history trait: sumNoeNpop, sizeNpoop and adultNpop
+mod <- lm(sumNeoNpop ~ pop * alg * car,data=sub)
+summary(aov(mod))
+mod_rand <- lmer(sizeNpop ~ pop * alg * car + (1|Ind), data=sub)
+Anova(mod_rand)
+
+#Post hoc analysis
+PostHocTest(aov(mod), method = "bonf")
+
+
+#Mortality 
+Mort <- read.csv("Mort.csv")
+Mortt<-filter(Mort, cond =="control")
+
+#two way anova
+Mortt <- Mort[(Mort$cond == "HA") | (Mort$cond == "LA"), ]
+a=glmer(mort ~ pop*cond+(1|Ind),data=Mortt,family=binomial)
+Anova(a)
+a=glm(mort ~ pop*cond,data=Mortt,family=binomial)
+Anova(a)
+Mortt <- Mort[(Mort$cond == "HC") | (Mort$cond == "LC"), ]
+a=glmer(mort ~ pop*cond+(1|Ind),data=Mortt,family=binomial)
+Anova(a)
+a=glm(mort ~ pop*cond,data=Mortt,family=binomial)
+Anova(a)
+
+#three way anova
+Mort$alg <- NA
+Mort$alg[Mort$cond == "HAHC" | Mort$cond == "HALC"] <- "hi"
+Mort$alg[Mort$cond == "LAHC" | Mort$cond == "LALC"] <- "lo"
+Mort$car <- NA
+Mort$car[Mort$cond == "HAHC" | Mort$cond == "LAHC"] <- "hi"
+Mort$car[Mort$cond == "HALC" | Mort$cond == "LALC"] <- "lo"
+Mortt <- Mort[(Mort$cond == "HAHC") | (Mort$cond == "HALC") | (Mort$cond == "LAHC") | (Mort$cond == "LALC"), ]
+a=glmer(mort ~ pop*alg*car+(1|Ind),data=Mortt,family=binomial)
+Anova(a)
+a=glm(mort ~ pop*alg*car,data=Mortt,family=binomial)
+Anova(a)
+
+PostHocTest(aov(a), method = "bonf")
+
+#---------------------------------------
+#Table 2. Patitioning metrices analysis 
+#---------------------------------------
+dat <- read.csv("All.csv")
+
+#Combined stressors
+# Planned contrasts 1: EP --> PP
+d <- dim(sub_PC1 <- dat[(dat$cond == "HALC" | dat$cond == "HAHC") & (dat$pop == "EP" | dat$pop == "PP"),])
+sub_PC1 <- array(NA,dim=d)
+colnames(sub_PC1) <- colnames(dat)
+sub_PC1 <- as.data.frame(sub_PC1)
+sub_PC1$cond <- as.character(dat$cond[(dat$cond == "HALC" | dat$cond == "HAHC") & (dat$pop == "EP" | dat$pop == "PP")])
+sub_PC1$Ind <- as.character(dat$Ind[(dat$cond == "HALC" | dat$cond == "HAHC") & (dat$pop == "EP" | dat$pop == "PP")])
+sub_PC1$pop <- as.character(dat$pop[(dat$cond == "HALC" | dat$cond == "HAHC") & (dat$pop == "EP" | dat$pop == "PP")])
+sub_PC1[,c(2,5:d[2])] <- dat[(dat$cond == "HALC" | dat$cond == "HAHC") & (dat$pop == "EP" | dat$pop == "PP"),c(2,5:d[2])]
+
+sub_PC1$cond <- as.factor(sub_PC1$cond)
+sub_PC1$Ind <- as.factor(sub_PC1$Ind)
+sub_PC1$pop <- as.factor(sub_PC1$pop)
+
+# Here we set the factor contrasts to make sure we have a 'directional' comparison, 
+#from the oldest to the middle population and environment
+contrasts(sub_PC1$cond) <- c(1,0)
+contrasts(sub_PC1$pop) <- "contr.treatment"
+
+#remplace sumNeoNpop, sizeNpop and adultNpop
+mod_PC1 <- lmer(sumNeoNpop ~ pop + cond + pop*cond + (1|Ind), data=sub_PC1)
+# These error messages mean its struggling to estimate the variance-covariance matrix needed for the fixed effects. 
+# Will probably have to drop them for these rediced models.
+summary(mod_PC1)
+Anova(mod_PC1)
+mod_PC1 <- lm(sumNeoNpop ~ pop + cond + pop*cond, data=sub_PC1)
+summary(mod_PC1)
+Anova(mod_PC1)
+
+## Planned contrasts 2: PP --> CWP
+d <- dim(sub_PC2 <- dat[(dat$cond == "HAHC" | dat$cond == "LALC") & (dat$pop == "PP" | dat$pop == "CWP"),])
+sub_PC2 <- array(NA,dim=d)
+colnames(sub_PC2) <- colnames(dat)
+sub_PC2 <- as.data.frame(sub_PC2)
+sub_PC2$cond <- as.character(dat$cond[(dat$cond == "HAHC" | dat$cond == "LALC") & (dat$pop == "PP" | dat$pop == "CWP")])
+sub_PC2$Ind <- as.character(dat$Ind[(dat$cond == "HAHC" | dat$cond == "LALC") & (dat$pop == "PP" | dat$pop == "CWP")])
+sub_PC2$pop <- as.character(dat$pop[(dat$cond == "HAHC" | dat$cond == "LALC") & (dat$pop == "PP" | dat$pop == "CWP")])
+sub_PC2[,c(2,5:d[2])] <- dat[(dat$cond == "HAHC" | dat$cond == "LALC") & (dat$pop == "PP" | dat$pop == "CWP"),c(2,5:d[2])]
+
+sub_PC2$cond <- as.factor(sub_PC2$cond)
+sub_PC2$Ind <- as.factor(sub_PC2$Ind)
+sub_PC2$pop <- as.factor(sub_PC2$pop)
+
+# Here we set the factor contrasts to make sure we have a 'directional' comparison, from the oldest to the middle population and environment
+contrasts(sub_PC2$cond)
+contrasts(sub_PC2$pop) <- c(1,0)
+#Models with and without random efect 
+##remplace sumNeoNpop, sizeNpop and adultNpop
+mod_PC2 <- lmer(adultNpop ~ pop + cond + pop*cond + (1|Ind), data=sub_PC2)
+summary(mod_PC2)
+Anova(mod_PC2)
+mod_PC2 <- lm(adultNpop ~ pop + cond + pop*cond, data=sub_PC2)
+summary(mod_PC2)
+Anova(mod_PC2)
+
+##Single stress
+##Planned contrasts 3: EP --> PP (LC --> HC)
+d <- dim(sub_PC11 <- dat[(dat$cond == "LC" | dat$cond == "HC") & (dat$pop == "EP" | dat$pop == "PP"),])
+sub_PC11 <- array(NA,dim=d)
+colnames(sub_PC11) <- colnames(dat)
+sub_PC11 <- as.data.frame(sub_PC11)
+sub_PC11$cond <- as.character(dat$cond[(dat$cond == "LC" | dat$cond == "HC") & (dat$pop == "EP" | dat$pop == "PP")])
+sub_PC11$Ind <- as.character(dat$Ind[(dat$cond == "LC" | dat$cond == "HC") & (dat$pop == "EP" | dat$pop == "PP")])
+sub_PC11$pop <- as.character(dat$pop[(dat$cond == "LC" | dat$cond == "HC") & (dat$pop == "EP" | dat$pop == "PP")])
+sub_PC11[,c(2,5:d[2])] <- dat[(dat$cond == "LC" | dat$cond == "HC") & (dat$pop == "EP" | dat$pop == "PP"),c(2,5:d[2])]
+
+sub_PC11$cond <- as.factor(sub_PC11$cond)
+sub_PC11$pop <- as.factor(sub_PC11$pop)
+contrasts(sub_PC11$cond) <- c(1,0)
+contrasts(sub_PC11$pop) <- "contr.treatment"
+
+#Models with and without random efect 
+##remplace sumNeoNpop, sizeNpop and adultNpop
+mod_PC11 <- lmer(adultNpop ~ pop + cond + pop*cond + (1|Ind), data=sub_PC11)
+summary(mod_PC11)
+Anova(mod_PC11)
+mod_PC11 <- lm(adultNpop ~ pop + cond + pop*cond, data=sub_PC11)
+summary(mod_PC11)
+Anova(mod_PC11)
+
+##Planned contrasts 4: PP --> CWP (HI --> LI)
+d <- dim(sub_PC21 <- dat[(dat$cond == "LC" | dat$cond == "HC") & (dat$pop == "PP" | dat$pop == "CWP"),])
+sub_PC21 <- array(NA,dim=d)
+colnames(sub_PC21) <- colnames(dat)
+sub_PC21 <- as.data.frame(sub_PC21)
+sub_PC21$cond <- as.character(dat$cond[(dat$cond == "LC" | dat$cond == "HC") & (dat$pop == "PP" | dat$pop == "CWP")])
+sub_PC21$Ind <- as.character(dat$Ind[(dat$cond == "LC" | dat$cond == "HC") & (dat$pop == "PP" | dat$pop == "CWP")])
+sub_PC21$pop <- as.character(dat$pop[(dat$cond == "LC" | dat$cond == "HC") & (dat$pop == "PP" | dat$pop == "CWP")])
+sub_PC21[,c(2,5:d[2])] <- dat[(dat$cond == "LC" | dat$cond == "HC") & (dat$pop == "PP" | dat$pop == "CWP"),c(2,5:d[2])]
+
+sub_PC21$cond <- as.factor(sub_PC21$cond)
+sub_PC21$pop <- as.factor(sub_PC21$pop)
+contrasts(sub_PC21$cond)
+contrasts(sub_PC21$pop) <- c(1,0)
+
+#Models with and without random efect 
+##remplace sumNeoNpop, sizeNpop and adultNpop
+mod_PC21 <- lmer(adultNpop ~ pop + cond + pop*cond + (1|Ind), data=sub_PC21)
+summary(mod_PC21)
+Anova(mod_PC21)
+mod_PC21 <- lm(adultNpop ~ pop + cond + pop*cond, data=sub_PC21)
+summary(mod_PC21)
+Anova(mod_PC21)
+
+##Planned contrasts 5: PP --> CWP (HA --> LA)
+d <- dim(sub_PC22 <- dat[(dat$cond == "HA" | dat$cond == "LA") & (dat$pop == "PP" | dat$pop == "CWP"),])
+sub_PC22 <- array(NA,dim=d)
+colnames(sub_PC22) <- colnames(dat)
+sub_PC22 <- as.data.frame(sub_PC22)
+sub_PC22$cond <- as.character(dat$cond[(dat$cond == "HA" | dat$cond == "LA") & (dat$pop == "PP" | dat$pop == "CWP")])
+sub_PC22$Ind <- as.character(dat$Ind[(dat$cond == "HA" | dat$cond == "LA") & (dat$pop == "PP" | dat$pop == "CWP")])
+sub_PC22$pop <- as.character(dat$pop[(dat$cond == "HA" | dat$cond == "LA") & (dat$pop == "PP" | dat$pop == "CWP")])
+sub_PC22[,c(2,5:d[2])] <- dat[(dat$cond == "HA" | dat$cond == "LA") & (dat$pop == "PP" | dat$pop == "CWP"),c(2,5:d[2])]
+
+sub_PC22$cond <- as.factor(sub_PC22$cond)
+sub_PC22$pop <- as.factor(sub_PC22$pop)
+contrasts(sub_PC22$cond)
+contrasts(sub_PC22$pop) <- c(1,0)
+
+#Models with and without random efect 
+##remplace sumNeoNpop, sizeNpop and adultNpop
+mod_PC22 <- lmer(adultNpop ~ pop + cond + pop*cond + (1|Ind), data=sub_PC22)
+summary(mod_PC22)
+Anova(mod_PC22)
+mod_PC22 <- lm(adultNpop ~ pop + cond + pop*cond, data=sub_PC22)
+summary(mod_PC22)
+Anova(mod_PC22)
+boxplot(sumNeoNpop ~ pop*cond, data=sub_PC22)
+
+#---------------------------------------
+#Table S2 t-test syn ant add
+#---------------------------------------
+
+#https://statpages.info/anova1sm.html
+
