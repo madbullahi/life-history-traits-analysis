@@ -3026,7 +3026,6 @@ PheDatawithoutNAs <- PheData[complete.cases(PheData),] # remove the missing valu
 
 PheDatawithoutNAs
 
-
 ```
 
 
@@ -3089,7 +3088,7 @@ print(Y) # print the Y matrix
 ```
 
 ```{r}
-#Basic data parameters (n=#spec, p=#ldmk, k=#dim)
+#Basic data param,,eters (n=#spec, p=#ldmk, k=#dim)
 n <- length(levels(taxa)) # create the n variable
 n  #was n.taxa
 ```
@@ -3168,7 +3167,7 @@ arrayspecs <- function(A){
     n.m <-cbind(n.m, temp)}
   trajectories <- array(n.m, dim = c(p, k, n))
 }
-traj.specs.obs
+
 ```
 ### function calculating Trajectory attributes
 
@@ -3262,6 +3261,7 @@ list("rotated"=temp2,"it.number"=iter,"Q"=Q,"intereucl.dist"=Qm2,"mshape"=
 
 ```
 
+
 ```{r}
 ## loop for GPA and shape distances
 trajshape <- function(M){
@@ -3270,6 +3270,7 @@ trajshape <- function(M){
 }
 
 ```
+
 
 ```{r}
 ## TrajectrorySummaryStat
@@ -3280,6 +3281,7 @@ sumstat<-function(M){
   
 }
 ```
+
 
 ```{r}
 
@@ -3553,17 +3555,69 @@ outliers <- apply(U_TP, 2, function(x) which( abs(x - mean(x)) > (3 * sd(x)) )) 
    
 ```
   
+######Synergistic and additive effects
 ```{r}
+# Define the null model
+# compute the expected additive effect.
+# compare the observed effects.
+# statistical analysis
+# visualisation; e.g. ternary plots or response matrics
+# interpretation: differentiate between a synergisitc or antagonisic effect based on  the direction and magnituted of the deviation from additivity.
+# install package multiplestressor
 
+#loading up an example dataset from the multiplestressR package
 
+df <-  multiplestressR::survival
 
-
+df
 
 
 ```
 
 ```{r}
 
+
+#calculating effect sizes
+df <- effect_size_additive(Control_N = df$Sample_Size_Control,
+Control_SD = df$Standard_Deviation_Control,
+Control_Mean = df$Mean_Control,
+StressorA_N = df$Sample_Size_Temperature,
+StressorA_SD = df$Standard_Deviation_Temperature,
+StressorA_Mean = df$Mean_Temperature,
+StressorB_N = df$Sample_Size_pH,
+StressorB_SD = df$Standard_Deviation_pH,
+StressorB_Mean = df$Mean_pH,
+StressorsAB_N = df$Sample_Size_Temperature_pH,
+StressorsAB_SD = df$Standard_Deviation_Temperature_pH,
+StressorsAB_Mean = df$Mean_Temperature_pH,
+Significance_Level = 0.05)
+
+```
+
+
+```{r}
+#classifying interactions
+df <- classify_interactions(effect_size_dataframe = df,
+assign_reversals = TRUE,
+remove_directionality = F)
+
+
+```
+
+
+```{r}
+
+#generate summary plots
+df_plots <- summary_plots(effect_size_dataframe = df,
+Significance_Level = 0.05)
+
+```
+
+```{r}
+df_plots
+```
+
+```{r}
 ```
 
 
