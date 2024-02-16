@@ -3618,15 +3618,306 @@ df_plots
 ```
 
 ```{r}
+# compute the standardised effect size.
+library(readxl)
+library(lme4)
+library(ggplot2)
+library(rms)
+library(DescTools)
+```
+
+
+```{r}
+data <- read_excel("~/life-history-traits-analysis/All.xlsx")
+data
+```
+
+#############Partitioning matric analysis################
+
+#########################################
+```{r}
+# combined stressors
+
+# Planned contrast 1: LRV0_1 vs LR2-36-1
+d <- dim(sub_PC1 <- data[(data$Treatment == "PFOS_PFOA" | data$Treatment == "MP_PFOS_PFOA") & (data$Genotypes == "LRV-0-1" | data$Genotypes == "LR2-36-01"),]) #
+sub_PC1 <- array(NA,dim=d) # create an empty array
+
+sub_PC1
+```
+
+```{r}
+colnames(sub_PC1) <- colnames(data) # copy column names
+```
+
+```{r}
+
+sub_PC1 <- as.data.frame(sub_PC1) # convert to data frame.
+
+sub_PC1
+```
+
+```{r}
+sub_PC1$Treatment <- as.character(data$Treatment[(data$Treatment == "PFOS_PFOA" | data$Treatment == "MP_PFOS_PFOA") & (data$Genotypes == "LRV-0-1" | data$Genotypes == "LR2-36-01")]) # copy the treatment column
+
+```
+
+```{r}
+sub_PC1$Replicates <- as.character(data$Replicates[(data$Treatment == "PFOS_PFOA" | data$Treatment == "MP_PFOS_PFOA") & (data$Genotypes == "LRV-0-1" | data$Genotypes == "LR2-36-01")])
+
+sub_PC1$Genotypes <- as.character(data$Genotypes[(data$Treatment == "PFOS_PFOA" | data$Treatment == "MP_PFOS_PFOA") & (data$Genotypes == "LRV-0-1" | data$Genotypes == "LR2-36-01")])
+
 ```
 
 
 ```{r}
 
+sub_PC1[,c(2,5:d[2])] <- data[(data$Treatment == "PFOS_PFOA" | data$Treatment == "MP_PFOS_PFOA") & (data$Genotypes == "LRV-0-1" | data$Genotypes == "LR2-36-01"),c(2,5:d[2])] # copy the data
+
+sub_PC1
+```
+
+```{r}
+sub_PC1$Treatment <- as.factor(sub_PC1$Treatment)
+sub_PC1$Replicates <- as.factor(sub_PC1$Replicates)
+sub_PC1$Genotypes <- as.factor(sub_PC1$Genotypes)
+sub_PC1
+
+
+```
+
+
+```{r}
+
+# Here we set the factor contrasts to make sure we have a 'directional' comparison, 
+#from the oldest to the middle population and environment
+
+contrasts(sub_PC1$Treatment) <- c(1,0)
+contrasts(sub_PC1$Genotypes) <- "contr.treatment"
+```
+
+```{r}
+#remplace sumNeoNpop, sizeNpop and adultNpop
+mod_PC1 <- lmer(Fecundity ~ Genotypes + Treatment + Genotypes*Treatment + (1|Genotypes:Replicates), data=sub_PC1)
+# These error messages mean its struggling to estimate the variance-covariance matrix needed for the fixed effects. 
+# Will probably have to drop them for these rediced models.
+summary(mod_PC1)
+Anova(mod_PC1)
+#mod_PC1 <- lm(Fecundity ~ Genotypes + Treatment + Genotypes*Treatment, data=sub_PC1)
+#summary(mod_PC1)
+#Anova(mod_PC1)
+
 ```
 
 ```{r}
 
+coefficients <- coef(mod_PC1)
+coefficients
 ```
+
+```{r}
+standard_error <-  summary(mod_PC1)$coefficients[,"Std. Error"]
+standard_error
+```
+
+```{r}
+
+coefficients %>% as.list() %>% unlist() %>% as.numeric(coefficients)
+standard_error <- as.numeric(standard_error)
+
+t_values <- coefficients/standard_error
+t_values
+```
+
+```{r}
+is.numeric(coefficients)
+```
+
+
+
+```{r}
+
+
+## Planned contrasts 2: LR2-36-01 --> LRV-0-1: MP_PFOA---->MP_PFOS_PFOA
+d <- dim(sub_PC2 <- data[(data$Treatment == "MP_PFOS_PFOA" | data$Treatment == "MP_PFOA") & (data$Genotypes == "LRV-0-1" | data$Genotypes == "LR2-36-01"),])
+
+d
+```
+
+```{r}
+sub_PC2 <- array(NA,dim=d)
+colnames(sub_PC2) <- colnames(data)
+sub_PC2 <- as.data.frame(sub_PC2)
+
+
+sub_PC2
+
+```
+
+```{r}
+
+
+sub_PC2$Treatment <- as.character(data$Treatment[(data$Treatment == "MP_PFOS_PFOA" | data$Treatment == "MP_PFOA") & (data$Genotypes == "LRV-0-1" | data$Genotypes == "LR2-36-01")])
+
+sub_PC2$Replicates <- as.character(data$Replicates[(data$Treatment == "MP_PFOS_PFOA" | data$Treatment == "MP_PFOA") & (data$Genotypes == "LR2-36-01" | data$Genotypes == "LRV-0-1")])
+
+sub_PC2$Genotypes <- as.character(data$Genotypes[(data$Treatment == "MP_PFOS_PFOA" | data$Treatment == "MP_PFOA") & (data$Genotypes == "LR2-36-01" | data$Genotypes == "LRV-0-1")])
+
+sub_PC2[,c(2,5:d[2])] <- data[(data$Treatment == "MP_PFOS_PFOA" | data$Treatment == "MP_PFOA") & (data$Genotypes == "LR2-36-01" | data$Genotypes == "LRV-0-1"),c(2,5:d[2])]
+
+sub_PC2$Treatment <- as.factor(sub_PC2$Treatment)
+sub_PC2$Replicates <- as.factor(sub_PC2$Replicates)
+sub_PC2$Genotypes <- as.factor(sub_PC2$Genotypes)
+
+sub_PC2
+
+```
+
+
+```{r}
+
+
+# Here we set the factor contrasts to make sure we have a 'directional' comparison, from the oldest to the middle population and environment
+contrasts(sub_PC2$Treatment)
+contrasts(sub_PC2$Genotypes) <- c(1,0)
+
+#Models with and without random efect 
+##remplace sumNeoNpop, sizeNpop and adultNpop
+mod_PC2 <- lmer(Age_maturiy ~ Genotypes + Treatment + Genotypes*Treatment + (1|Genotypes:Replicates), data=sub_PC2)
+summary(mod_PC2)
+Anova(mod_PC2)
+mod_PC2 <- lm(Age_maturiy ~ Genotypes + Treatment + Genotypes*Treatment, data=sub_PC2)
+summary(mod_PC2)
+Anova(mod_PC2)
+
+```
+
+
+
+
+```{r}
+
+##Single stress
+##Planned contrasts 3: LR2-36-01 --> LRV-0-1 (PFOA --> PET)
+d <- dim(sub_PC11 <- data[(data$Treatment == "PFOA" | data$Treatment == "PET") & (data$Genotypes == "LRV-0-1" | data$Genotypes == "LR2-36-01"),])
+sub_PC11 <- array(NA,dim=d)
+colnames(sub_PC11) <- colnames(data)
+sub_PC11 <- as.data.frame(sub_PC11)
+sub_PC11$Treatment <- as.character(data$Treatment[(data$Treatment == "PFOA" | data$Treatment == "PET") & (data$Genotypes == "LRV-0-1" | data$Genotypes == "LR2-36-01")])
+sub_PC11$Replicates <- as.character(data$Replicates[(data$Treatment == "PFOA" | data$Treatment == "PET") & (data$Genotypes == "LRV-0-1" | data$Genotypes == "LR2-36-01")])
+sub_PC11$Genotypes <- as.character(data$Genotypes[(data$Treatment == "PFOA" | data$Treatment == "PET") & (data$Genotypes == "LRV-0-1" | data$Genotypes == "LR2-36-01")])
+sub_PC11[,c(2,5:d[2])] <- data[(data$Treatment == "PFOA" | data$Treatment == "PET") & (data$Genotypes == "LRV-0-1" | data$Genotypes == "LR2-36-01"),c(2,5:d[2])]
+
+
+sub_PC11$Treatment <- as.factor(sub_PC11$Treatment)
+sub_PC11$Genotypes <- as.factor(sub_PC11$Genotypes)
+contrasts(sub_PC11$Treatment) <- c(1,0)
+contrasts(sub_PC11$Genotypes) <- "contr.treatment"
+```
+
+```{r}
+
+
+#Models with and without random efect 
+##remplace sumNeoNpop, sizeNpop and adultNpop
+mod_PC11 <- lmer(Age_maturiy ~ Genotypes + Treatment + Genotypes*Treatment + (1|Genotypes:Replicates), data=sub_PC11)
+summary(mod_PC11)
+Anova(mod_PC11)
+mod_PC11 <- lm(Age_maturiy ~ Genotypes + Treatment + Genotypes*Treatment, data=sub_PC11)
+summary(mod_PC11)
+Anova(mod_PC11)
+```
+
+```{r}
+##Planned contrasts 4: LRV-0-1 --> , LR2-36-01 (PFOS --> PFOA)
+d <- dim(sub_PC21 <- data[(data$Treatment == "PFOS" | data$Treatment == "PFOA") & (data$Genotypes == "LRV-0-1" | data$Genotypes == "LR2-36-01"),])
+sub_PC21 <- array(NA,dim=d)
+colnames(sub_PC21) <- colnames(data)
+sub_PC21 <- as.data.frame(sub_PC21)
+sub_PC21$Treatment <- as.character(data$Treatment[(data$Treatment == "PFOS" | data$Treatment == "PFOA") & (data$Genotypes == "LRV-0-1" | data$Genotypes == "LR2-36-01")])
+sub_PC21$Replicates <- as.character(data$Replicates[(data$Treatment == "PFOS" | data$Treatment == "PFOA") & (data$Genotypes == "LRV-0-1" | data$Genotypes == "LR2-36-01")])
+sub_PC21$Genotypes <- as.character(data$Genotypes[(data$Treatment == "PFOS" | data$Treatment == "PFOA") & (data$Genotypes == "LRV-0-1" | data$Genotypes == "LR2-36-01")])
+sub_PC21[,c(2,5:d[2])] <- data[(data$Treatment == "PFOS" | data$Treatment == "PFOA") & (data$Genotypes == "LRV-0-1" | data$Genotypes == "LR2-36-01"),c(2,5:d[2])]
+
+sub_PC21$Treatment <- as.factor(sub_PC21$Treatment)
+sub_PC21$Genotypes <- as.factor(sub_PC21$Genotypes)
+contrasts(sub_PC21$Treatment)
+contrasts(sub_PC21$Genotypes) <- c(1,0)
+
+```
+```{r}
+
+#Models with and without random efect 
+##remplace sumNeoNpop, sizeNpop and adultNpop
+mod_PC22 <- lmer(Age_maturiy ~ Genotypes + Treatment + Genotypes*Treatment + (1|Genotypes:Replicates), data=sub_PC21)
+summary(mod_PC22)
+Anova(mod_PC22)
+mod_PC22 <- lm(Age_maturiy ~ Genotypes + Treatment + Genotypes*Treatment, data=sub_PC21)
+summary(mod_PC22)
+Anova(mod_PC22)
+boxplot(Fecundity ~ Genotypes*Treatment, data=sub_PC21)
+
+
+```
+
+#---------------------------------------
+#Table S2 t-test syn ant add
+#---------------------------------------
+
+```{r}
+# to assess deviation from the null additive model:
+# 1. fit the model using such as a linear model
+# 2. extract coeffients and standard errors from the model summary.
+# 3. calculate the t-statistic and p-value for the test of the null hypothesis by dividing the coefficient by the standard error and using the t-distribution with n-2 degrees of freedom.
+# 4. use the t-distibution to calculate the p-value associated with t-statistic.
+
+
+
+
+
+
+
+
+
+
+
+
+```
+
+```{r}
+SynAdd <- read_excel("Add.xlsx")
+
+SynAdd
+
+
+```
+
+```{r}
+synadd <-complete.cases(SynAdd)
+synadd
+```
+
+```{r}
+SynAdd <- SynAdd[complete.cases(SynAdd),]
+SynAdd
+
+```
+
+
+```{r}
+
+SynAdd <- read_excel("Add.xlsx")
+SynAdd$treatment <- factor(SynAdd$treatment, levels = c("HA", "LA", "HC", "LC", "HALC","HAHC", "LALC","LAHC","HALCNull","HAHCNull","LALCNull","LAHCNull"))
+SynAdd$pop <- factor(SynAdd$pop, levels = c("CWP","PP","EP"))
+SynAdd$trait <- factor(SynAdd$trait, levels = c("sumNeoNpop","sizeNpop","adultNpop"))
+ggplot(SynAdd, aes(x=treatment, y=mean, fill=pop)) + 
+  geom_bar(stat="identity", position=position_dodge()) +
+  geom_errorbar(aes(ymin=mean-sd, ymax=mean+sd), width=0,position=position_dodge(.9)) + 
+  theme_bw() + facet_grid(vars(trait), scales = "free") + theme_bw() + scale_x_discrete(expand = c(0,0.3)) + 
+  theme(legend.position="none") + theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank())
+```
+
+
+
+
 
 
