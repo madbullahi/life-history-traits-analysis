@@ -3815,7 +3815,7 @@ contrasts(sub_PC11$Genotypes) <- "contr.treatment"
 ```
 
 ```{r}
-
+%>% 
 
 #Models with and without random efect 
 ##remplace sumNeoNpop, sizeNpop and adultNpop
