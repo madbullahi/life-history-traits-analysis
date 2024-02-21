@@ -3884,7 +3884,7 @@ boxplot(Fecundity ~ Genotypes*Treatment, data=sub_PC21)
 ```
 
 ```{r}
-SynAdd <- read_excel("Add.xlsx")
+SynAdd <- read_excel("SynAddAnt.xlsx")
 
 SynAdd
 
@@ -3905,17 +3905,27 @@ SynAdd
 
 ```{r}
 
-SynAdd <- read_excel("Add.xlsx")
-SynAdd$treatment <- factor(SynAdd$treatment, levels = c("HA", "LA", "HC", "LC", "HALC","HAHC", "LALC","LAHC","HALCNull","HAHCNull","LALCNull","LAHCNull"))
-SynAdd$pop <- factor(SynAdd$pop, levels = c("CWP","PP","EP"))
-SynAdd$trait <- factor(SynAdd$trait, levels = c("sumNeoNpop","sizeNpop","adultNpop"))
-ggplot(SynAdd, aes(x=treatment, y=mean, fill=pop)) + 
-  geom_bar(stat="identity", position=position_dodge()) +
-  geom_errorbar(aes(ymin=mean-sd, ymax=mean+sd), width=0,position=position_dodge(.9)) + 
-  theme_bw() + facet_grid(vars(trait), scales = "free") + theme_bw() + scale_x_discrete(expand = c(0,0.3)) + 
-  theme(legend.position="none") + theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank())
+
+SynAdd$treatment <- factor(SynAdd$treatment, levels = c("MP", "PFOS", "PFOA", "MP_PFOA", "PFOS_PFOA","MP_PFOS_PFOA", "MP_PFOANULL","PFOS_PFOANULL","MP_PFOSNULL","MP_PFOS_PFOANULL"))
+
+SynAdd$Genotypes <- factor(SynAdd$Genotypes, levels = c("LRV-0-1","LR2-36-01"))
+
+SynAdd$trait <- factor(SynAdd$trait, levels = c("Age_maturiy","Size_maturity","Fecundity", "Interval_brood"))
+
 ```
 
+
+```{r}
+
+# Create the ggplot
+ggplot(SynAdd, aes(x=treatment, y=SMD, fill=Genotypes)) + 
+  geom_bar(stat="identity", position=position_dodge()) +
+  geom_errorbar(aes(ymin=SMD-sd, ymax=SMD+sd), width=0,position=position_dodge(.9)) + 
+  theme_bw() + facet_grid(vars(trait), scales = "free") + theme_bw() + scale_x_discrete(expand = c(0,0.3)) + 
+  theme(legend.position="none") + 
+theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank())+
+  scale_fill_manual(values=c("black", "grey", "pink", "red")) 
+```
 
 
 
