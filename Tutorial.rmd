@@ -3906,9 +3906,9 @@ SynAdd
 ```{r}
 
 
-SynAdd$treatment <- factor(SynAdd$treatment, levels = c("MP", "PFOS", "PFOA", "MP_PFOA", "PFOS_PFOA","MP_PFOS_PFOA", "MP_PFOANULL","PFOS_PFOANULL","MP_PFOSNULL","MP_PFOS_PFOANULL"))
+SynAdd$treatment <- factor(SynAdd$treatment, levels = c("MP", "PFOS", "PFOA", "MP_PFOA", "PFOS_PFOA","MP_PFOS_PFOA"))
 
-SynAdd$Genotypes <- factor(SynAdd$Genotypes, levels = c("LRV-0-1","LR2-36-01"))
+SynAdd$Genotypes <- factor(SynAdd$Genotypes, levels = c("LRV-0-1", "NULL-LRV-0-1","LR2-36-01", "NULL-LR2-36-01"))
 
 SynAdd$trait <- factor(SynAdd$trait, levels = c("Age_maturiy","Size_maturity","Fecundity", "Interval_brood"))
 
@@ -3924,7 +3924,7 @@ ggplot(SynAdd, aes(x=treatment, y=SMD, fill=Genotypes)) +
   theme_bw() + facet_grid(vars(trait), scales = "free") + theme_bw() + scale_x_discrete(expand = c(0,0.3)) + 
   theme(legend.position="none") + 
 theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank())+
-  scale_fill_manual(values=c("black", "grey", "pink", "red")) 
+scale_fill_manual(values=c("Blue", "grey", "pink", "red")) 
 ```
 
 
