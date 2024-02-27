@@ -41,3 +41,21 @@ observed_values <- rnorm(4, mean = observed_mean, sd = observed_sd)
 t_test_result <- t.test(predicted_values, observed_values)
 
 t_test_result
+
+# load library
+
+library(dunn.test)
+
+# create the dataframe with the t-test result (means and standard deviation)
+
+t_test_result_df <- data.frame(
+  mean = c(predicted_mean, observed_mean),
+  sd = c(predicted_sd, observed_sd)
+)
+
+# perform the dunn test
+
+dunn_test_result <- dunn.test(t_test_result_df$mean, method = "bonferroni")
+
+dunn_test_result
+
