@@ -50,5 +50,14 @@ Data$cond <-  factor(Data$cond, levels = c("LA", "HA"))
 
 ```{r}
 
+colSums(is.na(Data)) # check for missing values
+
+```
+
+```{r}
+str(Data) # structure of the data
+```
+
+```{r}
 
 ```
