@@ -137,6 +137,8 @@ pca_plot <-  fviz_pca_ind(pca_Data_1, geom.ind = "point", col.ind = Data$pop, po
 
 pca_plot
 ```
+
+
 ```{r}
 
 # save the plot
@@ -149,7 +151,6 @@ ggsave("pca_plot.png", pca_plot, width = 10, height = 10, units = "cm")
 #  check for outliers in the pca
 
 U <-  pca_Data_1$x  # coordinates of individuals
-U
 ```
 
 ```{r}
@@ -158,5 +159,80 @@ threshold <- 3 # set the threshold
 apply(U, 2, function(x) which(abs(x - mean(x)) > threshold * sd(x)))
 ```
 
+
+
 ```{r}
+pca_plot2 <- fviz_pca_ind(pca_Data_1, 
+                         geom.ind = "point", 
+                         col.ind = Data$pop, 
+                         pointshape = 19, 
+                         pointsize = 2, 
+                         addEllipses = TRUE, 
+                         ellipse.level = 0.95, 
+                         legend.title = "pop", 
+                         repel = TRUE,
+         
+                                      axes = c(2, 3))  # Include PC3 in the plot
+
+pca_plot2
 ```
+```{r}
+# find and print outlier values in each column of the PCA
+U_no_outliers <- U
+  
+outliers <- apply(U, 2, function(x) which( abs(x - mean(x)) > (threshold * sd(x)) )) # find outliers
+  
+  
+```
+
+```{r}
+for (i in 1:ncol(U)) {  
+    U_no_outliers[outliers[[i]], i] <- NA 
+  }
+```
+
+
+```{r}
+# print the outliers  
+U_no_outliers
+
+```
+
+
+```{r}
+
+
+linked_data <-  cbind(Data, U_no_outliers) # combine the data with the pca results
+
+```
+
+```{r}
+
+
+view(linked_data) # view the combined data
+
+```
+
+
+```{r}
+
+original_colnames <- c("sumNeo", "adult", "diff", "size")
+```
+
+
+```{r}
+# Rename the columns in the linked dataframe to match the original dataset
+colnames(linked_data)[9:12] <- original_colnames
+
+view(linked_data) # view the combined data
+
+```
+
+```{r}
+
+# save the combined data
+
+write.csv(linked_data, "linked_data.csv")
+
+```
+``
