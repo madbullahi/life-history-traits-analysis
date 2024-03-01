@@ -44,7 +44,6 @@ view(Data) # view the data
 Data$pop <-  factor(Data$pop, levels = c("P", "E"))
 Data$cond <-  factor(Data$cond, levels = c("LA", "HA"))
 
-
 ```
 
 
@@ -57,100 +56,97 @@ colSums(is.na(Data)) # check for missing values
 ```{r}
 str(Data) # structure of the data
 ```
+```{r}
+Decode_Data <-Data
+
+```
+
 
 ```{r}
-# select cloumns 5 to 8
-
-Data_1 <- Data[,5:8]
-Data_1
+Decode_Data$pop <-  factor(Decode_Data$pop, levels = c("P", "E"))
+Decode_Data$cond <-  factor(Decode_Data$cond, levels = c("LA", "HA"))
+                           
 ```
+
+
+```{r}
+# select cloumns 5 to 8 
+
+Dacode_Data <- Decode_Data[,c(5:8)]
+Dacode_Data
+```
+
+
+```{r}
+# remove the missing values
+
+Data_without_NAs <-  Decode_Data[complete.cases(Decode_Data),]
+Data_without_NAs
+
+```
+```{r}
+DD <- Data_without_NAs
+
+
+```
+
+
+
 
 ```{r}
 # log transformation of the variables
 
-log_Data_1 <- log(Data_1 +0.5)
-log_Data_1
+DD[5:8] <- log(DD[5:8] +0.5)
+DD
 ```
-
 ```{r}
-df_with_NANs <-  data.frame(log_Data_1)
+log_DD <-  DD[, c(5:8)]
 
 ```
-
-
-```{r}
-# check for NANs values in each column
-
-nan_columns <-  apply(df_with_NANs, 2, function(x) any(is.nan(x)))  
-```
-
-```{r}
-#  identify columns with NANs values
-
-columns_with_nans <-  names(nan_columns[nan_columns == TRUE])
-
-columns_with_nans
-```
-
-```{r}
-# identify rows with NANs values
-rows_with_nan <-  which(is.nan(df_with_NANs$diff), arr.ind = TRUE)
-
-rows_with_nan
-```
-
-
-```{r}
-# remove NAs or NANs from the data
-
-#log_Data_1 <- log_Data_1[complete.cases(log_Data_1),]
-
-```
-
 
 ```{r}
 # run the PCA
 
-pca_Data_1 <- prcomp(log_Data_1, scale = TRUE)
+PCA1 <- prcomp(log_DD, scale = TRUE)
 ```
 
 ```{r}
 # print the PCA results
-print(pca_Data_1)
+print(PCA1)
 ```
 
 ```{r}
-summary(pca_Data_1)
+summary(PCA1)
 ```
 
 ```{r}
 #  load the libraries to plot the pca
 
-library(FactoMineR)
-library(factoextra)
+pop <- as.factor(DD$pop)
+cond <-  as.factor(DD$cond)
 ```
 
-```{r}
-pca_plot <-  fviz_pca_ind(pca_Data_1, geom.ind = "point", col.ind = Data$pop, pointshape = 19, pointsize = 2, 
-                         addEllipses = TRUE, ellipse.level = 0.95, 
-                         legend.title = "pop", repel = TRUE)
 
-pca_plot
+```{r}
+p <- fviz_pca_ind(PCA1, habillage = pop, geom = "point") +
+  xlim(-4, 4) + ylim(-4, 4) # plot the pca
+p
 ```
 
 
 ```{r}
 
 # save the plot
-
-ggsave("pca_plot.png", pca_plot, width = 10, height = 10, units = "cm")
-
+ ggsave("pca2_plot.png", p, width = 10, height = 10, units = "cm")
 ```
+
+
+
 
 ```{r}
 #  check for outliers in the pca
 
-U <-  pca_Data_1$x  # coordinates of individuals
+U <-  PCA1$x  # coordinates of individuals
 ```
 
 ```{r}
@@ -160,30 +156,51 @@ apply(U, 2, function(x) which(abs(x - mean(x)) > threshold * sd(x)))
 ```
 
 
+```{r}
+
+qplot(U[, 1], U[, 2], colour = factor(pop) ) + coord_equal()
+```
 
 ```{r}
-pca_plot2 <- fviz_pca_ind(pca_Data_1, 
-                         geom.ind = "point", 
-                         col.ind = Data$pop, 
-                         pointshape = 19, 
-                         pointsize = 2, 
-                         addEllipses = TRUE, 
-                         ellipse.level = 0.95, 
-                         legend.title = "pop", 
-                         repel = TRUE,
-         
-                                      axes = c(2, 3))  # Include PC3 in the plot
+ind.oout <- apply(U, 2, function(x) which(abs(x - mean(x)) > threshold * sd(x))) %>% 
+  Reduce(union, .) %>%
+  print()# find outliers
 
-pca_plot2
 ```
+
+```{r}
+col <- rep("black", nrow(U)); col[ind.oout] <- "red"
+qplot(U[, 1], U[, 2], colour = I(col), size = I(2)) + coord_equal()
+
+```
+******************Robust PCA******************
+1. computes the absolute difference of each column in the matrix U from its median, 
+divided by the MAD of that column.
+2. calculates a robust covariance distance using the covRob.
+****************************************************
+
+```{r}
+# robust Mahalanobis distance
+dist <- apply(U, 2, function(x) abs(x - median(x)) / mad(x)) %>%  
+                apply(1, max) 
+
+dist1 <-  covRob(U, estim = "pairwiseGK")$dist
+qqplot(dist, sqrt(dist1))
+
+```
+
+
 ```{r}
 # find and print outlier values in each column of the PCA
 U_no_outliers <- U
   
 outliers <- apply(U, 2, function(x) which( abs(x - mean(x)) > (threshold * sd(x)) )) # find outliers
-  
-  
+
 ```
+
+
+
+
 
 ```{r}
 for (i in 1:ncol(U)) {  
@@ -200,9 +217,11 @@ U_no_outliers
 
 
 ```{r}
+# If U_no_outliers has fewer rows, subset Data to match
+Data_subset <- Data[1:nrow(U_no_outliers), ]
 
-
-linked_data <-  cbind(Data, U_no_outliers) # combine the data with the pca results
+# Combine the datasets with matching rows
+linked_data <- cbind(Data_subset, U_no_outliers)
 
 ```
 
@@ -235,4 +254,46 @@ view(linked_data) # view the combined data
 write.csv(linked_data, "linked_data.csv")
 
 ```
-``
+
+```{r}
+# nvestigate the outliers using Robust Mahalanobis Distance
+
+dist2 <- covRob
+
+```
+
+
+
+```{r}
+rpca_result <- PcaCov(U, method = "classic")
+```
+
+```{r}
+
+# Identify outliers using a robust method (e.g., based on Mahalanobis distance)
+outliers <- boxplot.stats(rpca_result$scores)$out
+outliers
+```
+
+
+```{r}
+
+# Create a dataframe with outlier information
+outlier_df <- data.frame(
+  PC1 = rpca_result$scores[,1],    #  PC1 scores
+  PC2 = rpca_result$scores[,2],    #  PC2 scores
+  Outlier = ifelse(1:nrow(rpca_result$scores) %in% outliers, "Outlier", "Not Outlier")  #  Outlier status
+)
+```
+
+```{r}
+
+# Generate an outlier map using ggplot2
+library(ggplot2)
+ggplot(outlier_df, aes(x = PC1, y = PC2, color = Outlier)) +
+  geom_point() +
+  labs(title = "Outlier Map based on Robust PCA", x = "PC1", y = "PC2") +
+  theme_minimal()
+
+```
+
