@@ -190,6 +190,8 @@ qqplot(dist, sqrt(dist1))
 ```
 
 
+
+
 ```{r}
 # find and print outlier values in each column of the PCA
 U_no_outliers <- U
