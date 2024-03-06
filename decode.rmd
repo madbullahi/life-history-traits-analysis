@@ -86,9 +86,7 @@ Data_without_NAs
 ```
 ```{r}
 DD <- Data_without_NAs
-
 ```
-
 
 
 ```{r}
@@ -119,7 +117,6 @@ summary(PCA1)
 
 ```{r}
 #  load the libraries to plot the pca
-
 pop <- as.factor(DD$pop)
 cond <-  as.factor(DD$cond)
 ```
@@ -147,8 +144,6 @@ p
 #  check for outliers in the pca
 
 U <-  PCA1$x  # coordinates of individuals
-
-
 ```
 
 ```{r}
@@ -196,7 +191,6 @@ qqplot(dist, sqrt(dist1))
 # extract the pca scores
 
 pca_scores <-  as.data.frame(PCA1$x)
-
 ```
 
 
@@ -205,7 +199,6 @@ pca_scores <-  as.data.frame(PCA1$x)
 # Run K-mean clustering on the scores
 
 Kmeans_cluster <-  kmeans(pca_scores, centers = 2)
-
 ```
 
 ```{r}
@@ -283,6 +276,36 @@ write.csv(linked_data, "linked_data.csv")
 ```
 
 ```{r}
+
+ U_no_outliers
+
+
+```
+
+```{r}
+
+remove_NAs <- U_no_outliers[complete.cases(U_no_outliers), ]
+
+```
+
+
+```{r}
+
+apply(U_no_outliers, 2, function(x) which(abs(x - mean(x)) > threshold * sd(x)))
+
+```
+
+```{r}
+
+qplot(U_no_outliers[, 1], U_no_outliers[, 2], colour = factor(cond) ) + coord_equal()
+
+```
+
+
+
+
+
+```{r}
 # function to remove outliers from a specific column.
 remove_outliers <- function(column) {
   mean_col <-  mean(column)
@@ -304,41 +327,89 @@ cleaned_df <- Data
 
 
 ```{r}
-# Pad cleaned data to match original dataframe's length 
-cleaned_data <- c(remove_outliers(cleaned_df$adult), rep(NA, nrow(cleaned_df) - length(remove_outliers(cleaned_df$adult))))
-cleaned_data <- c(remove_outliers(cleaned_df$diff), rep(NA, nrow(cleaned_df) - length(remove_outliers(cleaned_df$diff))))
-cleaned_data <- c(remove_outliers(cleaned_df$size), rep(NA, nrow(cleaned_df) - length(remove_outliers(cleaned_df$size))))
-cleaned_data <- c(remove_outliers(cleaned_df$sumNeo), rep(NA, nrow(cleaned_df) - length(remove_outliers(cleaned_df$sumNeo))))
-
-```
+# Pad cleaned data to match original dataframe's length
+#cleaned_data <- c(remove_outliers(cleaned_df$adult), rep(NA, nrow(cleaned_df) - length(remove_outliers(cleaned_df$adult))))
+#cleaned_data <- c(remove_outliers(cleaned_df$diff), rep(NA, nrow(cleaned_df) - length(remove_outliers(cleaned_df$diff))))
+#cleaned_data <- c(remove_outliers(cleaned_df$size), rep(NA, nrow(cleaned_df) - length(remove_outliers(cleaned_df$size))))
+#cleaned_data <- c(remove_outliers(cleaned_df$sumNeo), rep(NA, nrow(cleaned_df) - length(remove_outliers(cleaned_df$sumNeo))))
 
 
-```{r}
-
-
-
-# Adjust the length of 'cleaned_data' to match the number of rows in 'cleaned_df'
-if(length(cleaned_data) < nrow(cleaned_df)) {
-  cleaned_data <- c(cleaned_data, rep(NA, nrow(cleaned_df) - length(cleaned_data)))
-} else if(length(cleaned_data) > nrow(cleaned_df)) {
-  cleaned_data <- cleaned_data[1:nrow(cleaned_df)]
-}
 
 # Assign padded data back to the 'adult' column
-cleaned_df$adult <- cleaned_data
-cleaned_df$diff <- cleaned_data
-cleaned_df$size <- cleaned_data
-cleaned_df$sumNeo <- cleaned_data
+#cleaned_df$adult <- cleaned_data
+#cleaned_df$diff <- cleaned_data
+#cleaned_df$size <- cleaned_data
+#cleaned_df$sumNeo <- cleaned_data
+#cleaned_df
+
+
+```
+
+
+```{r}
+
+# import the cleaned excel file
+ 
+clean_raw_data <- read.csv("cleaned_data.csv")
+clean_raw_data
+view(clean_raw_data)
 ```
 
 ```{r}
 
-cleaned_df
+# remove NAs from the cleaned data
+
+colSums(is.na(clean_raw_data))
 ```
 
 ```{r}
 
-# save the cleaned data
-write.csv(cleaned_df, "cleaned_data.csv")
+raw_clean_data <- clean_raw_data[complete.cases(clean_raw_data), ]
+raw_clean_data
 
+```
+
+```{r}
+log_raw_clean_data <- raw_clean_data
+```
+
+```{r}
+
+# log transformation of the variables
+log_raw_clean_data[5:8] <-  log(log_raw_clean_data[5:8] + 0.5)
+log_raw_clean_data
+
+```
+
+```{r}
+# convert the variables to factors
+
+log_raw_clean_data$cond <- factor(log_raw_clean_data$cond, levels = c("LA", "HA"))
+log_raw_clean_data$pop <- factor(log_raw_clean_data$pop, levels = c("P", "E"))
+```
+
+```{r}
+# subset the variables for subsequent analysis
+
+log_subset_data <- log_raw_clean_data[,c(5:8)]
+log_subset_data
+
+```
+
+```{r}
+# run PCA on the log transformed subsetted data
+
+PCA2 <- prcomp(log_subset_data, scale = TRUE)
+print(PCA2)
+summary(PCA2)
+
+```
+
+```{r}
+# plot the PCA results
+
+pca_plot <- fviz_pca_ind(PCA2, geom.ind = "point", col.ind = log_raw_clean_data$cond, 
+                        addEllipses = TRUE, ellipse.level = 0.95, 
+                         legend.title = "Condition", repel = TRUE)
+pca_plot
 ```
