@@ -87,9 +87,7 @@ Data_without_NAs
 ```{r}
 DD <- Data_without_NAs
 
-
 ```
-
 
 
 
@@ -128,7 +126,9 @@ cond <-  as.factor(DD$cond)
 
 
 ```{r}
-p <- fviz_pca_ind(PCA1, habillage = pop, geom = "point") +
+p <- fviz_pca_ind(PCA1, habillage = cond, geom = "point",
+                  ellipse.level = 0.68,
+                  addEllipses = T) +
   xlim(-4, 4) + ylim(-4, 4) # plot the pca
 p
 ```
@@ -158,7 +158,7 @@ apply(U, 2, function(x) which(abs(x - mean(x)) > threshold * sd(x)))
 
 ```{r}
 
-qplot(U[, 1], U[, 2], colour = factor(pop) ) + coord_equal()
+qplot(U[, 1], U[, 2], colour = factor(cond) ) + coord_equal()
 ```
 
 ```{r}
@@ -171,8 +171,8 @@ ind.oout <- apply(U, 2, function(x) which(abs(x - mean(x)) > threshold * sd(x)))
 ```{r}
 col <- rep("black", nrow(U)); col[ind.oout] <- "red"
 qplot(U[, 1], U[, 2], colour = I(col), size = I(2)) + coord_equal()
-
 ```
+
 ******************Robust PCA******************
 1. computes the absolute difference of each column in the matrix U from its median, 
 divided by the MAD of that column.
@@ -189,6 +189,29 @@ qqplot(dist, sqrt(dist1))
 
 ```
 
+
+```{r}
+# extract the pca scores
+
+pca_scores <-  as.data.frame(PCA1$x)
+
+```
+
+
+```{r}
+
+# Run K-mean clustering on the scores
+
+Kmeans_cluster <-  kmeans(pca_scores, centers = 2)
+
+```
+
+```{r}
+#  visualise the clustering results
+
+plot(pca_scores, col = Kmeans_cluster$cluster, pch = 20, cex = 2)
+
+```
 
 
 
