@@ -280,45 +280,4 @@ write.csv(linked_data, "linked_data.csv")
 
 ```
 
-```{r}
-# nvestigate the outliers using Robust Mahalanobis Distance
-
-dist2 <- covRob
-
-```
-
-
-
-```{r}
-rpca_result <- PcaCov(U, method = "classic")
-```
-
-```{r}
-
-# Identify outliers using a robust method (e.g., based on Mahalanobis distance)
-outliers <- boxplot.stats(rpca_result$scores)$out
-outliers
-```
-
-
-```{r}
-
-# Create a dataframe with outlier information
-outlier_df <- data.frame(
-  PC1 = rpca_result$scores[,1],    #  PC1 scores
-  PC2 = rpca_result$scores[,2],    #  PC2 scores
-  Outlier = ifelse(1:nrow(rpca_result$scores) %in% outliers, "Outlier", "Not Outlier")  #  Outlier status
-)
-```
-
-```{r}
-
-# Generate an outlier map using ggplot2
-library(ggplot2)
-ggplot(outlier_df, aes(x = PC1, y = PC2, color = Outlier)) +
-  geom_point() +
-  labs(title = "Outlier Map based on Robust PCA", x = "PC1", y = "PC2") +
-  theme_minimal()
-
-```
 
