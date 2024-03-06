@@ -147,6 +147,8 @@ p
 #  check for outliers in the pca
 
 U <-  PCA1$x  # coordinates of individuals
+
+
 ```
 
 ```{r}
@@ -280,4 +282,63 @@ write.csv(linked_data, "linked_data.csv")
 
 ```
 
+```{r}
+# function to remove outliers from a specific column.
+remove_outliers <- function(column) {
+  mean_col <-  mean(column)
+  sd_col <-  sd(column)
+  outliers_col <- column[abs(column - mean_col) > threshold * sd_col]
+  cleaned_column <-  column[!(column %in% outliers_col)]
+  return(cleaned_column)
+}
 
+
+```
+
+```{r}
+# apply the fuction to each column where you want to removew outliers
+
+cleaned_df <- Data
+
+```
+
+
+```{r}
+# Pad cleaned data to match original dataframe's length 
+cleaned_data <- c(remove_outliers(cleaned_df$adult), rep(NA, nrow(cleaned_df) - length(remove_outliers(cleaned_df$adult))))
+cleaned_data <- c(remove_outliers(cleaned_df$diff), rep(NA, nrow(cleaned_df) - length(remove_outliers(cleaned_df$diff))))
+cleaned_data <- c(remove_outliers(cleaned_df$size), rep(NA, nrow(cleaned_df) - length(remove_outliers(cleaned_df$size))))
+cleaned_data <- c(remove_outliers(cleaned_df$sumNeo), rep(NA, nrow(cleaned_df) - length(remove_outliers(cleaned_df$sumNeo))))
+
+```
+
+
+```{r}
+
+
+
+# Adjust the length of 'cleaned_data' to match the number of rows in 'cleaned_df'
+if(length(cleaned_data) < nrow(cleaned_df)) {
+  cleaned_data <- c(cleaned_data, rep(NA, nrow(cleaned_df) - length(cleaned_data)))
+} else if(length(cleaned_data) > nrow(cleaned_df)) {
+  cleaned_data <- cleaned_data[1:nrow(cleaned_df)]
+}
+
+# Assign padded data back to the 'adult' column
+cleaned_df$adult <- cleaned_data
+cleaned_df$diff <- cleaned_data
+cleaned_df$size <- cleaned_data
+cleaned_df$sumNeo <- cleaned_data
+```
+
+```{r}
+
+cleaned_df
+```
+
+```{r}
+
+# save the cleaned data
+write.csv(cleaned_df, "cleaned_data.csv")
+
+```
