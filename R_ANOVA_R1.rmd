@@ -11,10 +11,12 @@ library(DescTools)
 #Life history traits (remplace sumNeoNpop, sizeNpop, adultNpop): 
 dat <- read.csv("All.csv")
 dat$pop <- factor(dat$pop, levels = c("CWP","PP","EP"))
+dat
 
 ##Two-way ANOVA
 ## Effects of carbaryl
 datF <- dat[(dat$cond == "HC") | (dat$cond == "LC"), ]
+datF
 mod_rand <- lmer(sumNeoNpop ~ pop * cond + (1|Ind), data=datF)
 Anova(mod_rand)
 #without random effect
@@ -99,15 +101,16 @@ dat <- read.csv("All.csv")
 
 #Combined stressors
 # Planned contrasts 1: EP --> PP
-d <- dim(sub_PC1 <- dat[(dat$cond == "HALC" | dat$cond == "HAHC") & (dat$pop == "EP" | dat$pop == "PP"),])
+d <- dim(sub_PC1 <- dat[(dat$cond == "HALC" | dat$cond == "HAHC") & (dat$pop == "EP" | dat$pop == "PP"),]) #
 sub_PC1 <- array(NA,dim=d)
+sub_PC1
 colnames(sub_PC1) <- colnames(dat)
 sub_PC1 <- as.data.frame(sub_PC1)
 sub_PC1$cond <- as.character(dat$cond[(dat$cond == "HALC" | dat$cond == "HAHC") & (dat$pop == "EP" | dat$pop == "PP")])
 sub_PC1$Ind <- as.character(dat$Ind[(dat$cond == "HALC" | dat$cond == "HAHC") & (dat$pop == "EP" | dat$pop == "PP")])
 sub_PC1$pop <- as.character(dat$pop[(dat$cond == "HALC" | dat$cond == "HAHC") & (dat$pop == "EP" | dat$pop == "PP")])
 sub_PC1[,c(2,5:d[2])] <- dat[(dat$cond == "HALC" | dat$cond == "HAHC") & (dat$pop == "EP" | dat$pop == "PP"),c(2,5:d[2])]
-
+sub_PC1 
 sub_PC1$cond <- as.factor(sub_PC1$cond)
 sub_PC1$Ind <- as.factor(sub_PC1$Ind)
 sub_PC1$pop <- as.factor(sub_PC1$pop)
