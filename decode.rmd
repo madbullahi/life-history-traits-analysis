@@ -384,7 +384,7 @@ log_raw_clean_data
 ```{r}
 # convert the variables to factors
 
-log_raw_clean_data$cond <- factor(log_raw_clean_data$cond, levels = c("LA", "HA"))
+log_raw_clean_data$cond <- factor(log_raw_clean_data$cond, levels = c("AL", "HA"))
 log_raw_clean_data$pop <- factor(log_raw_clean_data$pop, levels = c("P", "E"))
 ```
 
@@ -417,7 +417,7 @@ pca_plot
 ```{r}
 # make a plot of PCA inlcuding the response variables.
 respone_biplot <-  fviz_pca_biplot(PCA2,
-                                   habillage = log_raw_clean_data$pop,
+                                   habillage = raw_clean_data$pop,
                                    palette = c("P" = "red", "E" = "black"),
                                    addEllipses = TRUE,
                                    col.var = "blue",
@@ -447,6 +447,40 @@ ggsave("PCA_biplot.png", respone_biplot, width = 10, height = 10, units = "in", 
 ```
 
 ```{r}
+# calculate the summary statistics for the variable age.
+age_summary <- summarySE(raw_clean_data, measurevar = "adult", groupvars = c("cond", "pop"))
+age_summary
+```
+
+```{r}
+# makke a plot of the summary statistics for the variable age.
+Age <- ggplot(age_summary,
+                        aes(x = cond,
+                            y = adult,
+                            colour = pop,
+                            group = interaction(pop))) +
+    geom_errorbar(aes(ymin = adult - se,
+                      ymax = adult + se),
+                  width = 0.1,
+                  position = pd) +
+    geom_line(position = pd) +
+    theme(panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.background = element_blank(),
+          axis.line = element_line(colour = "black"),
+          aspect.ratio = 1,
+          panel.border = element_rect(colour = "black", fill = NA, size = 0.5)) +
+    labs(x = "Treatment",
+         y = "Age at Maturity",
+         colour = "pop")
+Age
+```
+
+
+
+```{r}
+
 
 
 ```
+
