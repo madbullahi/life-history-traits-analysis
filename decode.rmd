@@ -413,3 +413,40 @@ pca_plot <- fviz_pca_ind(PCA2, geom.ind = "point", col.ind = log_raw_clean_data$
                          legend.title = "Condition", repel = TRUE)
 pca_plot
 ```
+
+```{r}
+# make a plot of PCA inlcuding the response variables.
+respone_biplot <-  fviz_pca_biplot(PCA2,
+                                   habillage = log_raw_clean_data$pop,
+                                   palette = c("P" = "red", "E" = "black"),
+                                   addEllipses = TRUE,
+                                   col.var = "blue",
+                                   arrowsize = 0.2,
+                                   labelsize = 5,
+                                   geom.ind = "point",
+                                   pointshape = 19,
+                                   pointsize = 3,
+                                   mean.point = F,
+                                   repel = TRUE,
+                                   legend.title = "Population",
+                                   ellipse.type = "confidence",
+                                   var.scale = 0.5,
+                                   xlim = c(-3, 3),
+                                   ylim = c(-5, 5),
+                                  shape.ind = log_raw_clean_data$cond)
+
+                                   
+
+respone_biplot
+```
+```{r}
+# save the PCA plot
+
+ggsave("PCA_biplot.png", respone_biplot, width = 10, height = 10, units = "in", dpi = 300)
+
+```
+
+```{r}
+
+
+```
