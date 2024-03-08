@@ -479,8 +479,140 @@ Age
 
 
 ```{r}
+# make the summary statistics for the variable size
 
+size <- summarySE(raw_clean_data, measurevar = "size", groupvars = c("cond", "pop"))
+size
 
 
 ```
+
+```{r}
+
+# make a plot of the summary statistics for the variable size
+
+Size <- ggplot(size,
+                        aes(x = cond,
+                            y = size,
+                            colour = pop,
+                            group = interaction(pop))) +
+    geom_errorbar(aes(ymin = size - se,
+                      ymax = size + se),
+                  width = 0.1,
+                  position = pd) +
+    geom_line(position = pd) +
+    theme(panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.background = element_blank(),
+          axis.line = element_line(colour = "black"),
+          aspect.ratio = 1,
+          panel.border = element_rect(colour = "black", fill = NA, size = 0.5)) +
+    labs(x = "Treatment",
+         y = "Size",
+         colour = "pop")
+Size
+```
+
+```{r}
+# make a summary statistics for the variable sumNeo
+
+fecundity <- summarySE(raw_clean_data, measurevar = "sumNeo", groupvars = c("cond", "pop"))
+fecundity
+```
+
+```{r}
+# make a plot of the summary statistics for the variable sumNeo
+fecundity_plot <- ggplot(fecundity,
+                        aes(x = cond,
+                            y = sumNeo,
+                            colour = pop,
+                            group = interaction(pop))) +
+    geom_errorbar(aes(ymin = sumNeo - se,
+                      ymax = sumNeo + se),
+                  width = 0.1,
+                  position = pd) +
+    geom_line(position = pd) +
+    theme(panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.background = element_blank(),
+          axis.line = element_line(colour = "black"),
+          aspect.ratio = 1,
+          panel.border = element_rect(colour = "black", fill = NA, size = 0.5)) +
+    labs(x = "Treatment",
+         y = "Fecundity",
+         colour = "pop")
+fecundity_plot
+```
+
+```{r}
+# make a summary statistics for the variable diff
+diff_summary <- summarySE(raw_clean_data, measurevar = "diff", groupvars = c("cond", "pop"))
+diff_summary
+```
+
+```{r}
+# make a plot of the summary statistics for the variable diff
+diff_plot <- ggplot(diff_summary,
+                        aes(x = cond,
+                            y = diff,
+                            colour = pop,
+                            group = interaction(pop))) +
+    geom_errorbar(aes(ymin = diff - se,
+                      ymax = diff + se),
+                  width = 0.1,
+                  position = pd) +
+    geom_line(position = pd) +
+    theme(panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.background = element_blank(),
+          axis.line = element_line(colour = "black"),
+          aspect.ratio = 1,
+          panel.border = element_rect(colour = "black", fill = NA, size = 0.5)) +
+    labs(x = "Treatment",
+         y = "Difference",
+         colour = "pop")
+diff_plot
+```
+********************hypothesis testing****************
+```{r}
+# peform the anova test for the variable adult
+age_anova <- lmer(adult ~ cond * pop + (1|pop:Genotypes:Replicates), data = raw_clean_data)
+
+anova(age_anova)
+```
+
+```{r}
+# perform the anova test for the variable size
+size_anova <- lmer(size ~ cond * pop + (1|pop:Genotypes:Replicates), data = raw_clean_data)
+anova(size_anova)
+```
+
+```{r}
+# perform the anova test for the variable sumNeo
+fecundity_anova <- lmer(sumNeo ~ cond * pop + (1|pop:Genotypes:Replicates), data = raw_clean_data)
+anova(fecundity_anova)
+```
+
+```{r}
+# perform the anova test for the variable diff
+diff_anova <- lmer(diff ~ cond * pop + (1|pop:Genotypes:Replicates), data = raw_clean_data)
+anova(diff_anova)
+```
+
+```{r}
+# manova for the four variables
+Y <-  cbind(raw_clean_data$adult, raw_clean_data$size, raw_clean_data$sumNeo, raw_clean_data$diff)
+```
+
+```{r}
+model_mano <-  manova(log(Y) ~ cond * pop , data = raw_clean_data)
+summary(model_mano, test = "Pillai")
+```
+**********PTA Analysis************
+```{r}
+
+
+```
+
+
 
