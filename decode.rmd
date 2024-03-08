@@ -610,9 +610,62 @@ summary(model_mano, test = "Pillai")
 ```
 **********PTA Analysis************
 ```{r}
-
+Data_PTA <- raw_clean_data
+Data_PTA$pop <- factor(Data_PTA$pop, levels = c("E", "P"))
+Data_PTA$cond <- factor(Data_PTA$cond, levels = c("AL", "HA"))
 
 ```
 
+```{r}
+
+Data_PTA_without_NAs <-  Data_PTA[complete.cases(Data_PTA),]
+Data_PTA_without_NAs
+```
 
 
+```{r}
+Data_PTA_without_NAs[5:8] <- log(Data_PTA_without_NAs[5:8] + 0.5)
+```
+
+```{r}
+# create your table variables
+
+AL <-  Data_PTA_without_NAs[Data_PTA_without_NAs$cond == "AL",]
+HA <-  Data_PTA_without_NAs[Data_PTA_without_NAs$cond == "HA",]
+```
+
+```{r}
+taxa <- as.factor(Data_PTA_without_NAs$pop)
+```
+
+```{r}
+level <-  as.factor(Data_PTA_without_NAs$cond)
+```
+
+```{r}
+Y <-  as.matrix(Data_PTA_without_NAs[-c(1:4)])
+```
+
+```{r}
+taxaBylevel <-  as.factor(paste(taxa, level))
+```
+
+
+```{r}
+Y <-  prcomp(Y)$x
+```
+
+```{r}
+n <-  length(levels(taxa))
+```
+
+```{r}
+p <- length(levels(level))
+```
+
+```{r}
+
+```
+
+```{r}
+```

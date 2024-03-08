@@ -3051,7 +3051,6 @@ control <- PheDatawithoutNAs[PheDatawithoutNAs$Treatment == "control",] # create
 
 ```{r}
 taxa <- as.factor(PheDatawithoutNAs[[3]]) # create the taxa variable
-
 ```
 
 ```{r}
@@ -3927,6 +3926,12 @@ theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank())+
 scale_fill_manual(values=c("Blue", "grey", "pink", "red")) 
 ```
 
+
+```{r}
+
+history(Inf)
+
+```
 
 
 
