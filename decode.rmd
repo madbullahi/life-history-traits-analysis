@@ -576,7 +576,8 @@ diff_plot
 ********************hypothesis testing****************
 ```{r}
 # peform the anova test for the variable adult
-age_anova <- lmer(adult ~ cond * pop + (1|pop:Genotypes:Replicates), data = raw_clean_data)
+set.seed(123)
+age_anova <- lmer(log(adult) ~ cond * pop + (1|pop:Genotypes:Replicates), data = raw_clean_data)
 
 anova(age_anova)
 ```
@@ -604,7 +605,7 @@ plotNormalHistogram(age_resid)
 
 ```{r}
 # perform the anova test for the variable size
-size_anova <- lmer(size ~ cond * pop + (1|pop:Genotypes:Replicates), data = raw_clean_data)
+size_anova <- lmer(log(size) ~ cond * pop + (1|pop:Genotypes:Replicates), data = raw_clean_data)
 anova(size_anova)
 ```
 
@@ -623,7 +624,7 @@ plotNormalHistogram(size_resid)
 
 ```{r}
 # perform the anova test for the variable sumNeo
-fecundity_anova <- lmer(sumNeo ~ cond * pop + (1|pop:Genotypes:Replicates), data = raw_clean_data)
+fecundity_anova <- lmer(log(sumNeo) ~ cond * pop + (1|pop:Genotypes:Replicates), data = raw_clean_data)
 anova(fecundity_anova)
 ```
 
@@ -642,7 +643,7 @@ plotNormalHistogram(fecundity_resid)
 
 ```{r}
 # perform the anova test for the variable diff
-diff_anova <- lmer(diff ~ cond * pop + (1|pop:Genotypes:Replicates), data = raw_clean_data)
+diff_anova <- lmer(log(diff) ~ cond * pop + (1|pop:Genotypes:Replicates), data = raw_clean_data)
 anova(diff_anova)
 ```
 
@@ -656,8 +657,6 @@ diff_resid <-  residuals(diff_anova)
 plotNormalHistogram(diff_resid)
 
 ```
-
-
 
 
 ```{r}
