@@ -600,6 +600,9 @@ age_resid <-  residuals(age_anova)
 
 plotNormalHistogram(age_resid)
 ```
+```{r}
+shapiro.test(age_resid) # test for normality
+```
 
 
 
@@ -619,6 +622,10 @@ qqline(resid(size_anova),
 size_resid <-  residuals(size_anova)
 plotNormalHistogram(size_resid)
 
+```
+```{r}
+
+shapiro.test(size_resid) # test for normality
 ```
 
 
@@ -640,6 +647,10 @@ plotNormalHistogram(fecundity_resid)
 
 ```
 
+```{r}
+
+shapiro.test(fecundity_resid) # test for normality
+```
 
 ```{r}
 # perform the anova test for the variable diff
@@ -658,6 +669,13 @@ plotNormalHistogram(diff_resid)
 
 ```
 
+```{r}
+
+shapiro.test(diff_resid) # test for normality
+```
+
+```{r}
+```
 
 ```{r}
 # manova for the four variables
