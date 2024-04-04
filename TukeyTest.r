@@ -104,3 +104,14 @@ points(centroid$Age_maturity, centroid$Size_maturity, centroid$Fecundity, pch = 
 ggsave("3D_Scatter_Plot_with_Centroids.png")
  
 
+
+
+# Emmeans for only the Lake-Phase
+ emmeans_LakePhase <- emmeans(manova_results, "Lake_Phase")
+
+ Tukey_LakePhase <- pairs(emmeans_LakePhase, adjust = "tukey")
+
+ # save the results
+ 
+ write.csv(emmeans_LakePhase, "emmeans_LakePhase.csv")
+write.csv(Tukey_LakePhase, "Tukey_LakePhase.csv") 
