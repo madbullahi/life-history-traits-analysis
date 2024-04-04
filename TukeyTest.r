@@ -1,3 +1,4 @@
+library(readxl)
 
 PHE_data <-  read_excel(file.choose(), sheet = "Sheet1") # read the data
 
@@ -65,3 +66,20 @@ ggsave("emmeans_results.png")
 # 1. calculate the estimate marginnal means (EMMS) for each combination of the indepented variables, while accounting for the other variables in the model.
 # 2. perform pairwise comparisons between the EMMs to determine which groups differ significantly from each other.
 # 3. visualise the results using interacctiion plots or other graphics.
+
+# load packages
+library(rstatix)
+
+# calculate the mahalanobis distance
+
+mahalanobis_distance <- mahalanobis(cbind(PHE_data$Age_maturity,PHE_data$Size_maturity,PHE_data$Fecundity,PHE_data$Interval_brood), 
+                                    colMeans(cbind(PHE_data$Age_maturity, PHE_data$Size_maturity, PHE_data$Fecundity, PHE_data$Interval_brood)), 
+                                    cov(cbind(PHE_data$Age_maturity, PHE_data$Size_maturity, PHE_data$Fecundity, PHE_data$Interval_brood)))
+
+# identify the outliers
+
+outliers <- PHE_data[mahalanobis_distance > qchisq(0.975, ncol(cbind(PHE_data$Age_maturity,
+                                                                     PHE_data$Size_maturity,
+                                                                     PHE_data$Fecundity,
+                                                                     PHE_data$Interval_brood))),]
+print(outliers)

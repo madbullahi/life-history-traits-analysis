@@ -1,0 +1,9 @@
+"","Replicate","Genotype","Lake_Phase","Treatment","Age_maturity","Size_maturity","Fecundity","Interval_brood"
+"1",1,"LRV 1_2","Recovery","control",7,4.0008,65,5
+"2",3,"LRV 2_1","Recovery","PHE",16,3.6524,10,6
+"3",1,"LRV 9.5_3","Pesticide","PHE",15,2.78252,5,3
+"4",5,"LRV 9.5_3","Pesticide","PHE",15,2.59732,3,3
+"5",2,"LRV 12.5_1","Eutrophic","PHE",15,2.37175,4,6
+"6",4,"LRV 13.5_1","Eutrophic","PHE",14,2.85387,5,7
+"7",5,"LRV 13.5_1","Eutrophic","PHE",15,2.57871,5,6
+"8",1,"LRV 88_1","Semi-Pristine","PHE",15,3.74483,19,6
