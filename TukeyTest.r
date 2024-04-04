@@ -96,9 +96,8 @@ centroid <- aggregate(cbind(PHE_data$Age_maturity, PHE_data$Size_maturity, PHE_d
 # plot the 3D scatter plot with centroids
 library(scatterplot3d)
 scatterplot3d(PHE_data$Age_maturity, PHE_data$Size_maturity, PHE_data$Fecundity, PHE_data$Interval_brood, pch = 16, 
-              , main = "3D Scatter Plot with Centroids")
+            main = "3D Scatter Plot with Centroids")
 points(centroid$Age_maturity, centroid$Size_maturity, centroid$Fecundity, pch = 19, cex = 2)
-
 
 # save the plot
 
