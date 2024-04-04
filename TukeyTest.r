@@ -83,3 +83,20 @@ outliers <- PHE_data[mahalanobis_distance > qchisq(0.975, ncol(cbind(PHE_data$Ag
                                                                      PHE_data$Fecundity,
                                                                      PHE_data$Interval_brood))),]
 print(outliers)
+
+# save the outliers
+
+write.csv(outliers, "outliers.csv")
+
+
+#  calculate the multivariate centroid
+
+centroid <- aggregate(cbind(PHE_data$Age_maturity, PHE_data$Size_maturity, PHE_data$Fecundity, PHE_data$Interval_brood) ~ Treatment * Lake_Phase, data = PHE_data, FUN = mean)
+
+# plot the 3D scatter plot with centroids
+library(scatterplot3d)
+scatterplot3d(PHE_data$Age_maturity, PHE_data$Size_maturity, PHE_data$Fecundity, PHE_data$Interval_brood, pch = 16, 
+              , main = "3D Scatter Plot with Centroids")
+points(centroid$Age_maturity, centroid$Size_maturity, centroid$Fecundity, pch = 19, cex = 2)
+
+
