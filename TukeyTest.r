@@ -100,3 +100,8 @@ scatterplot3d(PHE_data$Age_maturity, PHE_data$Size_maturity, PHE_data$Fecundity,
 points(centroid$Age_maturity, centroid$Size_maturity, centroid$Fecundity, pch = 19, cex = 2)
 
 
+# save the plot
+
+ggsave("3D_Scatter_Plot_with_Centroids.png")
+ 
+
