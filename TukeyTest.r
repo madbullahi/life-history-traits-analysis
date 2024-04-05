@@ -63,7 +63,7 @@ ggsave("emmeans_results.png")
 
 
 # After running the manova on the dataset, the emmeans package allows you:
-# 1. calculate the estimate marginnal means (EMMS) for each combination of the indepented variables, while accounting for the other variables in the model.
+# 1. calculate the estimate marginnal means (EMMS) for each combination of the independent variables, while accounting for the other variables in the model.
 # 2. perform pairwise comparisons between the EMMs to determine which groups differ significantly from each other.
 # 3. visualise the results using interacctiion plots or other graphics.
 
